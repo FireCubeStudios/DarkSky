@@ -1,0 +1,568 @@
+﻿<Page
+    x:Class="DarkSky.LegacyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:glow="using:Cube.UI.Controls.Glow"
+    xmlns:icons="using:Cube.UI.Icons"
+    xmlns:local="using:DarkSky"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    mc:Ignorable="d">
+    <Grid>
+        <Border
+            x:Name="AppTitleBar"
+            Height="40"
+            Margin="12,0,0,0"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <StackPanel Orientation="Horizontal">
+                <Image
+                    x:Name="AppFontIcon"
+                    Width="16"
+                    Height="16"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Source="Assets/Square44x44Logo.png" />
+                <TextBlock
+                    x:Name="AppTitle"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Darksky" />
+                <TextBlock
+                    Margin="4,0,0,0"
+                    VerticalAlignment="Center"
+                    Opacity="0.4"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="for Bluesky" />
+            </StackPanel>
+        </Border>
+        <muxc:NavigationView
+            x:Name="NavigationViewControl"
+            Grid.Row="1"
+            Margin="0,32,0,0"
+            IsBackButtonVisible="Collapsed"
+            IsBackEnabled="False"
+            IsPaneOpen="True"
+            IsPaneToggleButtonVisible="False"
+            IsSettingsVisible="False"
+            IsTitleBarAutoPaddingEnabled="False"
+            OpenPaneLength="72"
+            PaneDisplayMode="Left"
+            Style="{ThemeResource StoreNavigationViewStyle}">
+
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem Content="Home">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Home24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem>
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Alert24" />
+                    </muxc:NavigationViewItem.Icon>
+                    <Grid>
+                        <toolkit:DropShadowPanel
+                            Margin="24,0,0,0"
+                            BlurRadius="16"
+                            ShadowOpacity="0.23"
+                            Color="{ThemeResource SystemAccentColorLight3}">
+                            <Grid
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Background="{ThemeResource RadioBrush}"
+                                CornerRadius="100">
+                                <TextBlock
+                                    Margin="0,0,0,1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontWeight="SemiBold"
+                                    Foreground="Black">
+                                    3
+                                </TextBlock>
+                            </Grid>
+                        </toolkit:DropShadowPanel>
+                    </Grid>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Feeds">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="BroadActivityFeed24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Bookmarks">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Margin="0,0,4,0" Symbol="Bookmark24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+
+            </muxc:NavigationView.MenuItems>
+
+            <muxc:NavigationView.FooterMenuItems>
+                <muxc:NavigationViewItem>
+                    <StackPanel>
+                        <PersonPicture Height="36" ProfilePicture="https://cdn.bsky.social/imgproxy/Bm2SNEXL__1t3fZgKo0Gy1SETd2TCAoVhBf8mgNo03I/rs:fill:1000:1000:1:0/plain/bafkreiaemythgtxhxcucavhj2wjf2ttaimk56dir5l47sa5uegskif7gmm@jpeg" />
+                        <TextBlock Text="FireCube" />
+                    </StackPanel>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Settings">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Settings24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.FooterMenuItems>
+
+            <muxc:NavigationView.Content>
+                <Grid
+                    BorderBrush="{ThemeResource MicaBorderBrush}"
+                    BorderThickness="1,1,0,0"
+                    CornerRadius="8, 0, 0, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="600" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <!--  <StackPanel Grid.Column="0">
+                        <StackPanel Background="{ThemeResource MicaDarkBrush}" Padding="12, 4, 12, 4" Spacing="8" BorderThickness="0, 0, 1, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                            <Grid Margin="12, 0, 0, 0">
+                                <TextBlock FontWeight="SemiBold" FontSize="24" HorizontalAlignment="Left">Home</TextBlock>
+                                <Button HorizontalAlignment="Right" Style="{ThemeResource ToolbarButton}">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <icons:FluentSymbolIcon Symbol="List20"/>
+                                        <TextBlock Text="My feeds"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <ToggleButton Style="{ThemeResource ToolbarToggleButton}">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <icons:FluentSymbolIcon Symbol="People20"/>
+                                        <TextBlock Text="Following" FontWeight="SemiBold" Foreground="White"/>
+                                    </StackPanel>
+                                </ToggleButton>
+                                <ToggleButton Style="{ThemeResource ToolbarToggleButton}">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <icons:FluentSymbolIcon Symbol="ArrowTrending20"/>
+                                        <TextBlock Text="What's Hot" FontWeight="SemiBold" Foreground="White"/>
+                                    </StackPanel>
+                                </ToggleButton>
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid Background="{ThemeResource MicaDarkBrush}" BorderThickness="0, 0, 1, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                            <StackPanel Orientation="Horizontal" Spacing="12" Margin="12" Background="{ThemeResource MicaBlurBrush}">
+                                <PersonPicture Height="36" VerticalAlignment="Top" ProfilePicture="https://cdn.bsky.social/imgproxy/Bm2SNEXL__1t3fZgKo0Gy1SETd2TCAoVhBf8mgNo03I/rs:fill:1000:1000:1:0/plain/bafkreiaemythgtxhxcucavhj2wjf2ttaimk56dir5l47sa5uegskif7gmm@jpeg"/>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="FireCube" FontWeight="SemiBold" FontSize="16"/>
+                                        <TextBlock Text="@firecube.bsky.social" Opacity="0.7"/>
+                                        <TextBlock Text="4 hours ago" Opacity="0.7"/>
+                                    </StackPanel>
+                                    <TextBlock FontSize="16">
+                                        Lmao twitter shutdown as I was coding Bluesky client
+                                    </TextBlock>
+                                    <Grid Margin="-12, 12, 0, 0" HorizontalAlignment="Stretch" Width="500">
+                                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="Comment20"/>
+                                                    <TextBlock  Text="0"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="ArrowSync20"/>
+                                                    <TextBlock  Text="0"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Foreground="{ThemeResource HeartLinearGradientBrush}" Symbol="Heart20Filled"/>
+                                                    <TextBlock Foreground="#e96e60" Text="5"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Copy20"/>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Share20"/>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="MoreHorizontal20" Margin="0, 0, 0, 2"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Background="{ThemeResource MicaDarkBrush}" BorderThickness="0, 0, 1, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                            <StackPanel Orientation="Horizontal" Spacing="12" Margin="12" Background="{ThemeResource MicaBlurBrush}">
+                                <PersonPicture Height="36" VerticalAlignment="Top" ProfilePicture="https://cdn.bsky.social/imgproxy/Bm2SNEXL__1t3fZgKo0Gy1SETd2TCAoVhBf8mgNo03I/rs:fill:1000:1000:1:0/plain/bafkreiaemythgtxhxcucavhj2wjf2ttaimk56dir5l47sa5uegskif7gmm@jpeg"/>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="FireCube" FontWeight="SemiBold" FontSize="16"/>
+                                        <TextBlock Text="@firecube.bsky.social" Opacity="0.7"/>
+                                        <TextBlock Text="1 day ago" Opacity="0.7"/>
+                                    </StackPanel>
+                                    <TextBlock FontSize="16">
+                                        Run app with natural language processing!!!
+                                    </TextBlock>
+                                    <Border MaxWidth="500" Margin="0, 16, 0, 4" CornerRadius="8">
+                                        <Image  Source="https://cdn.bsky.social/imgproxy/Lihbf5oD8_hSgaP6w2U185NjwNxB3po989NCMXVJl10/rs:fit:1000:1000:1:0/plain/bafkreiewyjfnyrl7rwtrqj6b7aq33yp4lfnx5hqlxkqcpfob56wrg5sviy@jpeg"/>
+                                    </Border>
+                                    <Grid Margin="-12, 12, 0, 0" HorizontalAlignment="Stretch" Width="500">
+                                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="Comment20"/>
+                                                    <TextBlock Text="1"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="ArrowSync20"/>
+                                                    <TextBlock Text="2"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Foreground="{ThemeResource HeartLinearGradientBrush}" Symbol="Heart20Filled"/>
+                                                    <TextBlock Foreground="#e96e60" Text="6"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Copy20"/>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Share20"/>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="MoreHorizontal20" Margin="0, 0, 0, 2"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Background="{ThemeResource MicaDarkBrush}" BorderThickness="0, 0, 1, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                            <StackPanel Orientation="Horizontal" Spacing="12" Margin="12" >
+                                <PersonPicture Height="36" VerticalAlignment="Top" ProfilePicture="https://cdn.bsky.social/imgproxy/Bm2SNEXL__1t3fZgKo0Gy1SETd2TCAoVhBf8mgNo03I/rs:fill:1000:1000:1:0/plain/bafkreiaemythgtxhxcucavhj2wjf2ttaimk56dir5l47sa5uegskif7gmm@jpeg"/>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="FireCube" FontWeight="SemiBold" FontSize="16"/>
+                                        <TextBlock Text="@firecube.bsky.social" Opacity="0.7"/>
+                                        <TextBlock Text="24 minutes ago" Opacity="0.7"/>
+                                    </StackPanel>
+                                    <TextBlock FontSize="16" TextWrapping="WrapWholeWords" MaxWidth="450">
+                                        Twitter is ratelimited for me. This is cursed as now 10.7k people will eitheir miss out on insider news, app progress, memes or whatever reason I was followed for. I do like this new app tho as it is more cozy and I can be more free in what I say
+                                    </TextBlock>
+                                    <Grid Margin="-12, 12, 0, 0" HorizontalAlignment="Stretch" Width="500">
+                                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="Comment20"/>
+                                                    <TextBlock  Text="0"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="ArrowSync20"/>
+                                                    <TextBlock  Text="0"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Foreground="{ThemeResource HeartLinearGradientBrush}" Symbol="Heart20Filled"/>
+                                                    <TextBlock Foreground="#e96e60" Text="4"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Copy20"/>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Share20"/>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="MoreHorizontal20" Margin="0, 0, 0, 2"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>-->
+
+                    <StackPanel Grid.Column="1">
+                        <!-- <StackPanel Orientation="Horizontal" Spacing="8" Padding="4" Background="{ThemeResource MicaDarkBrush}" BorderThickness="0, 0, 1, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                           <muxc:TabView Style="{ThemeResource GlowTabView}" IsAddTabButtonVisible="False">
+                               <muxc:TabViewItem Style="{ThemeResource GlowTabViewItem}" Margin="12, 0, 12, 0">
+                                   <StackPanel Orientation="Horizontal" Spacing="8">
+                                       <PersonPicture Height="20" ProfilePicture="https://cdn.bsky.social/imgproxy/Bm2SNEXL__1t3fZgKo0Gy1SETd2TCAoVhBf8mgNo03I/rs:fill:1000:1000:1:0/plain/bafkreiaemythgtxhxcucavhj2wjf2ttaimk56dir5l47sa5uegskif7gmm@jpeg"/>
+                                       <TextBlock Text="Run app with natural..." Foreground="White"/>
+                                       <TextBlock Text="FireCube" Opacity="0.7"/>
+                                   </StackPanel>
+                               </muxc:TabViewItem>
+                               <muxc:TabViewItem Style="{ThemeResource GlowTabViewItem}">
+                                   <StackPanel Orientation="Horizontal" Spacing="8">
+                                       <icons:FluentSymbolIcon Symbol="Add20"/>
+                                       <TextBlock Text="Create new post" Foreground="White"/>
+                                   </StackPanel>
+                               </muxc:TabViewItem>
+                           </muxc:TabView>
+                       </StackPanel>-->
+                        <Grid
+                            Background="{ThemeResource MicaDarkBrush}"
+                            BorderBrush="{ThemeResource MicaBorderBrush}"
+                            BorderThickness="0,0,1,1">
+                            <StackPanel
+                                Margin="12"
+                                Background="{ThemeResource MicaBlurBrush}"
+                                Orientation="Horizontal"
+                                Spacing="12">
+                                <PersonPicture
+                                    Height="36"
+                                    VerticalAlignment="Top"
+                                    ProfilePicture="https://cdn.bsky.social/imgproxy/Bm2SNEXL__1t3fZgKo0Gy1SETd2TCAoVhBf8mgNo03I/rs:fill:1000:1000:1:0/plain/bafkreiaemythgtxhxcucavhj2wjf2ttaimk56dir5l47sa5uegskif7gmm@jpeg" />
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock
+                                            FontSize="16"
+                                            FontWeight="SemiBold"
+                                            Text="FireCube" />
+                                        <TextBlock Opacity="0.7" Text="@firecube.bsky.social" />
+                                        <TextBlock Opacity="0.7" Text="1 day ago" />
+                                    </StackPanel>
+                                    <TextBlock FontSize="16">
+                                        Run app with natural language processing!!!
+                                    </TextBlock>
+                                    <Border
+                                        MaxWidth="500"
+                                        Margin="0,16,0,12"
+                                        CornerRadius="8">
+                                        <Image Source="https://cdn.bsky.social/imgproxy/Lihbf5oD8_hSgaP6w2U185NjwNxB3po989NCMXVJl10/rs:fit:1000:1000:1:0/plain/bafkreiewyjfnyrl7rwtrqj6b7aq33yp4lfnx5hqlxkqcpfob56wrg5sviy@jpeg" />
+                                    </Border>
+                                    <Grid Width="500">
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Opacity="0.7">
+                                            June 30, 2023 at 2:25
+                                        </TextBlock>
+                                        <StackPanel
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Copy20" />
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Symbol="Share20" />
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <icons:FluentSymbolIcon Margin="0,0,0,2" Symbol="MoreHorizontal20" />
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid
+                                        Width="500"
+                                        Margin="0,4,0,0"
+                                        HorizontalAlignment="Stretch">
+                                        <StackPanel
+                                            HorizontalAlignment="Left"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="Comment20" />
+                                                    <TextBlock Text="1 comment" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Symbol="ArrowSync20" />
+                                                    <TextBlock Text="2 reposts" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{ThemeResource ToolbarButton}">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <icons:FluentSymbolIcon Foreground="{ThemeResource HeartLinearGradientBrush}" Symbol="Heart20Filled" />
+                                                    <TextBlock Foreground="#e96e60" Text="6 likes" />
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Margin="0,12,0,8">
+                                        <toolkit:DropShadowPanel
+                                            CornerRadius="8"
+                                            OffsetX="4"
+                                            OffsetY="4"
+                                            ShadowOpacity="0.4">
+                                            <TextBox
+                                                Width="400"
+                                                PlaceholderText="Type here to comment on this post"
+                                                Style="{ThemeResource GlowTextBox}" />
+                                        </toolkit:DropShadowPanel>
+                                        <icons:FluentSymbolIcon
+                                            Margin="0,0,60,2"
+                                            HorizontalAlignment="Right"
+                                            Symbol="ArrowReply20" />
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <toolkit:DropShadowPanel
+                                Margin="28,12,0,0"
+                                BlurRadius="16"
+                                Canvas.ZIndex="2"
+                                ShadowOpacity="0.23"
+                                Color="{ThemeResource SystemAccentColorLight3}">
+                                <Grid
+                                    Width="4"
+                                    Height="108"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Background="{ThemeResource AccentLinearDownGradientBrush}"
+                                    CornerRadius="2" />
+                            </toolkit:DropShadowPanel>
+                            <StackPanel
+                                Background="{ThemeResource MicaDarkBrush}"
+                                BorderBrush="{ThemeResource MicaBorderBrush}"
+                                BorderThickness="0,0,1,1">
+                                <StackPanel
+                                    Margin="12"
+                                    Background="{ThemeResource MicaBlurBrush}"
+                                    Orientation="Horizontal"
+                                    Spacing="12">
+                                    <PersonPicture
+                                        Height="36"
+                                        VerticalAlignment="Top"
+                                        ProfilePicture="https://cdn.bsky.social/imgproxy/mQ-bMoKzr8LHJ7cAlUGQzVOfUD2lUIxZh2VjtTeF_5s/rs:fill:1000:1000:1:0/plain/bafkreicvusbi3zmxpw75jhyr3hiqefuclgthz3hoha7xydypahetahkoj4@jpeg" />
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <TextBlock
+                                                FontSize="16"
+                                                FontWeight="SemiBold"
+                                                Text="omame 🐺" />
+                                            <TextBlock Opacity="0.7" Text="@omame.xyz" />
+                                            <TextBlock Opacity="0.7" Text="1 day ago" />
+                                        </StackPanel>
+                                        <TextBlock FontSize="16">
+                                            why
+                                        </TextBlock>
+                                        <Grid
+                                            Width="500"
+                                            Margin="-12,12,0,0"
+                                            HorizontalAlignment="Stretch">
+                                            <StackPanel
+                                                HorizontalAlignment="Left"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                                        <icons:FluentSymbolIcon Symbol="Comment20" />
+                                                        <TextBlock Text="2" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                                        <icons:FluentSymbolIcon Symbol="ArrowSync20" />
+                                                        <TextBlock Text="0" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                                        <icons:FluentSymbolIcon Foreground="{ThemeResource HeartLinearGradientBrush}" Symbol="Heart20Filled" />
+                                                        <TextBlock Foreground="#e96e60" Text="1" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                            <StackPanel
+                                                HorizontalAlignment="Right"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <icons:FluentSymbolIcon Margin="0,0,0,2" Symbol="MoreHorizontal20" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Margin="64,12,12,12"
+                                    Background="{ThemeResource MicaBlurBrush}"
+                                    Orientation="Horizontal"
+                                    Spacing="12">
+                                    <PersonPicture
+                                        Height="36"
+                                        VerticalAlignment="Top"
+                                        ProfilePicture="https://cdn.bsky.social/imgproxy/bK1e2f7F9RIDopoIjC74loYZCCKOiEJbP0w9pQVzihU/rs:fill:1000:1000:1:0/plain/bafkreifbbzbtsmdq3f3g4b67itezqqofyzmn47qi3xjxplbgezkyrs3aom@jpeg" />
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <TextBlock
+                                                FontSize="16"
+                                                FontWeight="SemiBold"
+                                                Text="vl1" />
+                                            <TextBlock Opacity="0.7" Text="@vl1,bsky.social" />
+                                            <TextBlock Opacity="0.7" Text="1 day ago" />
+                                        </StackPanel>
+                                        <TextBlock FontSize="16">
+                                            because they can
+                                        </TextBlock>
+                                        <Grid
+                                            Width="446"
+                                            Margin="-12,12,0,0"
+                                            HorizontalAlignment="Stretch">
+                                            <StackPanel
+                                                HorizontalAlignment="Left"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                                        <icons:FluentSymbolIcon Symbol="Comment20" />
+                                                        <TextBlock Text="0" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                                        <icons:FluentSymbolIcon Symbol="ArrowSync20" />
+                                                        <TextBlock Text="0" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                                        <icons:FluentSymbolIcon Foreground="{ThemeResource HeartLinearGradientBrush}" Symbol="Heart20Filled" />
+                                                        <TextBlock Foreground="#e96e60" Text="1" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                            <StackPanel
+                                                HorizontalAlignment="Right"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <Button Style="{ThemeResource ToolbarButton}">
+                                                    <icons:FluentSymbolIcon Margin="0,0,0,2" Symbol="MoreHorizontal20" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </muxc:NavigationView.Content>
+        </muxc:NavigationView>
+    </Grid>
+</Page>

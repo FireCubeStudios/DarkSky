@@ -1,0 +1,156 @@
+﻿<Page
+    x:Class="DarkSky.Views.PostPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ToolkitControls="using:Cube.UI.Controls.Toolkit"
+    xmlns:controls="using:DarkSky.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:glow="using:Cube.UI.Controls.Glow"
+    xmlns:icons="using:Cube.UI.Icons"
+    xmlns:local="using:DarkSky.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="49" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Padding="12,0,12,0"
+                Background="{ThemeResource MicaDarkBrush}"
+                BorderBrush="{ThemeResource MicaBorderBrush}"
+                BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PersonPicture Height="36" ProfilePicture="{x:Bind img(Post.Author.Avatar), Mode=OneWay}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Text="{x:Bind Post.Author.DisplayName, Mode=OneWay}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Opacity="0.7"
+                        Text="{x:Bind Post.Author.Handle, Mode=OneWay}" />
+                </StackPanel>
+                <Button
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Click="Button_Click"
+                    Style="{ThemeResource CloseButton}" />
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid Padding="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Spacing="12">
+                            <TextBlock
+                                FontSize="16"
+                                Text="{x:Bind Post.Record.Text, Mode=OneWay}"
+                                TextWrapping="WrapWholeWords" />
+                            <Border CornerRadius="8">
+                                <Image x:Name="PostImage" Stretch="Fill" />
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Opacity="0.7">
+                            June 30, 2024 at 2:25 (PLACEHOLDER)
+                        </TextBlock>
+                        <StackPanel
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <Button Style="{ThemeResource ToolbarButton}">
+                                <icons:FluentSymbolIcon Symbol="Copy20" />
+                            </Button>
+                            <Button Style="{ThemeResource ToolbarButton}">
+                                <icons:FluentSymbolIcon Symbol="Share20" />
+                            </Button>
+                            <Button Style="{ThemeResource ToolbarButton}">
+                                <icons:FluentSymbolIcon Margin="0,0,0,2" Symbol="MoreHorizontal20" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="24">
+                        <Button Style="{ThemeResource ToolbarButton}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <icons:FluentSymbolIcon Symbol="Comment20" />
+                                <TextBlock Text="{x:Bind Post.ReplyCount, Mode=OneWay}" />
+                                <TextBlock Text="comments" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{ThemeResource ToolbarButton}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <icons:FluentSymbolIcon Symbol="ArrowSync20" />
+                                <TextBlock Text="{x:Bind Post.RepostCount, Mode=OneWay}" />
+                                <TextBlock Text="reposts" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Like" Style="{ThemeResource ToolbarButton}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <icons:FluentSymbolIcon Symbol="Heart20" />
+                                <TextBlock Text="{x:Bind Post.LikeCount, Mode=OneWay}" />
+                                <TextBlock Text="likes" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Spacing="12">
+                        <MenuFlyoutSeparator />
+                        <TextBox AcceptsReturn="True" PlaceholderText="Write your reply" />
+                        <Grid>
+                            <StackPanel
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <Button Style="{ThemeResource ToolbarButton}">
+                                    <icons:FluentSymbolIcon Symbol="Image20" />
+                                </Button>
+                                <Button Style="{ThemeResource ToolbarButton}">
+                                    <icons:FluentSymbolIcon Symbol="Video20" />
+                                </Button>
+                                <Button Style="{ThemeResource ToolbarButton}">
+                                    <icons:FluentSymbolIcon Symbol="Emoji20" />
+                                </Button>
+                            </StackPanel>
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <HyperlinkButton Content="English" />
+                                <ToolkitControls:DropShadowPanel
+                                    CornerRadius="8"
+                                    OffsetX="4"
+                                    OffsetY="4"
+                                    ShadowOpacity="0.4"
+                                    Color="Black">
+                                    <TextBlock VerticalAlignment="Center" Text="300" />
+                                </ToolkitControls:DropShadowPanel>
+                                <muxc:ProgressRing IsIndeterminate="False" Value="60" />
+                            </StackPanel>
+                        </Grid>
+                        <MenuFlyoutSeparator />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>
