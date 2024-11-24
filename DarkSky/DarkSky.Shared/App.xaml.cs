@@ -1,61 +1,87 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DarkSky.Services;
+using DarkSky.ViewModels;
+using DarkSky.Views;
+using DarkSky.Services;
+using FishyFlip;
+using FishyFlip.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Application = Windows.UI.Xaml.Application;
 
 namespace DarkSky
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App : Application
+    sealed partial class App : Application
     {
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            services.AddSingleton<ICredentialService, CredentialService>();
+            services.AddSingleton<ISettingsService, SettingsService>();
+            services.AddSingleton<ATProtoService>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<ProfileViewModel>();
+            services.AddTransient<HomeFeedViewModel>();
+
+            NavigationService navigationService = new();
+            navigationService.RegisterViewForViewModel(typeof(MainViewModel), typeof(MainPage));
+            navigationService.RegisterViewForViewModel(typeof(LoginViewModel), typeof(LoginPage));
+            services.AddSingleton<INavigationService>(navigationService);
+
+            return services.BuildServiceProvider();
+        }
+        /// <summary>
+        /// Gets the current <see cref="App"/> instance in use
+        /// </summary>
+        public new static App Current => (App)Application.Current;
+
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider Services { get; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            InitializeLogging();
-
+            Services = ConfigureServices();
             this.InitializeComponent();
-
-#if HAS_UNO || NETFX_CORE
-			this.Suspending += OnSuspending;
-#endif
+            this.Suspending += OnSuspending;
+            UnhandledException += OnUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnUnobservedException;
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
         }
-
-        /// <summary>
-        /// Gets the main window of the app.
-        /// </summary>
-        internal static Window MainWindow { get; private set; }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        /// <param name="e">Details about the launch request and process.</param>
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-#if DEBUG
-			if (System.Diagnostics.Debugger.IsAttached)
-			{
-				// this.DebugSettings.EnableFrameRateCounter = true;
-			}
-#endif
-
-#if NET6_0_OR_GREATER && WINDOWS && !HAS_UNO
-			MainWindow = new Window();
-			MainWindow.Activate();
-#else
-            MainWindow = Windows.UI.Xaml.Window.Current;
-#endif
-
-            var rootFrame = MainWindow.Content as Frame;
+            Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -64,30 +90,24 @@ namespace DarkSky
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    // TODO: Load state from previously suspended application
+                    //TODO: Load state from previously suspended application
                 }
 
                 // Place the frame in the current Window
-                MainWindow.Content = rootFrame;
+                Window.Current.Content = rootFrame;
             }
 
-#if !(NET6_0_OR_GREATER && WINDOWS)
-            if (args.PrelaunchActivated == false)
-#endif
+            if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
                 {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(MainPage), args.Arguments);
+                    // ASSUMES NOT LOGGED IN DUE TO NO CREDENTIALS STORED
+                    var a = App.Current.Services.GetService<ATProtoService>();
                 }
                 // Ensure the current window is active
-                MainWindow.Activate();
+                Window.Current.Activate();
             }
         }
 
@@ -98,7 +118,7 @@ namespace DarkSky
         /// <param name="e">Details about the navigation failure</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new InvalidOperationException($"Failed to load {e.SourcePageType.FullName}: {e.Exception}");
+            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
         /// <summary>
@@ -115,73 +135,21 @@ namespace DarkSky
             deferral.Complete();
         }
 
-        /// <summary>
-        /// Configures global Uno Platform logging
-        /// </summary>
-        private static void InitializeLogging()
+        private static void OnUnobservedException(object? sender, UnobservedTaskExceptionEventArgs e) => e.SetObserved();
+
+        private static async void OnUnhandledException(object? sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-#if DEBUG
-			// Logging is disabled by default for release builds, as it incurs a significant
-			// initialization cost from Microsoft.Extensions.Logging setup. If startup performance
-			// is a concern for your application, keep this disabled. If you're running on web or
-			// desktop targets, you can use url or command line parameters to enable it.
-			//
-			// For more performance documentation: https://platform.uno/docs/articles/Uno-UI-Performance.html
+            await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
+            {
+                Title = "Unhandled exception",
+                Content = e.Message,
+                CloseButtonText = "Close"
+            }
+                .ShowAsync();
+        }
 
-			var factory = LoggerFactory.Create(builder =>
-			{
-#if __WASM__
-				builder.AddProvider(new global::Uno.Extensions.Logging.WebAssembly.WebAssemblyConsoleLoggerProvider());
-#elif __IOS__ && !__MACCATALYST__
-				builder.AddProvider(new global::Uno.Extensions.Logging.OSLogLoggerProvider());
-#elif NETFX_CORE
-				builder.AddDebug();
-#else
-				builder.AddConsole();
-#endif
-
-				// Exclude logs below this level
-				builder.SetMinimumLevel(LogLevel.Information);
-
-				// Default filters for Uno Platform namespaces
-				builder.AddFilter("Uno", LogLevel.Warning);
-				builder.AddFilter("Windows", LogLevel.Warning);
-				builder.AddFilter("Microsoft", LogLevel.Warning);
-
-				// Generic Xaml events
-				// builder.AddFilter("Windows.UI.Xaml", LogLevel.Debug );
-				// builder.AddFilter("Windows.UI.Xaml.VisualStateGroup", LogLevel.Debug );
-				// builder.AddFilter("Windows.UI.Xaml.StateTriggerBase", LogLevel.Debug );
-				// builder.AddFilter("Windows.UI.Xaml.UIElement", LogLevel.Debug );
-				// builder.AddFilter("Windows.UI.Xaml.FrameworkElement", LogLevel.Trace );
-
-				// Layouter specific messages
-				// builder.AddFilter("Windows.UI.Xaml.Controls", LogLevel.Debug );
-				// builder.AddFilter("Windows.UI.Xaml.Controls.Layouter", LogLevel.Debug );
-				// builder.AddFilter("Windows.UI.Xaml.Controls.Panel", LogLevel.Debug );
-
-				// builder.AddFilter("Windows.Storage", LogLevel.Debug );
-
-				// Binding related messages
-				// builder.AddFilter("Windows.UI.Xaml.Data", LogLevel.Debug );
-				// builder.AddFilter("Windows.UI.Xaml.Data", LogLevel.Debug );
-
-				// Binder memory references tracking
-				// builder.AddFilter("Uno.UI.DataBinding.BinderReferenceHolder", LogLevel.Debug );
-
-				// RemoteControl and HotReload related
-				// builder.AddFilter("Uno.UI.RemoteControl", LogLevel.Information);
-
-				// Debug JS interop
-				// builder.AddFilter("Uno.Foundation.WebAssemblyRuntime", LogLevel.Debug );
-			});
-
-			global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory = factory;
-
-#if HAS_UNO
-			global::Uno.UI.Adapter.Microsoft.Extensions.Logging.LoggingAdapter.Initialize();
-#endif
-#endif
+        private void CurrentDomain_FirstChanceException(object? sender, FirstChanceExceptionEventArgs e)
+        {
         }
     }
 }
