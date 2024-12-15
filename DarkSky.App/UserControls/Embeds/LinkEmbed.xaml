@@ -1,0 +1,25 @@
+<UserControl
+    x:Class="DarkSky.UserControls.Embeds.LinkEmbed"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:DarkSky.UserControls.Embeds"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+
+    <Button Click="Button_Click" Padding="0" Style="{ThemeResource CardButton}" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}" BorderThickness="1" CornerRadius="8">
+       <Grid Background="{ThemeResource MicaBlurBrush}" Padding="12">
+            <StackPanel Spacing="4">
+                <Border CornerRadius="8" MaxHeight="300" Margin="8">
+                    <Image x:Name="EmbedImage" Visibility="Collapsed" Stretch="UniformToFill"/>
+                </Border>
+                <TextBlock x:Name="Title" FontWeight="SemiBold" TextWrapping="WrapWholeWords"/>
+                <TextBlock Text="{x:Bind Embed.Description, Mode=OneWay}" TextWrapping="WrapWholeWords"/>
+                <MenuFlyoutSeparator/>
+                <TextBlock Text="{x:Bind Embed.Uri, Mode=OneWay}" FontSize="12" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+        </Grid>
+    </Button>
+</UserControl>

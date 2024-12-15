@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="DarkSky.Views.CreatePostPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ToolkitControls="using:Cube.UI.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:glow="using:Cube.UI.Controls.Glow"
+    xmlns:icons="using:Cube.UI.Icons"
+    xmlns:local="using:DarkSky.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:DarkSky.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Grid x:Name="Root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="49" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            Padding="12,0,12,0"
+            Background="{ThemeResource MicaDarkBrush}"
+            BorderBrush="{ThemeResource MicaBorderBrush}"
+            BorderThickness="0,0,0,1">
+            <TextBlock
+                VerticalAlignment="Center"
+                FontWeight="SemiBold"
+                Text="Create a new Post" />
+            <Button
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Click="Button_Click"
+                Style="{ThemeResource CloseButton}" />
+        </Grid>
+        <Grid Grid.Row="1" Padding="24">
+            <StackPanel Spacing="12">
+                <controls:RichPostTextBox x:Name="PostTextBox" Height="300"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" IsEnabled="False">
+                        Save as draft
+                    </Button>
+                    <Button
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        Click="Button_Click_1"
+                        Style="{ThemeResource AccentButtonStyle}">
+                        Post
+                    </Button>
+                </Grid>
+                <StackPanel
+            Padding="32" Visibility="Collapsed"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="8">
+                    <TextBlock
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                Text="More post features are coming soon.." />
+                    <TextBlock
+     HorizontalTextAlignment="Center"
+     Text="There is currently support for basic text posts. Image/video uploading, hastags, mentions are coming next!"
+     TextWrapping="WrapWholeWords" />
+                    <TextBlock
+                HorizontalTextAlignment="Center"
+                Text="The app is being built up rapidly. Follow the progress in BlueSky, GitHub or Discord."
+                TextWrapping="WrapWholeWords" />
+                    <HyperlinkButton HorizontalAlignment="Center" Content="See progress in BlueSky" NavigateUri="https://bsky.app/profile/firecube.bsky.social"/>
+                    <HyperlinkButton HorizontalAlignment="Center" Content="Send feedback in GitHub" NavigateUri="https://github.com/FireCubeStudios/DarkSky"/>
+                    <HyperlinkButton HorizontalAlignment="Center" Content="Join the Discord" NavigateUri="https://discord.com/invite/3WYcKat"/>
+                </StackPanel>
+                <muxc:Expander Visibility="Collapsed"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    Background="{ThemeResource LayerFillColorDefaultBrush}">
+                    <muxc:Expander.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <icons:FluentSymbolIcon Symbol="Settings24" />
+                            <TextBlock Margin="12,1,0,0" FontWeight="SemiBold">Advanced post settings</TextBlock>
+                        </StackPanel>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <Grid />
+                    </muxc:Expander.Content>
+                </muxc:Expander>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,222 @@
+﻿<Page
+    x:Class="DarkSky.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:glow="using:Cube.UI.Controls.Glow"
+    xmlns:icons="using:Cube.UI.Icons"
+    xmlns:local="using:DarkSky"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls" xmlns:helpers="using:DarkSky.Helpers"
+    SizeChanged="Page_SizeChanged"
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource MicaDeepBrush}">
+        <!-- Triggered when window gets big-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideState">
+                    <VisualState.Setters>
+                        <Setter Target="AppNavigation.PaneDisplayMode" Value="LeftCompact"/>
+                        <Setter Target="ProfileText.Visibility" Value="Visible"/>
+                        <Setter Target="NavigationContent.Margin" Value="0, 0, 8, 8"/>
+                        <Setter Target="PrimaryPaneToggle.Visibility" Value="c"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.Setters>
+                        <Setter Target="AppNavigation.PaneDisplayMode" Value="Top"/>
+                        <Setter Target="ProfileText.Visibility" Value="Collapsed"/>
+                        <Setter Target="NavigationContent.Margin" Value="8"/>
+                        <Setter Target="PrimaryPaneToggle.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Border
+            x:Name="AppTitleBar"
+            Height="48"
+            Padding="12,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <StackPanel Orientation="Horizontal">
+                <Image
+                    x:Name="AppFontIcon"
+                    Width="16"
+                    Height="16"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Source="Assets/Square44x44Logo.png" />
+                <TextBlock
+                    x:Name="AppTitle"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Darksky" />
+                <TextBlock
+                    Margin="4,0,0,0"
+                    VerticalAlignment="Center"
+                    Opacity="0.4"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="Insider"/>
+            </StackPanel>
+        </Border>
+        <AutoSuggestBox x:Name="SearchBox" Visibility="Collapsed"
+            Width="384"
+            Height="32"
+            Margin="0,8,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Canvas.ZIndex="2"
+            PlaceholderText="Search...">
+            <AutoSuggestBox.QueryIcon>
+                <icons:FluentIconElement Symbol="Search20" />
+            </AutoSuggestBox.QueryIcon>
+        </AutoSuggestBox>
+        <ToggleButton x:Name="PrimaryPaneToggle" IsChecked="{x:Bind PrimaryPaneCollapsed, Mode=TwoWay}"
+                      Click="PrimaryPaneToggle_Click" Visibility="Visible" Height="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 8, 200, 0" Canvas.ZIndex="2" Style="{ThemeResource ToolbarToggleButton}">
+           <!-- <Grid Visibility="Collapsed"> bug not working
+                <icons:FluentSymbolIcon x:Name="Collapsed" Symbol="ChevronLeft20" x:Load="{x:Bind PrimaryPaneCollapsed, Mode=OneWay}" Foreground="{ThemeResource HvidSortBrush}"/>
+                <icons:FluentSymbolIcon x:Name="Expanded" Symbol="ChevronRight20" x:Load="{x:Bind helpers:UIHelper.invert(PrimaryPaneCollapsed), Mode=OneWay}" Margin="0, 0, 3, 0" Foreground="{ThemeResource HvidSortBrush}"/>
+            </Grid>-->
+            <icons:FluentSymbolIcon Symbol="PaneClose20" RenderTransformOrigin="0.5, 0.5" Foreground="{ThemeResource HvidSortBrush}">
+                <icons:FluentSymbolIcon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="180"/>
+                        <TranslateTransform Y="2" X="2"/>
+                    </TransformGroup>
+                </icons:FluentSymbolIcon.RenderTransform>
+            </icons:FluentSymbolIcon>
+        </ToggleButton>
+        <muxc:InfoBar
+            x:Name="Errorbar"
+            Canvas.ZIndex="5"
+            VerticalAlignment="Top"
+            Margin="48"
+    IsOpen="False"
+    Severity="Error"/>
+        <muxc:NavigationView
+            x:Name="AppNavigation"
+            Grid.Row="1"
+            Margin="0,48,0,0"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="True"
+            IsBackEnabled="False"
+            IsPaneOpen="True"
+            IsPaneToggleButtonVisible="False"
+            IsTitleBarAutoPaddingEnabled="False"
+            ItemInvoked="AppNavigation_ItemInvoked"
+            OpenPaneLength="72"
+            CompactPaneLength="72"
+            PaneDisplayMode="Left"
+            SelectionChanged="AppNavigation_SelectionChanged"
+            Style="{ThemeResource StoreNavigationViewStyle}">
+
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem Content="Home" Tag="Home">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Home24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Notifications" Tag="Notifications">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Alert24" />
+                    </muxc:NavigationViewItem.Icon>
+                    <muxc:NavigationViewItem.InfoBadge>
+                        <muxc:InfoBadge Style="{StaticResource AttentionDotInfoBadgeStyle}" />
+                    </muxc:NavigationViewItem.InfoBadge>
+
+                    <!-- <Grid>
+                        <toolkit:DropShadowPanel Margin="24, 0, 0, 0" ShadowOpacity="0.23" BlurRadius="16" Color="{ThemeResource SystemAccentColorLight3}">
+                            <Grid Background="{ThemeResource RadioBrush}" Height="16" Width="16" VerticalAlignment="Center" HorizontalAlignment="Stretch" CornerRadius="100">
+                                <TextBlock FontWeight="SemiBold" Foreground="Black" Margin="0, 0, 0, 1" HorizontalAlignment="Center" VerticalAlignment="Center">0</TextBlock>
+                            </Grid>
+                        </toolkit:DropShadowPanel>
+                    </Grid>-->
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Search">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Search24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Chat" Visibility="Collapsed">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Chat24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Feeds" Visibility="Collapsed">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="BroadActivityFeed24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Content="Lists">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="List24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <!-- <muxc:NavigationViewItem Content="Bookmarks" Tag="Bookmarks">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Symbol="Bookmark24" Margin="0, 0, 4, 0"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>-->
+
+            </muxc:NavigationView.MenuItems>
+
+            <muxc:NavigationView.FooterMenuItems>
+                <muxc:NavigationViewItem
+                    Content="New Post"
+                    SelectsOnInvoked="False"
+                    Tag="New">
+                    <muxc:NavigationViewItem.Icon>
+                        <icons:FluentIconElement Margin="0,0,4,0" Symbol="AddSquare24" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Style="{ThemeResource ContentNavigatonViewItem}" Tag="Profile">
+                    <StackPanel>
+                        <PersonPicture Height="36" ProfilePicture="{x:Bind img(ViewModel.CurrentProfile.Avatar), Mode=OneWay}" />
+                        <TextBlock x:Name="ProfileText" Text="{x:Bind ViewModel.CurrentProfile.DisplayName, Mode=OneWay}" />
+                    </StackPanel>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.FooterMenuItems>
+
+            <muxc:NavigationView.Content>
+                <Grid x:Name="NavigationContent" Margin="0, 0, 8, 8" CornerRadius="8">
+                    <Grid>
+                        <Grid x:Name="DualPane" Visibility="Visible" ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="460"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid x:Name="PrimaryPaneContainer" Canvas.ZIndex="1" Grid.ColumnSpan="{x:Bind BoolToColumnSpan(PrimaryPaneCollapsed), Mode=OneWay}" Grid.Column="0" Background="{ThemeResource MicaDarkerBrush}" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                                <Grid Background="{ThemeResource MicaBlurBrush}">
+                                    <Frame x:Name="PrimaryPane"/>
+                                </Grid>
+                            </Grid>
+                            <Grid x:Name="SecondaryPaneContainer" Canvas.ZIndex="0" Visibility="Collapsed" Grid.Column="1" Grid.ColumnSpan="2" Background="{ThemeResource MicaDarkerBrush}" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                                <Grid Background="{ThemeResource MicaBlurBrush}">
+                                    <Frame x:Name="SecondaryPane"/>
+                                </Grid>
+                            </Grid>
+                            <toolkit:GridSplitter
+                                x:Name="PaneSplitter"
+                                Grid.Column="1" x:Load="False"
+                                Width="16"
+                                HorizontalAlignment="Left"
+                                ResizeBehavior="BasedOnAlignment"
+                                ResizeDirection="Auto">
+                                <toolkit:GridSplitter.RenderTransform>
+                                    <TranslateTransform X="-12" />
+                                </toolkit:GridSplitter.RenderTransform>
+                            </toolkit:GridSplitter>
+
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </muxc:NavigationView.Content>
+        </muxc:NavigationView>
+    </Grid>
+</Page>

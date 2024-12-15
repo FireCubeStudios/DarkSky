@@ -1,0 +1,177 @@
+﻿<Page
+    x:Class="DarkSky.Views.PostPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ToolkitControls="using:Cube.UI.Controls.Toolkit"
+    xmlns:controls="using:DarkSky.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:glow="using:Cube.UI.Controls.Glow"
+    xmlns:icons="using:Cube.UI.Icons"
+    xmlns:local="using:DarkSky.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:helpers="using:DarkSky.Helpers" xmlns:embeds="using:DarkSky.UserControls.Embeds" xmlns:controls1="using:DarkSky.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="49" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Padding="0,0,12,0"
+                Background="{ThemeResource MicaDarkBrush}"
+                BorderBrush="{ThemeResource MicaBorderBrush}"
+                BorderThickness="0,0,0,1">
+                <HyperlinkButton Click="HyperlinkButton_Click" Foreground="{ThemeResource HvidSortBrush}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <PersonPicture Height="36" ProfilePicture="{x:Bind helpers:UIHelper.Img(Post.InternalPost.Author.Avatar), Mode=OneWay}" />
+                        <TextBlock
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="{x:Bind Post.InternalPost.Author.DisplayName, Mode=OneWay}" />
+                        <TextBlock
+                   VerticalAlignment="Center"
+                   Opacity="0.7"
+                   Text="{x:Bind Post.InternalPost.Author.Handle, Mode=OneWay}" />
+                    </StackPanel>
+                </HyperlinkButton>
+                <Button
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Click="Button_Click"
+                    Style="{ThemeResource CloseButton}" />
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid Padding="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Spacing="12">
+                            <controls1:RichFacetTextBlock FontSize="16"
+                                RichText="{x:Bind Post.RichText, Mode=OneWay}"
+                                IsTextSelectionEnabled="True" />
+                            <embeds:EmbedControl x:Name="EmbedContent"
+                                x:Load="{x:Bind helpers:UIHelper.none(Post.InternalPost.Embed), Mode=OneWay}"
+                                Post="{x:Bind Post, Mode=OneWay}"
+                                HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Opacity="0.7" Text="{x:Bind helpers:UIHelper.FormatDate(Post.CreatedAt), Mode=OneWay}"/>
+                        <StackPanel
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+                                <icons:FluentSymbolIcon Symbol="Copy20" />
+                            </Button>
+                            <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+                                <icons:FluentSymbolIcon Symbol="Share20" />
+                            </Button>
+                            <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+                                <icons:FluentSymbolIcon Margin="0,0,0,2" Symbol="MoreHorizontal20" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="24">
+                        <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False"> <!--IsEnabled="{x:Bind Post.CanReply, Mode=OneWay}">-->
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <icons:FluentSymbolIcon Symbol="Comment20" />
+                                <TextBlock Text="{x:Bind Post.ReplyCount, Mode=OneWay}" />
+                                <TextBlock Text="comments" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{ThemeResource ToolbarButton}" Command="{x:Bind Post.RepostCommand, Mode=OneWay}">
+                            <Grid>
+                                <StackPanel x:Name="UnReposted" x:Load="{x:Bind helpers:UIHelper.invert(Post.IsReposted), Mode=OneWay}" Orientation="Horizontal" Spacing="8">
+                                    <icons:FluentSymbolIcon Symbol="ArrowRepeatAll20" />
+                                    <TextBlock Text="{x:Bind Post.RepostCount, Mode=OneWay}" />
+                                    <TextBlock Text="reposts" />
+                                </StackPanel>
+                                <StackPanel x:Name="Reposted" x:Load="{x:Bind Post.IsReposted, Mode=OneWay}" Orientation="Horizontal" Spacing="8">
+                                    <icons:FluentSymbolIcon Foreground="{ThemeResource ResponsiveAccentBrush2}" Symbol="ArrowRepeatAll20" />
+                                    <TextBlock Foreground="{ThemeResource ResponsiveAccentBrush2}" Text="{x:Bind Post.RepostCount, Mode=OneWay}" />
+                                    <TextBlock Foreground="{ThemeResource ResponsiveAccentBrush2}" Text="reposts" />
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <icons:FluentSymbolIcon Symbol="TextQuote20" />
+                                <TextBlock Text="{x:Bind Post.QuoteCount, Mode=OneWay}" />
+                                <TextBlock Text="quotes" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="Like" Style="{ThemeResource ToolbarButton}" Command="{x:Bind Post.LikeCommand, Mode=OneWay}">
+                            <Grid>
+                                <StackPanel x:Name="UnLiked" x:Load="{x:Bind helpers:UIHelper.invert(Post.IsLiked), Mode=OneWay}" Orientation="Horizontal" Spacing="8">
+                                    <icons:FluentSymbolIcon Symbol="Heart20" />
+                                    <TextBlock Text="{x:Bind Post.LikeCount, Mode=OneWay}" />
+                                    <TextBlock Text="likes" />
+                                </StackPanel>
+                                <StackPanel x:Name="Liked" x:Load="{x:Bind Post.IsLiked, Mode=OneWay}" Orientation="Horizontal" Spacing="8">
+                                    <icons:FluentSymbolIcon Foreground="{ThemeResource HeartLinearGradientBrush}" Symbol="Heart20Filled" />
+                                    <TextBlock Foreground="#e96e60" Text="{x:Bind Post.LikeCount, Mode=OneWay}" />
+                                    <TextBlock Foreground="#e96e60" Text="likes" />
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Spacing="12" Visibility="Collapsed">
+                        <MenuFlyoutSeparator />
+                        <TextBox AcceptsReturn="True" PlaceholderText="Write your reply" />
+                        <Grid>
+                            <StackPanel
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <Button Style="{ThemeResource ToolbarButton}">
+                                    <icons:FluentSymbolIcon Symbol="Image20" />
+                                </Button>
+                                <Button Style="{ThemeResource ToolbarButton}">
+                                    <icons:FluentSymbolIcon Symbol="Video20" />
+                                </Button>
+                                <Button Style="{ThemeResource ToolbarButton}">
+                                    <icons:FluentSymbolIcon Symbol="Emoji20" />
+                                </Button>
+                            </StackPanel>
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <HyperlinkButton Content="English" />
+                                <ToolkitControls:DropShadowPanel
+                                    CornerRadius="8"
+                                    OffsetX="4"
+                                    OffsetY="4"
+                                    ShadowOpacity="0.4"
+                                    Color="Black">
+                                    <TextBlock VerticalAlignment="Center" Text="300" />
+                                </ToolkitControls:DropShadowPanel>
+                                <muxc:ProgressRing IsIndeterminate="False" Value="60" />
+                            </StackPanel>
+                        </Grid>
+                        <MenuFlyoutSeparator />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>

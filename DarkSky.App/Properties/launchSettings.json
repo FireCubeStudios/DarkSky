@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DarkSky (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "DarkSky (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
