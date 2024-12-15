@@ -125,6 +125,8 @@
     <Compile Include="Animations\RefreshAnimation.cs" />
     <Compile Include="Animations\SketchAnimation.cs" />
     <Compile Include="Brushes\BackdropKind.cs" />
+    <Compile Include="Brushes\brushes\BackdropKind.cs" />
+    <Compile Include="Brushes\brushes\MicaAltBrush.cs" />
     <Compile Include="Brushes\MicaAltBrush.cs" />
     <Compile Include="Buttons\AnimatedButton.cs" />
     <Compile Include="Buttons\FlyoutButton.cs" />
@@ -204,6 +206,18 @@
     <Page Include="Brushes\ApplicationBrushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Brushes\brushes\ApplicationBrushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Brushes\brushes\MicaBrushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Brushes\brushes\StyleBrushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Brushes\MicaBrushes.xaml">
       <SubType>Designer</SubType>

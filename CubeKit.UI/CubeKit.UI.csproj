@@ -8,22 +8,45 @@
     <UseRidGraph>true</UseRidGraph>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Brushes\MicaAltBrush.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Brushes\MicaBrushes.xaml" />
     <None Remove="Controls\Settings\SettingsBlockControl.xaml" />
     <None Remove="Controls\Settings\SettingsDisplayControl.xaml" />
     <None Remove="Controls\Toolkit\DropShadowPanel.xaml" />
     <None Remove="Materials\BloomView.xaml" />
     <None Remove="Themes\Generic.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Remove="Brushes\MicaBrushes.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
       <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
+      <PackageReference Include="MicaForUWP" Version="0.2.12" />
       <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
       <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Brushes\ApplicationBrushes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Brushes\brushes\ApplicationBrushes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Brushes\brushes\MicaBrushes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Brushes\brushes\StyleBrushes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Brushes\StyleBrushes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\Settings\SettingsDisplayControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
