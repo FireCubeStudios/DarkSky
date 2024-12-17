@@ -119,11 +119,11 @@ namespace DarkSky
 				{
 					if (CredentialService.Count() == 0)
 					{
-						rootFrame.Navigate(typeof(LoginPage), e.Arguments);
+						rootFrame.Navigate(typeof(NEWLoginPage), e.Arguments);
 					}
 					else // login, initialise DI, go to mainpage
 					{
-						rootFrame.Navigate(typeof(MainPage), e.Arguments);
+						rootFrame.Navigate(typeof(NEWLoginPage), e.Arguments);
 					}
 				}
                 // Ensure the current window is active
