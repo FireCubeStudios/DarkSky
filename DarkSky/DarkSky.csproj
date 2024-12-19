@@ -139,7 +139,12 @@
     <Compile Include="Controls\RichPostTextBox.xaml.cs">
       <DependentUpon>RichPostTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SetttingsHelper.cs" />
     <Compile Include="Helpers\SQLFileHelper.cs" />
+    <Compile Include="NEWLoginPage.xaml.cs">
+      <DependentUpon>NEWLoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\KeyService.cs" />
     <Compile Include="Templates\CursorItemSelector.cs" />
     <Compile Include="Templates\CursorItemTemplates.xaml.cs">
       <DependentUpon>CursorItemTemplates.xaml</DependentUpon>
@@ -230,6 +235,7 @@
     <Content Include="Assets\LargeTile.scale-150.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\OOBE\OOBE1.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
     <Content Include="Assets\SmallTile.scale-150.png" />
@@ -294,6 +300,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RichPostTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NEWLoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

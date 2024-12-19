@@ -12,7 +12,6 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
     <Grid>
         <Grid>
             <Grid.RowDefinitions>

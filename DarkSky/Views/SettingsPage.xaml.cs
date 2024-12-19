@@ -38,7 +38,7 @@ namespace DarkSky.Views
 			ATProtoService atProtoService = App.Current.Services.GetService<ATProtoService>();
 			ICredentialService credentialService = App.Current.Services.GetService<ICredentialService>();
 			credentialService.RemoveCredentials();
-			((Frame)Window.Current.Content).Navigate(typeof(LoginPage));
+			((Frame)Window.Current.Content).Navigate(typeof(NEWLoginPage));
 		}
     }
 }

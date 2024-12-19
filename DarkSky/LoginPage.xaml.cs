@@ -52,7 +52,7 @@ namespace DarkSky
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			LoginBar.Visibility = Visibility.Visible;
+		/*	LoginBar.Visibility = Visibility.Visible;
 			ATProtoService proto = new();
 			CredentialService credentialService = new CredentialService();
 			await proto.LoginAsync(UsernameBox.Text, PasswordBox.Password);
@@ -66,7 +66,7 @@ namespace DarkSky
 				protoDI.ATProtocolClient = proto.ATProtocolClient;
 				((Frame)Window.Current.Content).Navigate(typeof(MainPage));
 			}
-			LoginBar.Visibility = Visibility.Collapsed;
+			LoginBar.Visibility = Visibility.Collapsed;*/
 		}
 	}
 }

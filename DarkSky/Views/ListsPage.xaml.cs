@@ -31,14 +31,7 @@ namespace DarkSky.Views
 		public ListsPage()
 		{
 			this.InitializeComponent();
-			_ = ViewModel.ListsSource.GetMoreItemsAsync();
-		}
-
-		private void ListsList_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			WeakReferenceMessenger.Default.Send(
-				new SecondaryNavigationMessage(
-					new SecondaryNavigation(typeof(ListViewModel), e.ClickedItem as ListViewModel)));
+			_ = ViewModel.ListsSource?.GetMoreItemsAsync();
 		}
 	}
 }

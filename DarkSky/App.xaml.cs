@@ -26,6 +26,9 @@ using Windows.UI.Xaml.Navigation;
 using DarkSky.Core.Services;
 using DarkSky.Core.Classes;
 using DarkSky.Core.Services.Interfaces;
+using Windows.Storage;
+using FishyFlip.Events;
+using System.Net;
 
 namespace DarkSky
 {
@@ -41,6 +44,7 @@ namespace DarkSky
 			services.AddSingleton<ICredentialService, CredentialService>();
 			services.AddSingleton<ISettingsService, SettingsService>();
 			services.AddSingleton<IAccountService, AccountService>();
+			services.AddSingleton<IKeyService, KeyService>();
 			services.AddSingleton<ATProtoService>();
 			services.AddTransient<LoginViewModel>();
 			services.AddTransient<MainViewModel>();
@@ -66,20 +70,35 @@ namespace DarkSky
 		/// </summary>
 		public IServiceProvider Services { get; set; }
 
+		public ApplicationDataContainer Settings = ApplicationData.Current.LocalSettings;
+
 		private CredentialService CredentialService = new CredentialService();
+
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
 		/// </summary>
 		public App()
-        {
+		{
 			this.InitializeComponent();
+			App.Current.Services = ServiceContainer.Services = ConfigureServices();
 			if (CredentialService.Count() != 0)
 			{
-				App.Current.Services = ServiceContainer.Services = ConfigureServices();
 				Credential credentials = CredentialService.GetCredential();
 				ATProtoService proto = Services.GetService<ATProtoService>();
-				_ = proto.LoginAsync(credentials.username, credentials.password);
+				if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
+				{
+					_ = proto.LoginAsync(credentials.username, credentials.password);
+				}
+				else { // login with refresh token if it is available
+						_ = proto.RefreshLoginAsync(
+							(string)Settings.Values["v1_previous_did"],
+							(string)Settings.Values["v1_previous_handle"],
+							(string)Settings.Values["v1_previous_accessJWT"],
+							credentials.token,
+							(string)Settings.Values["v1_previous_pds"]
+							);
+				}
 			}
 			this.Suspending += OnSuspending;
 			UnhandledException += OnUnhandledException;
@@ -119,7 +138,7 @@ namespace DarkSky
 				{
 					if (CredentialService.Count() == 0)
 					{
-						rootFrame.Navigate(typeof(LoginPage), e.Arguments);
+						rootFrame.Navigate(typeof(NEWLoginPage), e.Arguments);
 					}
 					else // login, initialise DI, go to mainpage
 					{
@@ -159,13 +178,17 @@ namespace DarkSky
 
 		private static async void OnUnhandledException(object? sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
 		{
-			await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
+			try
+			{
+				await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
 				{
 					Title = "Unhandled exception",
 					Content = e.Message,
 					CloseButtonText = "Close"
 				}
-				.ShowAsync();
+					.ShowAsync();
+			}
+			catch { }
         }
 
 		private void CurrentDomain_FirstChanceException(object? sender, FirstChanceExceptionEventArgs e)
