@@ -26,6 +26,9 @@ using Windows.UI.Xaml.Navigation;
 using DarkSky.Core.Services;
 using DarkSky.Core.Classes;
 using DarkSky.Core.Services.Interfaces;
+using Windows.Storage;
+using FishyFlip.Events;
+using System.Net;
 
 namespace DarkSky
 {
@@ -66,7 +69,10 @@ namespace DarkSky
 		/// </summary>
 		public IServiceProvider Services { get; set; }
 
+		public ApplicationDataContainer Settings = ApplicationData.Current.LocalSettings;
+
 		private CredentialService CredentialService = new CredentialService();
+
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
@@ -77,14 +83,39 @@ namespace DarkSky
 			if (CredentialService.Count() != 0)
 			{
 				App.Current.Services = ServiceContainer.Services = ConfigureServices();
-				Credential credentials = CredentialService.GetCredential();
-				ATProtoService proto = Services.GetService<ATProtoService>();
-				_ = proto.LoginAsync(credentials.username, credentials.password);
+				if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
+				{
+					Credential credentials = CredentialService.GetCredential();
+					ATProtoService proto = Services.GetService<ATProtoService>();
+					proto.ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
+					_ = proto.LoginAsync(credentials.username, credentials.password);
+				}
+				else
+				{
+					ATProtoService proto = Services.GetService<ATProtoService>();
+					Credential credentials = CredentialService.GetCredential();
+					proto.ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
+					_ = proto.RefreshLoginAsync(
+						(string)Settings.Values["v1_previous_did"],
+						(string)Settings.Values["v1_previous_handle"],
+						(string)Settings.Values["v1_previous_accessJWT"],
+						credentials.token,
+						(string)Settings.Values["v1_previous_pds"]
+						);
+				}
 			}
 			this.Suspending += OnSuspending;
 			UnhandledException += OnUnhandledException;
 			TaskScheduler.UnobservedTaskException += OnUnobservedException;
 			AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+		}
+
+		private void ATProtocolClient_SessionUpdated(object sender, SessionUpdatedEventArgs e)
+		{
+			App.Current.Settings.Values["v1_previous_did"] = e.Session.Session.Did.Handler;
+			App.Current.Settings.Values["v1_previous_handle"] = e.Session.Session.Handle.Handle;
+			App.Current.Settings.Values["v1_previous_accessJWT"] = e.Session.Session.AccessJwt;
+			App.Current.Settings.Values["v1_previous_pds"] = e.InstanceUri;
 		}
 
 		/// <summary>
@@ -123,7 +154,7 @@ namespace DarkSky
 					}
 					else // login, initialise DI, go to mainpage
 					{
-						rootFrame.Navigate(typeof(NEWLoginPage), e.Arguments);
+						rootFrame.Navigate(typeof(MainPage), e.Arguments);
 					}
 				}
                 // Ensure the current window is active
@@ -159,13 +190,17 @@ namespace DarkSky
 
 		private static async void OnUnhandledException(object? sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
 		{
-			await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
+			try
+			{
+				await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
 				{
 					Title = "Unhandled exception",
 					Content = e.Message,
 					CloseButtonText = "Close"
 				}
-				.ShowAsync();
+					.ShowAsync();
+			}
+			catch { }
         }
 
 		private void CurrentDomain_FirstChanceException(object? sender, FirstChanceExceptionEventArgs e)

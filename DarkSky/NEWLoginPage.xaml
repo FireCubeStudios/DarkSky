@@ -427,7 +427,7 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RevealButton" Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0">
                                                     <DiscreteObjectKeyFrame.Value>
-                                                        <Visibility>Visible</Visibility>
+                                                        <Visibility>Collapsed</Visibility>
                                                     </DiscreteObjectKeyFrame.Value>
                                                 </DiscreteObjectKeyFrame>
                                             </ObjectAnimationUsingKeyFrames>
@@ -452,7 +452,7 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RevealButton" Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0">
                                                     <DiscreteObjectKeyFrame.Value>
-                                                        <Visibility>Visible</Visibility>
+                                                        <Visibility>Collapsed</Visibility>
                                                     </DiscreteObjectKeyFrame.Value>
                                                 </DiscreteObjectKeyFrame>
                                             </ObjectAnimationUsingKeyFrames>
@@ -533,6 +533,7 @@
                             IsHitTestVisible="False" />
                             <ToggleButton x:Name="RevealButton"
                             Grid.Row="1"
+                            Visibility="Collapsed"
                             Grid.Column="0"
                             Canvas.ZIndex="3"
                             HorizontalAlignment="Right"
@@ -564,7 +565,7 @@
         <Border
             x:Name="AppTitleBar"
             Height="48"
-            Padding="12,0,0,0"
+            Padding="12,12,0,0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
             Background="Transparent"
@@ -599,75 +600,68 @@
             VerticalAlignment="Top"
     IsOpen="False"
     Severity="Error"/>
-        <Grid HorizontalAlignment="Center" Canvas.ZIndex="2"  VerticalAlignment="Center">
-            <toolkit:DropShadowPanel Canvas.ZIndex="2" BlurRadius="16" ShadowOpacity="0.12" OffsetY="24" OffsetX="24" CornerRadius="8">
-                <FlipView RequiresPointer="Never" BorderBrush="{ThemeResource MicaBorderBrush}" BorderThickness="1" Margin="20"
+        <Grid HorizontalAlignment="Center" Canvas.ZIndex="2" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <toolkit:DropShadowPanel Grid.Row="0" Canvas.ZIndex="2" BlurRadius="16" ShadowOpacity="0.12" OffsetY="24" OffsetX="24" CornerRadius="8">
+                <Grid BorderBrush="{ThemeResource MicaBorderBrush}" BorderThickness="1" Margin="20"
             Background="{ThemeResource MicaDarkBrush}" VerticalAlignment="Stretch"
-            MaxHeight="490" HorizontalAlignment="Stretch" MaxWidth="800" 
-            CornerRadius="8" x:Name="FlappyBird"
-            Style="{StaticResource OOBEFlipViewStyle}">
-                    <FlipViewItem>
-                        <Grid Background="{ThemeResource MicaBlurBrush}">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8">
-                                <Image Stretch="UniformToFill" Source="ms-appx:///Assets/OOBE/OOBE1.png" Width="365"/>
-                                <StackPanel Orientation="Vertical" Margin="28,40,28,0" Width="375">
-                                    <TextBlock Text="Welcome to DarkSky!" FontSize="32" Margin="0,0,0,12" FontWeight="SemiBold" CharacterSpacing="-20"/>
-                                    <TextBlock Opacity="0.70" LineHeight="24" Width="375" HorizontalAlignment="Left"
+            Height="490" HorizontalAlignment="Stretch" Width="800" 
+            CornerRadius="8">
+                    <Grid Background="{ThemeResource MicaBlurBrush}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8">
+                            <Image Stretch="UniformToFill" Source="ms-appx:///Assets/OOBE/OOBE1.png" Width="365"/>
+                            <StackPanel Orientation="Vertical" Margin="28,40,28,0" Width="375">
+                                <TextBlock Text="Welcome to DarkSky!" FontSize="32" Margin="0,0,0,12" FontWeight="SemiBold" CharacterSpacing="-20"/>
+                                <TextBlock Opacity="0.70" LineHeight="24" Width="375" HorizontalAlignment="Left"
                                             Text="Login to your Bluesky account to use this app" TextWrapping="WrapWholeWords"/>
-                                    <StackPanel Spacing="8" Margin="0, 12, 0, 0">
-                                        <TextBlock FontWeight="SemiBold">Handle or Email:</TextBlock>
+                                <StackPanel Spacing="8" Margin="0, 12, 0, 0">
+                                    <TextBlock FontWeight="SemiBold">Handle or Email:</TextBlock>
+                                    <toolkit:DropShadowPanel ShadowOpacity="0.4" OffsetX="4" CornerRadius="8" OffsetY="4">
+                                        <TextBox x:Name="NameBox" Height="20" Width="370" PlaceholderText="example.bsky.social" Style="{ThemeResource KeyGlowTextBox}"/>
+                                    </toolkit:DropShadowPanel>
+                                    <TextBlock FontWeight="SemiBold">Password or App Password:</TextBlock>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
                                         <toolkit:DropShadowPanel ShadowOpacity="0.4" OffsetX="4" CornerRadius="8" OffsetY="4">
-                                            <TextBox x:Name="NameBox" Height="20" Width="370" PlaceholderText="example.bsky.social" Style="{ThemeResource KeyGlowTextBox}"/>
+                                            <PasswordBox x:Name="KeyBox" Width="320" PlaceholderText="Enter your Password or App password here..." PasswordRevealMode="{x:Bind PasswordReveal(PasswordRevealToggle.IsChecked), Mode=OneWay}" IsPasswordRevealButtonEnabled="False" Style="{ThemeResource KeyGlowPasswordBoxStyle}"/>
                                         </toolkit:DropShadowPanel>
-                                        <TextBlock FontWeight="SemiBold">Password or App Password:</TextBlock>
-                                        <toolkit:DropShadowPanel ShadowOpacity="0.4" OffsetX="0" CornerRadius="8" OffsetY="0">
-                                            <PasswordBox x:Name="KeyBox" Width="370" PlaceholderText="Enter your Password or App password here..." PasswordRevealMode="Visible" IsPasswordRevealButtonEnabled="True" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}"/>
-                                        </toolkit:DropShadowPanel>
-                                        <muxc:Expander Height="130" Margin="0, 12, 0, 0" HorizontalAlignment="Stretch" Padding="0">
-                                            <muxc:Expander.Header>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <icons:FluentSymbolIcon Symbol="Settings24"/>
-                                                    <TextBlock FontWeight="SemiBold" Margin="12, 2, 0, 0">Advanced</TextBlock>
-                                                </StackPanel>
-                                            </muxc:Expander.Header>
-                                            <muxc:Expander.Content>
-                                                <Grid>
-                                                    <StackPanel Spacing="8">
-                                                        <TextBlock FontWeight="SemiBold">Custom PDS server link:</TextBlock>
-                                                        <toolkit:DropShadowPanel ShadowOpacity="0.4" OffsetX="4" CornerRadius="8" OffsetY="4">
-                                                            <TextBox x:Name="PDSBox" Height="20" Width="340" PlaceholderText="https://" Style="{ThemeResource KeyGlowTextBox}"/>
-                                                        </toolkit:DropShadowPanel>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </muxc:Expander.Content>
-                                        </muxc:Expander>
+                                        <ToggleButton x:Name="PasswordRevealToggle" IsChecked="True" Style="{ThemeResource ToolbarToggleButton}" VerticalAlignment="Center">
+                                            <icons:FluentSymbolIcon Symbol="EyeHide20" Foreground="{ThemeResource HvidSortBrush}"/>
+                                        </ToggleButton>
                                     </StackPanel>
-                                    <Button Margin="0, 12, 0, 12" Padding="18, 8, 18, 8" HorizontalAlignment="Right" Style="{ThemeResource ToolbarButton}" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}" CornerRadius="4">
-                                        Login
-                                    </Button>
+                                    <muxc:Expander Height="130" Margin="0, 12, 0, 0" HorizontalAlignment="Stretch" Padding="0">
+                                        <muxc:Expander.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <icons:FluentSymbolIcon Symbol="Settings24"/>
+                                                <TextBlock FontWeight="SemiBold" Margin="12, 2, 0, 0">Advanced</TextBlock>
+                                            </StackPanel>
+                                        </muxc:Expander.Header>
+                                        <muxc:Expander.Content>
+                                            <Grid>
+                                                <StackPanel Spacing="8">
+                                                    <TextBlock FontWeight="SemiBold">Custom PDS server link:</TextBlock>
+                                                    <toolkit:DropShadowPanel ShadowOpacity="0.4" OffsetX="4" CornerRadius="8" OffsetY="4">
+                                                        <TextBox x:Name="PDSBox" Height="20" Width="340" PlaceholderText="https://" Style="{ThemeResource KeyGlowTextBox}"/>
+                                                    </toolkit:DropShadowPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </muxc:Expander.Content>
+                                    </muxc:Expander>
                                 </StackPanel>
+                                <Button Click="LoginButton_Click" Margin="0, 12, 0, 12" Padding="18, 8, 18, 8" HorizontalAlignment="Right" Style="{ThemeResource ToolbarButton}" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}" CornerRadius="4">
+                                    Login
+                                </Button>
                             </StackPanel>
-
-                        </Grid>
-                    </FlipViewItem>
-                    <FlipViewItem x:Name="EmailAuthPage" x:Load="False">
-                        <Grid>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8">
-                                <Image Stretch="UniformToFill" Source="ms-appx:///Assets/OOBE/OOBE1.png" Width="365"/>
-
-                                <StackPanel Orientation="Vertical" Margin="28,40,28,0" Width="375">
-                                    <icons:FluentSymbolIcon Symbol="Settings24" Foreground="{ThemeResource ResponsiveAccentBrush1}" HorizontalAlignment="Left" Margin="0,0,0,12" RenderTransformOrigin="0.5,0.5">
-                                        <icons:FluentSymbolIcon.RenderTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                        </icons:FluentSymbolIcon.RenderTransform>
-                                    </icons:FluentSymbolIcon>
-                                    <TextBlock Text="Customize Settings" FontSize="32" Margin="0,0,0,12" FontWeight="SemiBold" CharacterSpacing="-20"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </FlipViewItem>
-                </FlipView>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
             </toolkit:DropShadowPanel>
+            <StackPanel Grid.Row="1" Spacing="8">
+                <TextBlock x:Name="StatusText" HorizontalAlignment="Center" Margin="0, 20, 0, 12" FontWeight="SemiBold"/>
+                <muxc:ProgressBar x:Name="LoginBar" Visibility="Collapsed" IsIndeterminate="True" Margin="4, 0, 4, 0"/>
+            </StackPanel>
         </Grid>
         <materials:AuroraLite/>
         <materials:BloomView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

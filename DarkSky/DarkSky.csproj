@@ -144,6 +144,7 @@
     <Compile Include="NEWLoginPage.xaml.cs">
       <DependentUpon>NEWLoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\KeyService.cs" />
     <Compile Include="Templates\CursorItemSelector.cs" />
     <Compile Include="Templates\CursorItemTemplates.xaml.cs">
       <DependentUpon>CursorItemTemplates.xaml</DependentUpon>

@@ -27,17 +27,50 @@ namespace DarkSky.Core.Services
 			ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
 		}
 
-		private void ATProtocolClient_SessionUpdated(object sender, SessionUpdatedEventArgs e)
+		private void CreateATProtocolClient(string pds = "")
 		{
-			Debug.WriteLine(e.InstanceUri);
+			ATProtocolBuilder Builder = new ATProtocolBuilder();
+			if (!String.IsNullOrEmpty(pds))
+				Builder.WithInstanceUrl(new Uri(pds));
+			ATProtocolClient = Builder.EnableAutoRenewSession(true).Build();
+			ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
 		}
 
-		public async Task LoginAsync(string username, string password)
+		private void ATProtocolClient_SessionUpdated(object sender, SessionUpdatedEventArgs e)
+		{
+		}
+
+		public async Task RefreshLoginAsync(string did, string handle, string accessJwt, string refreshJwt, string pds = "")
 		{
 			try
 			{
-				ATProtocolClient = new ATProtocolBuilder().EnableAutoRenewSession(true).Build();
-				ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
+				CreateATProtocolClient(pds);
+
+				Session session = new Session(new ATDid(did), null, new ATHandle(handle), null, accessJwt, refreshJwt);
+				var authSession = new AuthSession(session);
+				// Login with refresh token
+				Session session3 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(authSession);
+				if (session3 is not null)
+				{
+					WeakReferenceMessenger.Default.Send(new AuthenticationSessionMessage(ATProtocolClient.Session));
+				}
+				else
+				{
+					WeakReferenceMessenger.Default.Send(new ErrorMessage(new Exception($"Session was null")));
+				}
+			}
+			catch (Exception ex)
+			{
+				WeakReferenceMessenger.Default.Send(new ErrorMessage(ex));
+			}
+		}
+
+		public async Task LoginAsync(string username, string password, string pds = "")
+		{
+			try
+			{
+				CreateATProtocolClient(pds);
+
 				// We use CreateSessionAsync to get error message if login fails to display to the user
 				var result = await ATProtocolClient.AuthenticateWithPasswordResultAsync(username, password);
 				if (result.IsT0 && result.AsT0 is not null)
