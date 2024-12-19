@@ -1,4 +1,4 @@
-![Screenshot-BackgroundCrop,NoMargin,RoundedCorner](https://github.com/user-attachments/assets/51a53382-653a-4277-b1fe-7325b6c3eec0)
+![Screenshot-BackgroundCrop,NoMargin,RoundedCorner](https://github.com/FireCubeStudios/DarkSky/blob/master/DarkSky.png?raw=true)
 
 <p align="center">
   <a style="text-decoration:none" href="https://github.com/FireCubeStudios/DarkSky/actions/workflows/ci.yml">
