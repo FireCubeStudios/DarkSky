@@ -1,7 +1,10 @@
-﻿using Cube.UI.Brushes;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Cube.UI.Brushes;
 using Cube.UI.Services;
 using DarkSky.Core.Classes;
+using DarkSky.Core.Exceptions;
 using DarkSky.Core.Services;
+using DarkSky.Core.Services.Interfaces;
 using DarkSky.Services;
 using FishyFlip.Events;
 using FishyFlip.Models;
@@ -29,6 +32,7 @@ namespace DarkSky
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
+	[INotifyPropertyChanged]
 	public sealed partial class NEWLoginPage : Page
 	{
 		public NEWLoginPage()
@@ -43,38 +47,53 @@ namespace DarkSky
 
 		private PasswordRevealMode PasswordReveal(bool? IsChecked) => (bool)IsChecked ? PasswordRevealMode.Hidden : PasswordRevealMode.Visible;
 
+
+		/*
+		 * Used to show 2FA UI and also let us know 2FA process is enabled
+		 */
+		[ObservableProperty]
+		private bool is2FA = false;
 		private async void LoginButton_Click(object sender, RoutedEventArgs e)
 		{
 			LoginBar.Visibility = Visibility.Visible;
-			ATProtoService proto = new();
-			proto.ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
-			CredentialService credentialService = new CredentialService();
-			await proto.LoginAsync(NameBox.Text, KeyBox.Password);
-			if (proto.ATProtocolClient.Session is not null)
+
+			try
 			{
-				var session = proto.ATProtocolClient.Session;
-				credentialService.SaveCredential(new Credential(session.Did.Handler, KeyBox.Password, proto.ATProtocolClient.Session.RefreshJwt));
-				Session session2 = new Session(session.Did, null, session.Handle, null, session.AccessJwt, "");
-				App.Current.Settings.Values["v1_previous_did"] = session.Did.Handler;
-				App.Current.Settings.Values["v1_previous_handle"] = session.Handle.Handle;
-				App.Current.Settings.Values["v1_previous_accessJWT"] = session.AccessJwt;
+				ATProtoService proto = ServiceContainer.Services.GetService<ATProtoService>();
+				ICredentialService credentialService = ServiceContainer.Services.GetService<ICredentialService>();
 
+				try
+				{
+					if (Is2FA) await proto.AuthCodeLoginAsync(NameBox.Text, KeyBox.Password, CodeBox.Text, PDSBox.Text);
+					else await proto.LoginAsync(NameBox.Text, KeyBox.Password, PDSBox.Text);
+				}
+				catch (ATErrorException ex)
+				{
+					// 2FA missing, switch to 2FA page
+					if (ex.Error?.Detail?.Error == "AuthFactorTokenRequired")
+					{
+						Is2FA = true;
+						return;
+					}
+					else
+						StatusTitle.Text = ex.Message;
+				}
 
-				App.Current.Services = ServiceContainer.Services = App.ConfigureServices();
-				ATProtoService protoDI = App.Current.Services.GetService<ATProtoService>();
-				protoDI.ATProtocolClient = proto.ATProtocolClient; // set the authenticated one
-				protoDI.ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
-				((Frame)Window.Current.Content).Navigate(typeof(MainPage));
+				if (proto.ATProtocolClient.Session is not null)
+				{
+					Is2FA = false;
+					var session = proto.ATProtocolClient.Session;
+					credentialService.SaveCredential(new Credential(session.Did.Handler, KeyBox.Password, proto.ATProtocolClient.Session.RefreshJwt));
+					((Frame)Window.Current.Content).Navigate(typeof(MainPage));
+				}
 			}
-			LoginBar.Visibility = Visibility.Collapsed;
-		}
+			catch (Exception ex)
+			{
+				StatusTitle.Text = ex.Message;
+				StatusText.Text = ex.StackTrace;
+			}
 
-		private void ATProtocolClient_SessionUpdated(object sender, SessionUpdatedEventArgs e)
-		{
-			App.Current.Settings.Values["v1_previous_did"] = e.Session.Session.Did.Handler;
-			App.Current.Settings.Values["v1_previous_handle"] = e.Session.Session.Handle.Handle;
-			App.Current.Settings.Values["v1_previous_accessJWT"] = e.Session.Session.AccessJwt;
-			App.Current.Settings.Values["v1_previous_pds"] = e.InstanceUri;
+			LoginBar.Visibility = Visibility.Collapsed;
 		}
 	}
 }

@@ -50,6 +50,10 @@ namespace DarkSky.Helpers
 
 		public static bool invert(bool b) => !b;
 
+		public static Visibility BoolToVis(bool b) => b ? Visibility.Visible : Visibility.Collapsed;
+
+		public static Visibility InvertBoolToVis(bool b) => b ? Visibility.Collapsed : Visibility.Visible;
+
 		public static ImageSource Img(string uri)
 		{
 			if (String.IsNullOrEmpty(uri))

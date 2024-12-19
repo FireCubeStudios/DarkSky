@@ -9,7 +9,7 @@
     xmlns:icons="using:Cube.UI.Icons"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    xmlns:materials="using:Cube.UI.Materials"
+    xmlns:materials="using:Cube.UI.Materials" xmlns:helpers="using:DarkSky.Helpers"
     mc:Ignorable="d">
     <Page.Resources>
         <!--Cursed style uses foreground property to change color of line-->
@@ -613,7 +613,7 @@
                     <Grid Background="{ThemeResource MicaBlurBrush}">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8">
                             <Image Stretch="UniformToFill" Source="ms-appx:///Assets/OOBE/OOBE1.png" Width="365"/>
-                            <StackPanel Orientation="Vertical" Margin="28,40,28,0" Width="375">
+                            <StackPanel x:Name="LoginContent" Visibility="{x:Bind helpers:UIHelper.InvertBoolToVis(Is2FA), Mode=OneWay}" Orientation="Vertical" Margin="28,40,28,0" Width="375">
                                 <TextBlock Text="Welcome to DarkSky!" FontSize="32" Margin="0,0,0,12" FontWeight="SemiBold" CharacterSpacing="-20"/>
                                 <TextBlock Opacity="0.70" LineHeight="24" Width="375" HorizontalAlignment="Left"
                                             Text="Login to your Bluesky account to use this app" TextWrapping="WrapWholeWords"/>
@@ -654,15 +654,36 @@
                                     Login
                                 </Button>
                             </StackPanel>
+                            <StackPanel x:Name="Login2FAContent" Visibility="{x:Bind helpers:UIHelper.BoolToVis(Is2FA), Mode=OneWay}" Orientation="Vertical" Margin="28,40,28,0" Width="375">
+                                <TextBlock Text="Enter 2FA Code!" FontSize="32" Margin="0,0,0,12" FontWeight="SemiBold" CharacterSpacing="-20"/>
+                                <TextBlock Opacity="0.70" LineHeight="24" Width="375" HorizontalAlignment="Left"
+                                            Text="A 2FA code has been sent to your email" TextWrapping="WrapWholeWords"/>
+                                <StackPanel Spacing="8" Margin="0, 12, 0, 0">
+                                    <TextBlock FontWeight="SemiBold">Handle or Email:</TextBlock>
+                                    <toolkit:DropShadowPanel ShadowOpacity="0.4" OffsetX="4" CornerRadius="8" OffsetY="4">
+                                        <TextBox x:Name="CodeBox" Height="20" Width="370" PlaceholderText="XXXXX-XXXXX" Style="{ThemeResource KeyGlowTextBox}"/>
+                                    </toolkit:DropShadowPanel>
+                                </StackPanel>
+                                <Button Click="LoginButton_Click" Margin="0, 12, 0, 12" Padding="18, 8, 18, 8" HorizontalAlignment="Right" Style="{ThemeResource ToolbarButton}" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}" CornerRadius="4">
+                                    Enter 2FA
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Grid>
             </toolkit:DropShadowPanel>
-            <StackPanel Grid.Row="1" Spacing="8">
-                <TextBlock x:Name="StatusText" HorizontalAlignment="Center" Margin="0, 20, 0, 12" FontWeight="SemiBold"/>
-                <muxc:ProgressBar x:Name="LoginBar" Visibility="Collapsed" IsIndeterminate="True" Margin="4, 0, 4, 0"/>
-            </StackPanel>
+
         </Grid>
+        <StackPanel Grid.Row="1" Spacing="8" VerticalAlignment="Bottom" Canvas.ZIndex="2" Margin="0, 0, 0, 24">
+            <TextBlock x:Name="StatusTitle" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+            <TextBlock x:Name="StatusText" HorizontalAlignment="Center" Margin="0, 0, 0, 12" MaxLines="2" TextTrimming="CharacterEllipsis"/>
+            <muxc:ProgressBar x:Name="LoginBar" Visibility="Collapsed" IsIndeterminate="True"/>
+            <TextBlock Text="This app is in a public beta and we need your help to make it better! Please report any issues you encounter to GitHub" HorizontalAlignment="Center" TextWrapping="WrapWholeWords" />
+            <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+                <HyperlinkButton HorizontalAlignment="Center" Content="Send feedback in GitHub" NavigateUri="https://github.com/FireCubeStudios/DarkSky"/>
+                <HyperlinkButton HorizontalAlignment="Center" Content="Join the Discord" NavigateUri="https://discord.com/invite/3WYcKat"/>
+            </StackPanel>
+        </StackPanel>
         <materials:AuroraLite/>
         <materials:BloomView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>

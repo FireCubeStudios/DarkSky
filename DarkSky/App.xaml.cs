@@ -44,6 +44,7 @@ namespace DarkSky
 			services.AddSingleton<ICredentialService, CredentialService>();
 			services.AddSingleton<ISettingsService, SettingsService>();
 			services.AddSingleton<IAccountService, AccountService>();
+			services.AddSingleton<IKeyService, KeyService>();
 			services.AddSingleton<ATProtoService>();
 			services.AddTransient<LoginViewModel>();
 			services.AddTransient<MainViewModel>();
@@ -78,44 +79,31 @@ namespace DarkSky
 		/// executed, and as such is the logical equivalent of main() or WinMain().
 		/// </summary>
 		public App()
-        {
+		{
 			this.InitializeComponent();
+			App.Current.Services = ServiceContainer.Services = ConfigureServices();
 			if (CredentialService.Count() != 0)
 			{
-				App.Current.Services = ServiceContainer.Services = ConfigureServices();
+				Credential credentials = CredentialService.GetCredential();
+				ATProtoService proto = Services.GetService<ATProtoService>();
 				if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
 				{
-					Credential credentials = CredentialService.GetCredential();
-					ATProtoService proto = Services.GetService<ATProtoService>();
-					proto.ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
 					_ = proto.LoginAsync(credentials.username, credentials.password);
 				}
-				else
-				{
-					ATProtoService proto = Services.GetService<ATProtoService>();
-					Credential credentials = CredentialService.GetCredential();
-					proto.ATProtocolClient.SessionUpdated += ATProtocolClient_SessionUpdated;
-					_ = proto.RefreshLoginAsync(
-						(string)Settings.Values["v1_previous_did"],
-						(string)Settings.Values["v1_previous_handle"],
-						(string)Settings.Values["v1_previous_accessJWT"],
-						credentials.token,
-						(string)Settings.Values["v1_previous_pds"]
-						);
+				else { // login with refresh token if it is available
+						_ = proto.RefreshLoginAsync(
+							(string)Settings.Values["v1_previous_did"],
+							(string)Settings.Values["v1_previous_handle"],
+							(string)Settings.Values["v1_previous_accessJWT"],
+							credentials.token,
+							(string)Settings.Values["v1_previous_pds"]
+							);
 				}
 			}
 			this.Suspending += OnSuspending;
 			UnhandledException += OnUnhandledException;
 			TaskScheduler.UnobservedTaskException += OnUnobservedException;
 			AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
-		}
-
-		private void ATProtocolClient_SessionUpdated(object sender, SessionUpdatedEventArgs e)
-		{
-			App.Current.Settings.Values["v1_previous_did"] = e.Session.Session.Did.Handler;
-			App.Current.Settings.Values["v1_previous_handle"] = e.Session.Session.Handle.Handle;
-			App.Current.Settings.Values["v1_previous_accessJWT"] = e.Session.Session.AccessJwt;
-			App.Current.Settings.Values["v1_previous_pds"] = e.InstanceUri;
 		}
 
 		/// <summary>
