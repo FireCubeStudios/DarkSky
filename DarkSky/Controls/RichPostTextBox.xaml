@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:icons="using:Cube.UI.Icons" 
-    xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+     
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     SizeChanged="UserControl_SizeChanged"
     mc:Ignorable="d">
@@ -19,27 +19,20 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ToolkitControls:DropShadowPanel Grid.Row="0" Grid.Column="0"
-        CornerRadius="8"
-        OffsetX="4"
-        OffsetY="4" HorizontalAlignment="Center"
-        ShadowOpacity="0.4" Margin="12" 
-        Color="Black">
-            <TextBox x:Name="PostText" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}"
+        <TextBox x:Name="PostText" BorderThickness="1" 
                AcceptsReturn="True"
                PlaceholderText="What's up?" />
-        </ToolkitControls:DropShadowPanel>
         <StackPanel Grid.Row="1"
 HorizontalAlignment="Left"
 Orientation="Horizontal"
 Spacing="8">
-            <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+            <Button  IsEnabled="False">
                 <icons:FluentSymbolIcon Symbol="Image20" />
             </Button>
-            <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+            <Button  IsEnabled="False">
                 <icons:FluentSymbolIcon Symbol="Video20" />
             </Button>
-            <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+            <Button  IsEnabled="False">
                 <icons:FluentSymbolIcon Symbol="Emoji20" />
             </Button>
         </StackPanel>
@@ -48,14 +41,7 @@ HorizontalAlignment="Right"
 Orientation="Horizontal"
 Spacing="8">
             <HyperlinkButton Content="English" IsEnabled="False" />
-            <ToolkitControls:DropShadowPanel
-    CornerRadius="8"
-    OffsetX="4"
-    OffsetY="4"
-    ShadowOpacity="0.4"
-    Color="Black">
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind LimitValueStr(PostText.Text), Mode=OneWay}" />
-            </ToolkitControls:DropShadowPanel>
+            <TextBlock VerticalAlignment="Center" Text="{x:Bind LimitValueStr(PostText.Text), Mode=OneWay}" />
             <muxc:ProgressRing IsIndeterminate="False" Minimum="0" Value="{x:Bind LimitValue(PostText.Text), Mode=OneWay}" Maximum="300"/>
         </StackPanel>
     </Grid>

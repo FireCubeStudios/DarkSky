@@ -5,11 +5,11 @@
     xmlns:local="using:DarkSky.Views.Temporary"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:glow="using:Cube.UI.Controls.Glow"
-    xmlns:icons="using:Cube.UI.Icons"
+    
+    
     xmlns:models="using:FishyFlip.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+     
     xmlns:classes="using:DarkSky.Core.Classes" 
     xmlns:helpers="using:DarkSky.Helpers" 
     xmlns:usercontrols="using:DarkSky.UserControls" 
@@ -23,7 +23,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Padding="12, 8, 12, 0" BorderThickness="0, 0, 0, 1" ColumnSpacing="8" BorderBrush="{ThemeResource MicaBorderBrush}">
+        <Grid Grid.Row="0" Padding="12, 8, 12, 0" BorderThickness="0, 0, 0, 1" ColumnSpacing="8" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="48"/>
                 <ColumnDefinition Width="*"/>

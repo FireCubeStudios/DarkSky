@@ -7,7 +7,6 @@
     <Application.Resources>
         <controls:XamlControlsResources>
             <controls:XamlControlsResources.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Cube.UI/Resources/ResourcesHub.xaml" />
                 <ResourceDictionary>
                     <LinearGradientBrush x:Key="HeartLinearGradientBrush" StartPoint="0,0" EndPoint="1,0">
                         <GradientStop Offset="0.0" Color="Red" />

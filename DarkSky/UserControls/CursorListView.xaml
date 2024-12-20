@@ -21,13 +21,13 @@
                               ListItemTemplate="{StaticResource ListItemTemplate}"/>
         
         <DataTemplate x:Key="PostItemTemplate" x:DataType="temporary:PostViewModel">
-            <Border BorderThickness="{x:Bind helpers:UIHelper.Border(HasReply), Mode=OneWay}" Margin="-16, 0, -16, 0" Padding="0, 0, 16, 0" BorderBrush="{ThemeResource MicaBorderBrush}">
+            <Border BorderThickness="{x:Bind helpers:UIHelper.Border(HasReply), Mode=OneWay}" Margin="-16, 0, -16, 0" Padding="0, 0, 16, 0" >
                 <local:PostControl Post="{x:Bind Mode=OneWay}"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="ProfileItemTemplate" x:DataType="temporary:ProfileViewModel">
-            <Grid Padding="12, 8, 12, 8" ColumnSpacing="12" BorderThickness="0, 0, 0, 1" Margin="-16, 0, -16, 0" BorderBrush="{ThemeResource MicaBorderBrush}">
+            <Grid Padding="12, 8, 12, 8" ColumnSpacing="12" BorderThickness="0, 0, 0, 1" Margin="-16, 0, -16, 0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
@@ -42,7 +42,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ListItemTemplate" x:DataType="temporary:ListViewModel">
-            <Grid Padding="12, 8, 12, 8" BorderThickness="0, 0, 0, 1" RowSpacing="8" ColumnSpacing="8" Margin="-16, 0, -16, 0" BorderBrush="{ThemeResource MicaBorderBrush}">
+            <Grid Padding="12, 8, 12, 8" BorderThickness="0, 0, 0, 1" RowSpacing="8" ColumnSpacing="8" Margin="-16, 0, -16, 0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>

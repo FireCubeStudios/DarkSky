@@ -9,6 +9,6 @@
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Spacing="12" x:Name="Container" CornerRadius="8" BorderBrush="{ThemeResource MicaBorderBrush}"/>
+        <StackPanel Spacing="12" x:Name="Container" CornerRadius="8" />
     </Grid>
 </UserControl>

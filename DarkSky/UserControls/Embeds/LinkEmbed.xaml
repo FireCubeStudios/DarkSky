@@ -9,8 +9,8 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Button Click="Button_Click" Padding="0" Style="{ThemeResource CardButton}" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}" BorderThickness="1" CornerRadius="8">
-       <Grid Background="{ThemeResource MicaBlurBrush}" Padding="12">
+    <Button Click="Button_Click" Padding="0"  BorderThickness="1" CornerRadius="8">
+       <Grid  Padding="12">
             <StackPanel Spacing="4">
                 <Border CornerRadius="8" MaxHeight="300" Margin="8">
                     <Image x:Name="EmbedImage" Visibility="Collapsed" Stretch="UniformToFill"/>

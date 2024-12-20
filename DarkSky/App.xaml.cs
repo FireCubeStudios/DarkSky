@@ -55,7 +55,6 @@ namespace DarkSky
 
 			NavigationService navigationService = new();
 			navigationService.RegisterViewForViewModel(typeof(MainViewModel), typeof(MainPage));
-			navigationService.RegisterViewForViewModel(typeof(LoginViewModel), typeof(LoginPage));
 			services.AddSingleton<INavigationService>(navigationService);
 
 			return services.BuildServiceProvider();

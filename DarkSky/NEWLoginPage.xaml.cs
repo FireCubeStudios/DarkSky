@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Cube.UI.Brushes;
-using Cube.UI.Services;
 using DarkSky.Core.Classes;
 using DarkSky.Core.Exceptions;
 using DarkSky.Core.Services;
@@ -39,7 +37,7 @@ namespace DarkSky
 		{
 			this.InitializeComponent();
 
-			WindowService.Initialize(AppTitleBar, AppTitle);
+			
 		}
 
 		private PasswordRevealMode PasswordReveal(bool? IsChecked) => (bool)IsChecked ? PasswordRevealMode.Hidden : PasswordRevealMode.Visible;

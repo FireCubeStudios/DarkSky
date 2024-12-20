@@ -10,8 +10,8 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Button Click="Button_Click" Padding="0" Style="{ThemeResource CardButton}" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}" BorderThickness="1" CornerRadius="8">
-            <Grid Background="{ThemeResource MicaBlurBrush}">
+        <Button Click="Button_Click" Padding="0" BorderThickness="1" CornerRadius="8">
+            <Grid >
                 <usercontrols:PostControl Post="{x:Bind Post, Mode=OneWay}"/>
             </Grid>
         </Button>

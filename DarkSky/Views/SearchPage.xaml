@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:classes="using:DarkSky.Core.Classes" 
+     xmlns:classes="using:DarkSky.Core.Classes" 
     xmlns:notification="using:FishyFlip.Lexicon.App.Bsky.Notification"
     xmlns:helpers="using:DarkSky.Helpers" 
     xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary" 
@@ -21,20 +21,18 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Height="49" Padding="12, 8, 12, 8" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+            <Grid Grid.Row="0" Height="49" Padding="12, 8, 12, 8" BorderThickness="0, 0, 0, 1" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <toolkit:DropShadowPanel Grid.Column="0" ShadowOpacity="0.4" OffsetX="4" CornerRadius="8" OffsetY="4">
-                    <AutoSuggestBox Grid.Column="0" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}" MinWidth="430">
-                        <AutoSuggestBox.QueryIcon>
-                            <icons:FluentIconElement Symbol="Search20"/>
-                        </AutoSuggestBox.QueryIcon>
-                     <!--   <UI:effects.Shadow>
+                <AutoSuggestBox Grid.Column="0" HorizontalAlignment="Center" BorderThickness="1"  MinWidth="430">
+                    <AutoSuggestBox.QueryIcon>
+                        <icons:FluentIconElement Symbol="Search20"/>
+                    </AutoSuggestBox.QueryIcon>
+                    <!--   <UI:effects.Shadow>
                             <media:AttachedCardShadow Offset="4" />
                         </UI:effects.Shadow>-->
-                    </AutoSuggestBox>
-                </toolkit:DropShadowPanel>
+                </AutoSuggestBox>
             </Grid>
         </Grid>
     </Grid>

@@ -8,14 +8,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="2505FireCubeStudios.Darksky"
+    Name="2505FireCubeStudios.DarkskyNET9"
     Publisher="CN=3C7C8FC9-7104-4B33-8730-EE1E929D5D3B"
     Version="0.4.12.0" />
 
   <mp:PhoneIdentity PhoneProductId="6916ad9d-61d4-4569-a8b0-d65d9cdfb407" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Darksky</DisplayName>
+    <DisplayName>Darksky NET 9</DisplayName>
     <PublisherDisplayName>FireCubeStudios</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

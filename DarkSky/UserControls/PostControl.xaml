@@ -8,7 +8,7 @@
     xmlns:icons="using:Cube.UI.Icons"
     xmlns:local="using:DarkSky.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:controls="using:DarkSky.Controls"
+     xmlns:controls="using:DarkSky.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
@@ -42,22 +42,12 @@
             <PersonPicture
                 Grid.Row="1" Grid.Column="0" Height="36" HorizontalAlignment="Left" VerticalAlignment="Top"
                 ProfilePicture="{x:Bind helpers:UIHelper.Img(Post.InternalPost.Author.Avatar), Mode=OneWay}" />
-            <toolkit:DropShadowPanel
-                x:Name="ReplyBar"
-                x:Load="{x:Bind Post.HasReply, Mode=OneWay}"
-                Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center" Margin="0, 48, 12, 12"
-                 BlurRadius="16"
-                 Canvas.ZIndex="2"
-                 ShadowOpacity="0.23"
-                 Color="{ThemeResource SystemAccentColorLight3}">
-                <Grid
+            <Grid Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center" Margin="0, 48, 12, 12"
                      Width="3"
-                     HorizontalAlignment="Center"
                      VerticalAlignment="Stretch"
                      Background="{ThemeResource AccentLinearDownGradientBrush}"
                      CornerRadius="2" />
-            </toolkit:DropShadowPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1">
+                <StackPanel Grid.Row="1" Grid.Column="1">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <TextBlock
                         FontSize="16"
@@ -95,26 +85,26 @@
                     HorizontalAlignment="Left"
                     Orientation="Horizontal"
                     Spacing="8">
-                    <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+                    <Button  IsEnabled="False">
                         <!--IsEnabled="{x:Bind Post.CanReply, Mode=OneWay}">-->
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:FluentSymbolIcon Symbol="Comment20" />
                             <TextBlock Text="{x:Bind Post.ReplyCount, Mode=OneWay}" />
                         </StackPanel>
                     </Button>
-                    <Button Style="{ThemeResource ToolbarButton}" Command="{x:Bind Post.RepostCommand, Mode=OneWay}">
+                    <Button  Command="{x:Bind Post.RepostCommand, Mode=OneWay}">
                         <Grid>
                             <StackPanel x:Name="UnReposted" x:Load="{x:Bind helpers:UIHelper.invert(Post.IsReposted), Mode=OneWay}" Orientation="Horizontal" Spacing="8">
                                     <icons:FluentSymbolIcon Symbol="ArrowRepeatAll20" />
                                     <TextBlock Text="{x:Bind Post.RepostCount, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel x:Name="Reposted" x:Load="{x:Bind Post.IsReposted, Mode=OneWay}" Orientation="Horizontal" Spacing="8">
-                                <icons:FluentSymbolIcon Foreground="{ThemeResource ResponsiveAccentBrush2}" Symbol="ArrowRepeatAll20" />
-                                <TextBlock Foreground="{ThemeResource ResponsiveAccentBrush2}" Text="{x:Bind Post.RepostCount, Mode=OneWay}" />
+                                <icons:FluentSymbolIcon  Symbol="ArrowRepeatAll20" />
+                                <TextBlock  Text="{x:Bind Post.RepostCount, Mode=OneWay}" />
                             </StackPanel>
                         </Grid>
                     </Button>
-                    <Button Style="{ThemeResource ToolbarButton}" Command="{x:Bind Post.LikeCommand, Mode=OneWay}">
+                    <Button  Command="{x:Bind Post.LikeCommand, Mode=OneWay}">
                         <Grid>
                             <StackPanel x:Name="UnLiked" x:Load="{x:Bind helpers:UIHelper.invert(Post.IsLiked), Mode=OneWay}" Orientation="Horizontal" Spacing="8">
                                 <icons:FluentSymbolIcon Symbol="Heart20" />
@@ -126,7 +116,7 @@
                             </StackPanel>
                         </Grid>
                     </Button>
-                    <Button Style="{ThemeResource ToolbarButton}" Visibility="Collapsed">
+                    <Button  Visibility="Collapsed">
                         <icons:FluentSymbolIcon Margin="0,0,1,2" Symbol="MoreHorizontal20" />
                         <Button.Flyout>
                             <MenuFlyout>

@@ -4,13 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:DarkSky.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:glow="using:Cube.UI.Controls.Glow"
+    
     xmlns:icons="using:Cube.UI.Icons"
     xmlns:local="using:DarkSky.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:FishyFlip.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:classes="using:DarkSky.Core.Classes" xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary" xmlns:helpers="using:DarkSky.Helpers"
+     xmlns:classes="using:DarkSky.Core.Classes" xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary" xmlns:helpers="using:DarkSky.Helpers"
     NavigationCacheMode="Enabled"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
@@ -21,8 +21,8 @@
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0" Height="49"
-            Background="{ThemeResource MicaDarkerBrush}"
-            BorderBrush="{ThemeResource MicaBorderBrush}"
+            
+            
             BorderThickness="0,0,0,1">
             <muxc:NavigationView
                 x:Name="FeedNavigation" Height="48"

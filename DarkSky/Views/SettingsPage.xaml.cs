@@ -3,7 +3,6 @@ using DarkSky.Core.Services.Interfaces;
 using DarkSky.Core.ViewModels;
 using DarkSky.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;

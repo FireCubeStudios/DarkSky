@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Cube.UI.Services;
 using DarkSky.Core.Messages;
 using DarkSky.Services;
 using DarkSky.Core.ViewModels;
@@ -27,7 +26,6 @@ using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Diagnostics;
-using Cube.UI.Brushes;
 using DarkSky.Views.Temporary;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -107,7 +105,7 @@ namespace DarkSky
 		{
 			base.OnNavigatedTo(e);
 			ViewModel = App.Current.Services.GetService<MainViewModel>();
-			WindowService.Initialize(AppTitleBar, AppTitle);
+			
 
 			// fix weird titlebar bug
 			AppTitleBar.Height = 50;

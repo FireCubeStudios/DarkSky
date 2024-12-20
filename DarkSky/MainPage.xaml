@@ -3,13 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:glow="using:Cube.UI.Controls.Glow"
+    
     xmlns:icons="using:Cube.UI.Icons"
     xmlns:local="using:DarkSky"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls" 
-    xmlns:helpers="using:DarkSky.Helpers" xmlns:materials="using:Cube.UI.Materials"
+    xmlns:helpers="using:DarkSky.Helpers" 
     SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
     <Grid>
@@ -34,7 +33,6 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <materials:Mica10DeepBackground/>
         <Border
             x:Name="AppTitleBar"
             Height="48"
@@ -79,12 +77,12 @@
             </AutoSuggestBox.QueryIcon>
         </AutoSuggestBox>
         <ToggleButton x:Name="PrimaryPaneToggle" IsChecked="{x:Bind PrimaryPaneCollapsed, Mode=TwoWay}"
-                      Click="PrimaryPaneToggle_Click" Visibility="Visible" Height="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 8, 200, 0" Canvas.ZIndex="2" Style="{ThemeResource ToolbarToggleButton}">
+                      Click="PrimaryPaneToggle_Click" Visibility="Visible" Height="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 8, 200, 0" Canvas.ZIndex="2" >
            <!-- <Grid Visibility="Collapsed"> bug not working
-                <icons:FluentSymbolIcon x:Name="Collapsed" Symbol="ChevronLeft20" x:Load="{x:Bind PrimaryPaneCollapsed, Mode=OneWay}" Foreground="{ThemeResource HvidSortBrush}"/>
-                <icons:FluentSymbolIcon x:Name="Expanded" Symbol="ChevronRight20" x:Load="{x:Bind helpers:UIHelper.invert(PrimaryPaneCollapsed), Mode=OneWay}" Margin="0, 0, 3, 0" Foreground="{ThemeResource HvidSortBrush}"/>
+                <icons:FluentSymbolIcon x:Name="Collapsed" Symbol="ChevronLeft20" x:Load="{x:Bind PrimaryPaneCollapsed, Mode=OneWay}" />
+                <icons:FluentSymbolIcon x:Name="Expanded" Symbol="ChevronRight20" x:Load="{x:Bind helpers:UIHelper.invert(PrimaryPaneCollapsed), Mode=OneWay}" Margin="0, 0, 3, 0" />
             </Grid>-->
-            <icons:FluentSymbolIcon Symbol="PaneClose20" RenderTransformOrigin="0.5, 0.5" Foreground="{ThemeResource HvidSortBrush}">
+            <icons:FluentSymbolIcon Symbol="PaneClose20" RenderTransformOrigin="0.5, 0.5" >
                 <icons:FluentSymbolIcon.RenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="180"/>
@@ -114,8 +112,7 @@
             OpenPaneLength="72"
             CompactPaneLength="72"
             PaneDisplayMode="Left"
-            SelectionChanged="AppNavigation_SelectionChanged"
-            Style="{ThemeResource StoreNavigationViewStyle}">
+            SelectionChanged="AppNavigation_SelectionChanged">
 
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem Content="Home" Tag="Home">
@@ -193,28 +190,16 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid x:Name="PrimaryPaneContainer" Canvas.ZIndex="1" Grid.ColumnSpan="{x:Bind BoolToColumnSpan(PrimaryPaneCollapsed), Mode=OneWay}" Grid.Column="0" Background="{ThemeResource MicaDarkerBrush}" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}">
-                                <Grid Background="{ThemeResource MicaBlurBrush}">
+                            <Grid x:Name="PrimaryPaneContainer" Canvas.ZIndex="1" Grid.ColumnSpan="{x:Bind BoolToColumnSpan(PrimaryPaneCollapsed), Mode=OneWay}" Grid.Column="0"  CornerRadius="8" BorderThickness="1" >
+                                <Grid >
                                     <Frame x:Name="PrimaryPane"/>
                                 </Grid>
                             </Grid>
-                            <Grid x:Name="SecondaryPaneContainer" Canvas.ZIndex="0" Visibility="Collapsed" Grid.Column="1" Grid.ColumnSpan="2" Background="{ThemeResource MicaDarkerBrush}" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}">
-                                <Grid Background="{ThemeResource MicaBlurBrush}">
+                            <Grid x:Name="SecondaryPaneContainer" Canvas.ZIndex="0" Visibility="Collapsed" Grid.Column="1" Grid.ColumnSpan="2"  CornerRadius="8" BorderThickness="1" >
+                                <Grid >
                                     <Frame x:Name="SecondaryPane"/>
                                 </Grid>
                             </Grid>
-                            <toolkit:GridSplitter
-                                x:Name="PaneSplitter"
-                                Grid.Column="1" x:Load="False"
-                                Width="16"
-                                HorizontalAlignment="Left"
-                                ResizeBehavior="BasedOnAlignment"
-                                ResizeDirection="Auto">
-                                <toolkit:GridSplitter.RenderTransform>
-                                    <TranslateTransform X="-12" />
-                                </toolkit:GridSplitter.RenderTransform>
-                            </toolkit:GridSplitter>
-
                         </Grid>
                     </Grid>
                 </Grid>
