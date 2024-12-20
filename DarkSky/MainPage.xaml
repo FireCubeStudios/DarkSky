@@ -8,10 +8,11 @@
     xmlns:local="using:DarkSky"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls" xmlns:helpers="using:DarkSky.Helpers"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls" 
+    xmlns:helpers="using:DarkSky.Helpers" xmlns:materials="using:Cube.UI.Materials"
     SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
-    <Grid Background="{ThemeResource MicaDeepBrush}">
+    <Grid>
         <!-- Triggered when window gets big-->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -33,6 +34,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <materials:Mica10DeepBackground/>
         <Border
             x:Name="AppTitleBar"
             Height="48"
@@ -177,7 +179,7 @@
                 <muxc:NavigationViewItem Style="{ThemeResource ContentNavigatonViewItem}" Tag="Profile">
                     <StackPanel>
                         <PersonPicture Height="36" ProfilePicture="{x:Bind img(ViewModel.CurrentProfile.Avatar), Mode=OneWay}" />
-                        <TextBlock x:Name="ProfileText" Text="{x:Bind ViewModel.CurrentProfile.DisplayName, Mode=OneWay}" />
+                        <TextBlock x:Name="ProfileText" Text="{x:Bind ViewModel.CurrentProfile.DisplayName, Mode=OneWay}" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.FooterMenuItems>

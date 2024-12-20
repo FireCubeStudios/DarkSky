@@ -86,11 +86,14 @@ namespace DarkSky
 			{
 				Credential credentials = CredentialService.GetCredential();
 				ATProtoService proto = Services.GetService<ATProtoService>();
+
 				if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
 				{
 					_ = proto.LoginAsync(credentials.username, credentials.password);
 				}
 				else { // login with refresh token if it is available
+					try
+					{
 						_ = proto.RefreshLoginAsync(
 							(string)Settings.Values["v1_previous_did"],
 							(string)Settings.Values["v1_previous_handle"],
@@ -98,6 +101,11 @@ namespace DarkSky
 							credentials.token,
 							(string)Settings.Values["v1_previous_pds"]
 							);
+					}
+					catch
+					{
+						_ = proto.LoginAsync(credentials.username, credentials.password);
+					}
 				}
 			}
 			this.Suspending += OnSuspending;

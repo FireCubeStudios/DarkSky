@@ -40,9 +40,6 @@ namespace DarkSky
 			this.InitializeComponent();
 
 			WindowService.Initialize(AppTitleBar, AppTitle);
-			var m = new MicaAltBrush();
-			m.Kind = (int)BackdropKind.BaseAlt;
-			this.Background = m;
 		}
 
 		private PasswordRevealMode PasswordReveal(bool? IsChecked) => (bool)IsChecked ? PasswordRevealMode.Hidden : PasswordRevealMode.Visible;

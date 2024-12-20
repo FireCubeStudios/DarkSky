@@ -57,9 +57,6 @@ namespace DarkSky
 		{
 			this.InitializeComponent();
 			PrimaryPaneCollapsed = CollapseByDefault;
-			var m = new MicaAltBrush();
-			m.Kind = (int)BackdropKind.BaseAlt;
-			this.Background = m;
 			AppNavigation.SelectedItem = AppNavigation.MenuItems[0];
 			Bindings.Update();
 			/*

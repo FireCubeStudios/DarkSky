@@ -561,7 +561,8 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Grid Background="{ThemeResource MicaDeepBrush}">
+    <Grid>
+        <materials:Mica10DeepBackground/>
         <Border
             x:Name="AppTitleBar"
             Height="48"

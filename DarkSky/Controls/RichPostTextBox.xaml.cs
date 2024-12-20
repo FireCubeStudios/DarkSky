@@ -29,7 +29,8 @@ namespace DarkSky.Controls
 
 		private void UserControl_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
 		{
-			PostText.Width = e.NewSize.Width - 36;
+			if(e.NewSize.Width > 36)
+				PostText.Width = e.NewSize.Width - 36;
 		}
 
 		public string gettext() => PostText.Text;

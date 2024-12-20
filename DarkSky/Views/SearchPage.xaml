@@ -22,11 +22,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Height="49" Padding="12, 8, 12, 8" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
-                <AutoSuggestBox HorizontalAlignment="Stretch">
-                    <AutoSuggestBox.QueryIcon>
-                        <icons:FluentIconElement Symbol="Search20"/>
-                    </AutoSuggestBox.QueryIcon>
-                </AutoSuggestBox>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <toolkit:DropShadowPanel Grid.Column="0" ShadowOpacity="0.4" OffsetX="4" CornerRadius="8" OffsetY="4">
+                    <AutoSuggestBox Grid.Column="0" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}" MinWidth="430">
+                        <AutoSuggestBox.QueryIcon>
+                            <icons:FluentIconElement Symbol="Search20"/>
+                        </AutoSuggestBox.QueryIcon>
+                     <!--   <UI:effects.Shadow>
+                            <media:AttachedCardShadow Offset="4" />
+                        </UI:effects.Shadow>-->
+                    </AutoSuggestBox>
+                </toolkit:DropShadowPanel>
             </Grid>
         </Grid>
     </Grid>
