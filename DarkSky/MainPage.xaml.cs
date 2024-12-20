@@ -29,6 +29,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Diagnostics;
 using Cube.UI.Brushes;
 using DarkSky.Views.Temporary;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -43,6 +44,8 @@ namespace DarkSky
 		[ObservableProperty]
 		private MainViewModel viewModel;
 		private readonly Dictionary<Type, Type> viewModelsToViews = new();
+
+		private ObservableCollection<ErrorMessage> errors = new ObservableCollection<ErrorMessage>();
 
 		/*
 		 * Used to determine if primary pane is collapsed or expanded
@@ -94,11 +97,8 @@ namespace DarkSky
 			{
 				await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async() =>
 				{
-					Errorbar.IsOpen = true;
-					Errorbar.Title = m.Value.Message;
-					Errorbar.Content = m.Value.StackTrace;
-					await Task.Delay(5000);
-					Errorbar.IsOpen = false;
+					ErrorButton.Visibility = Visibility.Visible;
+					errors.Add(m);
 				});
 			});
 		}

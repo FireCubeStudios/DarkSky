@@ -78,34 +78,44 @@ namespace DarkSky
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
 		/// </summary>
+		/// 
+		private bool loginfail = false;
 		public App()
 		{
 			this.InitializeComponent();
 			App.Current.Services = ServiceContainer.Services = ConfigureServices();
 			if (CredentialService.Count() != 0)
 			{
-				Credential credentials = CredentialService.GetCredential();
-				ATProtoService proto = Services.GetService<ATProtoService>();
-
-				if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
+				try
 				{
-					_ = proto.LoginAsync(credentials.username, credentials.password);
-				}
-				else { // login with refresh token if it is available
-					try
-					{
-						_ = proto.RefreshLoginAsync(
-							(string)Settings.Values["v1_previous_did"],
-							(string)Settings.Values["v1_previous_handle"],
-							(string)Settings.Values["v1_previous_accessJWT"],
-							credentials.token,
-							(string)Settings.Values["v1_previous_pds"]
-							);
-					}
-					catch
+					Credential credentials = CredentialService.GetCredential();
+					ATProtoService proto = Services.GetService<ATProtoService>();
+
+					if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
 					{
 						_ = proto.LoginAsync(credentials.username, credentials.password);
 					}
+					else
+					{ // login with refresh token if it is available
+						try
+						{
+							_ = proto.RefreshLoginAsync(
+								(string)Settings.Values["v1_previous_did"],
+								(string)Settings.Values["v1_previous_handle"],
+								(string)Settings.Values["v1_previous_accessJWT"],
+								credentials.token,
+								(string)Settings.Values["v1_previous_pds"]
+								);
+						}
+						catch
+						{
+							_ = proto.LoginAsync(credentials.username, credentials.password);
+						}
+					}
+				}
+				catch
+				{
+					loginfail = true;
 				}
 			}
 			this.Suspending += OnSuspending;
@@ -144,7 +154,7 @@ namespace DarkSky
 				Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
 				if (rootFrame.Content == null)
 				{
-					if (CredentialService.Count() == 0)
+					if (CredentialService.Count() == 0 || loginfail)
 					{
 						rootFrame.Navigate(typeof(NEWLoginPage), e.Arguments);
 					}

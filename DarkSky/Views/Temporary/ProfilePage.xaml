@@ -14,7 +14,6 @@
     xmlns:helpers="using:DarkSky.Helpers" 
     xmlns:usercontrols="using:DarkSky.UserControls" 
     xmlns:controls="using:DarkSky.Controls" xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary"
-    NavigationCacheMode="Disabled"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
     <Grid>

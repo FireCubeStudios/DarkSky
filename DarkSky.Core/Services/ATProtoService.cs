@@ -49,13 +49,18 @@ namespace DarkSky.Core.Services
 			if(result.IsT0)
 			{
 				var RefreshSession = result.AsT0;
-				Session Session3 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(
+				Session? Session3 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(
 					new AuthSession(
 						new Session(RefreshSession.Did, RefreshSession.DidDoc, RefreshSession.Handle, null, RefreshSession.AccessJwt, RefreshSession.RefreshJwt)));
-				WeakReferenceMessenger.Default.Send(new AuthenticationSessionMessage(ATProtocolClient.Session));
-				KeyService.Set("v1_previous_did", Session3.Did.Handler);
-				KeyService.Set("v1_previous_handle", Session3.Handle.Handle);
-				KeyService.Set("v1_previous_accessJWT", Session3.AccessJwt);
+				if(Session3 is not null)
+				{
+					WeakReferenceMessenger.Default.Send(new AuthenticationSessionMessage(ATProtocolClient.Session));
+					KeyService.Set("v1_previous_did", Session3.Did.Handler);
+					KeyService.Set("v1_previous_handle", Session3.Handle.Handle);
+					KeyService.Set("v1_previous_accessJWT", Session3.AccessJwt);
+				}
+				else
+					throw new Exception($"Refresh failed Session was null");
 			}
 			else
 				throw new Exception($"Refresh failed");

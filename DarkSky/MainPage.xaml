@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:toolkit="using:CommunityToolkit.WinUI.Controls" 
-    xmlns:helpers="using:DarkSky.Helpers" xmlns:materials="using:Cube.UI.Materials"
+    xmlns:helpers="using:DarkSky.Helpers" xmlns:materials="using:Cube.UI.Materials" xmlns:system="using:System" xmlns:messages="using:DarkSky.Core.Messages"
     SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
     <Grid>
@@ -66,6 +66,30 @@
                     Text="Insider"/>
             </StackPanel>
         </Border>
+        <Button x:Name="ErrorButton" Canvas.ZIndex="2" Margin="124, 4, 0, 0" VerticalAlignment="Top" Visibility="Collapsed" Style="{ThemeResource ToolbarButton}">
+            <icons:FluentSymbolIcon Symbol="ErrorCircle20" Foreground="Red" FontWeight="SemiBold"/>
+            <Button.Flyout>
+                <Flyout Placement="Bottom">
+                    <StackPanel Spacing="8">
+                        <TextBlock FontWeight="SemiBold" Text="App errors"/>
+                        <TextBlock Width="300" TextWrapping="WrapWholeWords" Text="The app is still in beta, if an error occurs please send these on github"/>
+                        <HyperlinkButton Content="Send errors in GitHub" NavigateUri="https://github.com/FireCubeStudios/DarkSky"/>
+                        <ListView ItemsSource="{x:Bind errors, Mode=OneWay}" SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="messages:ErrorMessage">
+                                    <StackPanel Spacing="8" Padding="8" MaxHeight="250" MaxWidth="300">
+                                        <TextBlock Text="{x:Bind Value.Message, Mode=OneWay}" IsTextSelectionEnabled="True" FontWeight="SemiBold"/>
+                                        <ScrollViewer VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
+                                            <TextBlock Text="{x:Bind Value.StackTrace, Mode=OneWay}" MaxWidth="280" IsTextSelectionEnabled="True" TextWrapping="Wrap"/>
+                                        </ScrollViewer>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
         <AutoSuggestBox x:Name="SearchBox" Visibility="Collapsed"
             Width="384"
             Height="32"
@@ -80,7 +104,7 @@
         </AutoSuggestBox>
         <ToggleButton x:Name="PrimaryPaneToggle" IsChecked="{x:Bind PrimaryPaneCollapsed, Mode=TwoWay}"
                       Click="PrimaryPaneToggle_Click" Visibility="Visible" Height="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 8, 200, 0" Canvas.ZIndex="2" Style="{ThemeResource ToolbarToggleButton}">
-           <!-- <Grid Visibility="Collapsed"> bug not working
+            <!-- <Grid Visibility="Collapsed"> bug not working
                 <icons:FluentSymbolIcon x:Name="Collapsed" Symbol="ChevronLeft20" x:Load="{x:Bind PrimaryPaneCollapsed, Mode=OneWay}" Foreground="{ThemeResource HvidSortBrush}"/>
                 <icons:FluentSymbolIcon x:Name="Expanded" Symbol="ChevronRight20" x:Load="{x:Bind helpers:UIHelper.invert(PrimaryPaneCollapsed), Mode=OneWay}" Margin="0, 0, 3, 0" Foreground="{ThemeResource HvidSortBrush}"/>
             </Grid>-->
@@ -93,13 +117,6 @@
                 </icons:FluentSymbolIcon.RenderTransform>
             </icons:FluentSymbolIcon>
         </ToggleButton>
-        <muxc:InfoBar
-            x:Name="Errorbar"
-            Canvas.ZIndex="5"
-            VerticalAlignment="Top"
-            Margin="48"
-    IsOpen="False"
-    Severity="Error"/>
         <muxc:NavigationView
             x:Name="AppNavigation"
             Grid.Row="1"
