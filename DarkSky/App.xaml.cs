@@ -84,6 +84,16 @@ namespace DarkSky
 		{
 			this.InitializeComponent();
 			App.Current.Services = ServiceContainer.Services = ConfigureServices();
+			setup();
+			this.Suspending += OnSuspending;
+			UnhandledException += OnUnhandledException;
+			TaskScheduler.UnobservedTaskException += OnUnobservedException;
+			AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+		}
+
+		private async void setup()
+		{
+
 			if (CredentialService.Count() != 0)
 			{
 				try
@@ -93,13 +103,13 @@ namespace DarkSky
 
 					if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
 					{
-						_ = proto.LoginAsync(credentials.username, credentials.password);
+						await proto.LoginAsync(credentials.username, credentials.password);
 					}
 					else
 					{ // login with refresh token if it is available
 						try
 						{
-							_ = proto.RefreshLoginAsync(
+							await proto.RefreshLoginAsync(
 								(string)Settings.Values["v1_previous_did"],
 								(string)Settings.Values["v1_previous_handle"],
 								(string)Settings.Values["v1_previous_accessJWT"],
@@ -107,21 +117,17 @@ namespace DarkSky
 								(string)Settings.Values["v1_previous_pds"]
 								);
 						}
-						catch
+						catch (Exception e)
 						{
-							_ = proto.LoginAsync(credentials.username, credentials.password);
+							await proto.LoginAsync(credentials.username, credentials.password);
 						}
 					}
 				}
-				catch
+				catch (Exception e)
 				{
 					loginfail = true;
 				}
 			}
-			this.Suspending += OnSuspending;
-			UnhandledException += OnUnhandledException;
-			TaskScheduler.UnobservedTaskException += OnUnobservedException;
-			AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
 		}
 
 		/// <summary>
