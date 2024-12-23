@@ -50,8 +50,10 @@
                 <Grid Padding="12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
                         <RowDefinition Height="40" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
@@ -91,7 +93,8 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal"
                         Spacing="24">
-                        <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False"> <!--IsEnabled="{x:Bind Post.CanReply, Mode=OneWay}">-->
+                        <Button Style="{ThemeResource ToolbarButton}" IsEnabled="False">
+                            <!--IsEnabled="{x:Bind Post.CanReply, Mode=OneWay}">-->
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <icons:FluentSymbolIcon Symbol="Comment20" />
                                 <TextBlock Text="{x:Bind Post.ReplyCount, Mode=OneWay}" />
@@ -170,6 +173,8 @@
                         </Grid>
                         <MenuFlyoutSeparator />
                     </StackPanel>
+                    <controls:PostControl Grid.Row="4" Post="{x:Bind Post.Parent, Mode=OneWay}"/>
+                    <controls:PostControl Grid.Row="5" Post="{x:Bind Post.Reply, Mode=OneWay}"/>
                 </Grid>
             </Grid>
         </Grid>

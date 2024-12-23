@@ -132,6 +132,9 @@
     <Compile Include="Controls\Glow\GlowBall.xaml.cs">
       <DependentUpon>GlowBall.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Glow\GlowLine.xaml.cs">
+      <DependentUpon>GlowLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Settings\Converters.cs" />
     <Compile Include="Controls\Settings\SettingsBlockControl.xaml.cs">
       <DependentUpon>SettingsBlockControl.xaml</DependentUpon>
@@ -234,6 +237,10 @@
     <Page Include="Controls\Glow\GlowBall.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Glow\GlowLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Settings\SettingsBlockControl.xaml">
       <Generator>MSBuild:Compile</Generator>

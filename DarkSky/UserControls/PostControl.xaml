@@ -8,7 +8,7 @@
     xmlns:icons="using:Cube.UI.Icons"
     xmlns:local="using:DarkSky.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:controls="using:DarkSky.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:controls="using:DarkSky.Controls" xmlns:glow="using:Cube.UI.Controls.Glow"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
@@ -23,6 +23,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="40" />
+                <RowDefinition Height="auto" MinHeight="4"/>
             </Grid.RowDefinitions>
             <StackPanel
                 x:Name="RepostContent" VerticalAlignment="Center" Spacing="4" Orientation="Horizontal" Padding="32, 0, 0, 0"
@@ -42,21 +43,7 @@
             <PersonPicture
                 Grid.Row="1" Grid.Column="0" Height="36" HorizontalAlignment="Left" VerticalAlignment="Top"
                 ProfilePicture="{x:Bind helpers:UIHelper.Img(Post.InternalPost.Author.Avatar), Mode=OneWay}" />
-            <toolkit:DropShadowPanel
-                x:Name="ReplyBar"
-                x:Load="{x:Bind Post.HasReply, Mode=OneWay}"
-                Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center" Margin="0, 48, 12, 12"
-                 BlurRadius="16"
-                 Canvas.ZIndex="2"
-                 ShadowOpacity="0.23"
-                 Color="{ThemeResource SystemAccentColorLight3}">
-                <Grid
-                     Width="3"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Stretch"
-                     Background="{ThemeResource AccentLinearDownGradientBrush}"
-                     CornerRadius="2" />
-            </toolkit:DropShadowPanel>
+            <glow:GlowLine x:Name="ReplyBar" x:Load="{x:Bind Post.HasReply, Mode=OneWay}" Canvas.ZIndex="2" Width="3" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" HorizontalAlignment="Center" Margin="0, 42, 10, 4"/>
             <StackPanel Grid.Row="1" Grid.Column="1">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <TextBlock
@@ -144,6 +131,16 @@
                         </Button.Flyout>
                     </Button>
                 </StackPanel>
+            </Grid>
+            <StackPanel x:Name="ShowFullThreadGlowIndicator" x:Load="{x:Bind Post.HasFullThread, Mode=OneWay}" Spacing="4" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Margin="0, 0, 10, 4" VerticalAlignment="Center">
+                <glow:GlowLine Height="4" Width="4"/>
+                <glow:GlowLine Height="4" Width="4"/>
+                <glow:GlowLine Height="8" Width="4"/>
+            </StackPanel>
+            <Grid x:Name="ShowFullThreadButton" x:Load="{x:Bind Post.HasFullThread, Mode=OneWay}" Grid.Row="4" Grid.Column="1">
+                <HyperlinkButton Click="ShowFullThreadButton_Click" HorizontalAlignment="Stretch" Height="32" HorizontalContentAlignment="Left">
+                    <TextBlock Text="View full thread..."/>
+                </HyperlinkButton>
             </Grid>
         </Grid>
     </Grid>

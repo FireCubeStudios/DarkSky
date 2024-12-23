@@ -57,7 +57,7 @@ namespace DarkSky.Core.Cursors
 			await GetMoreItemsAsync();
 		}
 
-		public void Clear()
+		public virtual void Clear()
 		{
 			((ObservableCollection<T>)Items).Clear();
 			Cursor = "";

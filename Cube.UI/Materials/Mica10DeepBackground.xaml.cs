@@ -40,7 +40,7 @@ namespace Cube.UI.Materials
 
 				var m = new MicaAltBrush();
 				m.Kind = (int)BackdropKind.BaseAlt;
-				m.Theme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+				m.Theme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Default;
 				this.Background = m;
 			}
 			else
@@ -66,7 +66,7 @@ namespace Cube.UI.Materials
 
 				var m = new MicaAltBrush();
 				m.Kind = (int)BackdropKind.BaseAlt;
-				m.Theme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+				m.Theme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Default;
 				this.Background = m;
 			}
 		}

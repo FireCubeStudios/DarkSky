@@ -29,6 +29,12 @@ namespace DarkSky.Core.ViewModels.Temporary
 		private PostView internalPost;
 
 		[ObservableProperty]
+		private PostView internalPostReply;
+
+		[ObservableProperty]
+		private PostView internalPostParent;
+
+		[ObservableProperty]
 		private FeedViewPost internalFeedViewPost;
 
 		#endregion
@@ -36,11 +42,25 @@ namespace DarkSky.Core.ViewModels.Temporary
 		[ObservableProperty]
 		private string text;
 
+		/*
+		 * Determines if post has a thread of replies, this can be used to show different UI
+		 * In a list of posts we show a "View full thread" button if a post has more than 2 replies
+		 * PostControl.xaml and AbstractFeedCursorSource
+		 */
+		[ObservableProperty]
+		private bool hasFullThread = false; 
+
 		[ObservableProperty]
 		private bool isReply = false; // Determines if the post is a reply, used by the reposted by "replying to" label in PostControl
 
 		[ObservableProperty]
+		private PostViewModel parent; // Parent of this post if it is a reply
+
+		[ObservableProperty]
 		private bool hasReply = false; // Determines whether to show the reply bar or not, related with FeedViewPost
+
+		[ObservableProperty]
+		private PostViewModel reply; // Reply of this post
 
 		[ObservableProperty]
 		private string repostedBy; // If the post has been reposted by someone, used with FeedViewPost
@@ -122,6 +142,26 @@ namespace DarkSky.Core.ViewModels.Temporary
 				LikeUri = post.Viewer.Like;
 				RepostUri = post.Viewer.Repost;
 			}
+		}
+
+		// Add a reply to this post
+		public void AddReply(PostViewModel reply)
+		{
+			if (Reply == reply) return; // Post is a reply already
+			HasReply = true;
+			Reply = reply;
+			Reply.AddParent(this);
+			InternalPostReply = reply.InternalPost;
+		}
+
+		// Add a parent to this post
+		public void AddParent(PostViewModel parent)
+		{
+			if (Parent == parent) return; // Post has the same parent already
+			IsReply = true;
+			Parent = parent;
+			Parent.AddReply(this);
+			InternalPostParent = parent.InternalPost;
 		}
 
 		[RelayCommand]

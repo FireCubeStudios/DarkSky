@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DarkSky.Core.Cursors.Feeds
 {
-	public class FeedCursorSource : AbstractCursorSource<PostViewModel>, ICursorSource
+	public class FeedCursorSource : AbstractFeedCursorSource
 	{
 		private string FeedUri;
 		public FeedCursorSource(string feed) : base()
@@ -19,12 +19,13 @@ namespace DarkSky.Core.Cursors.Feeds
 			FeedUri = feed;
 		}
 
+
 		protected override async Task OnGetMoreItemsAsync(int limit = 20)
 		{
 			GetFeedOutput timeLine = (await atProtoService.ATProtocolClient.Feed.GetFeedAsync(new ATUri(FeedUri), limit, Cursor)).AsT0;
 			Cursor = timeLine.Cursor;
 			foreach (var item in timeLine.Feed)
-				((ObservableCollection<PostViewModel>)Items).Add(PostFactory.Create(item));
+				AddPost(item);
 		}
 	}
 }

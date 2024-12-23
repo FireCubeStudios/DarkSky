@@ -17,7 +17,7 @@ namespace DarkSky.Core.Cursors.Feeds
 	/*
 	 * Load posts from a Profile
 	 */
-	public class ProfileFeedCursorSource : AbstractCursorSource<PostViewModel>, ICursorSource
+	public class ProfileFeedCursorSource : AbstractFeedCursorSource
 	{
 		private string Filter;
 		private ProfileViewModel Profile;
@@ -32,14 +32,15 @@ namespace DarkSky.Core.Cursors.Feeds
 			GetAuthorFeedOutput timeLine = (await atProtoService.ATProtocolClient.Feed.GetAuthorFeedAsync(Profile.Handle, limit, Cursor, Filter, false)).AsT0;
 			Cursor = timeLine.Cursor;
 
-			if (((ObservableCollection<PostViewModel>)Items).Count == 0 && Profile.PinnedPost is not null) // Add pinned post first if it exists
+			// Add pinned post first if it exists
+			if (((ObservableCollection<PostViewModel>)Items).Count == 0 && Profile.PinnedPost is not null)
 				Add(Profile.PinnedPost);
 
 			foreach (var item in timeLine.Feed)
 			{
 				// Ignore pinned posts if there are any
 				if (Profile.PinnedPost is null || item.Post.Cid != Profile.PinnedPost.Cid)
-					Add(PostFactory.Create(item));
+					AddPost(item);
 			}
 		}
 	}

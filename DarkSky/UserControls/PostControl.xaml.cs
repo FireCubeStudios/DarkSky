@@ -51,5 +51,12 @@ namespace DarkSky.UserControls
 		{
 			this.InitializeComponent();
 		}
-	}
+
+		private void ShowFullThreadButton_Click(object sender, RoutedEventArgs e)
+		{
+			WeakReferenceMessenger.Default.Send(
+					new SecondaryNavigationMessage(
+						new SecondaryNavigation(typeof(PostViewModel), Post)));
+		}
+    }
 }
