@@ -15,8 +15,8 @@ namespace DarkSky.Core.Cursors.Feeds
 	 */
 	public abstract class AbstractFeedCursorSource : AbstractCursorSource<PostViewModel>, ICursorSource
 	{
-		private Dictionary<string, PostViewModel> parents = new(); // contain all "parent" posts
-		private Dictionary<string, PostViewModel> roots = new(); // contain all "root" posts
+		protected Dictionary<string, PostViewModel> parents = new(); // contain all "parent" posts
+		protected Dictionary<string, PostViewModel> roots = new(); // contain all "root" posts
 
 		protected override abstract Task OnGetMoreItemsAsync(int limit = 20);
 
@@ -73,19 +73,24 @@ namespace DarkSky.Core.Cursors.Feeds
 					// to do this we set root of post A or B as "show full thread"
 					// then we do not render anything
 					// we also set the parent of post B to have a new parent which is the parent of post A
-					// reference: https://discord.com/channels/714581497222398064/753345992543305808/1320524875789500416
+					// furthermore set the root reply to be the parent of post A
+					// reference image where post A is 3s in second message and post B is 3s in first message:
+					// https://discord.com/channels/714581497222398064/753345992543305808/1320524875789500416
 
 					if (parents.ContainsKey(item.Post.Cid)) // Post appeared as a parent
 					{
-						PostViewModel rootPost;
-						roots.TryGetValue(root.Cid, out rootPost);
-						if (rootPost is not null)
-							rootPost.HasFullThread = true; // Mark root as "show full thread"
-
 						PostViewModel parentPostB;
 						parents.TryGetValue(item.Post.Cid, out parentPostB);
 						if (parentPostB is not null)
 							parentPostB.AddParent(parentV);
+
+						PostViewModel rootPost;
+						roots.TryGetValue(root.Cid, out rootPost);
+						if (rootPost is not null)
+						{
+							rootPost.HasFullThread = true; // Mark root as "show full thread"
+							rootPost.AddReply(parentV);
+						}
 
 						return;
 					}

@@ -17,15 +17,27 @@ namespace DarkSky.Core.Cursors.Feeds
 	{
 		public TimelineFeedCursorSource() : base() { }
 
-		// Prevent duplicates loading with replies and posts
-		private HashSet<string> postID = new HashSet<string>();
-
 		protected override async Task OnGetMoreItemsAsync(int limit = 20)
 		{
 			GetTimelineOutput timeLine = (await atProtoService.ATProtocolClient.Feed.GetTimelineAsync(limit: limit, cursor: Cursor)).AsT0;
 			Cursor = timeLine.Cursor;
 			foreach (var item in timeLine.Feed)
-				AddPost(item);
+			{
+				// Custom logic to hide duplicate posts in the timeline only
+				if (item.Reply is null)
+					AddPost(item); // Post has no replies
+				else
+				{
+					// Post has replies to a root post that was shown before
+					// So we do not show the reply chain
+					// bsky.app timeline has this behaviour
+					if (item.Reply.Root is not PostView) continue;
+					if (!roots.ContainsKey(((PostView)item.Reply.Root).Cid))
+					{
+						AddPost(item);
+					}
+				}
+			}
 			/*
 			 * The timeline may contain a post then a reply chain to that post which basically duplicates it
 			 * This logic aims to remove duplicates to show reply chains to the original post instead
