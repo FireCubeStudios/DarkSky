@@ -91,8 +91,6 @@ namespace DarkSky.Controls
 				{
 					foreach (Facet facet in text.Facets)
 					{
-						//try
-						//{
 							if (facet.Features.Count == 1)
 							{
 								if (facet.Features[0].Type == "app.bsky.richtext.facet#mention")
@@ -123,12 +121,6 @@ namespace DarkSky.Controls
 									);
 								}
 							}
-						/*}
-						catch // If facet parsing fails then show plain text
-						{
-							//RichTextBlock.Inlines.Clear();
-							//RichTextBlock.Inlines.Add(run);
-						}*/
 					}
 				}
 			}
@@ -180,6 +172,8 @@ namespace DarkSky.Controls
 							Hyperlink_Click(sender, uri);
 						};
 						hyperlink.Inlines.Add(new Run { Text = linkText });
+
+
 						if (!string.IsNullOrEmpty(beforeLink))	// Avoid bugs if link starts at index 0
 							RichTextBlock.Inlines.Insert(i + 1, hyperlink);
 						else

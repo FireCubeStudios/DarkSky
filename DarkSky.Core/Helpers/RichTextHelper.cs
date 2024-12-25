@@ -1,7 +1,11 @@
 ﻿using FishyFlip.Lexicon.App.Bsky.Richtext;
+using FishyFlip.Lexicon.Social.Psky.Richtext;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DarkSky.Core.Helpers
 {
@@ -13,44 +17,51 @@ namespace DarkSky.Core.Helpers
 	 */
 	public class RichTextHelper
 	{
-		// Convert byte index to a char index
-		public static int ByteIndexToCharIndex(string Text, long Index)
+		// Omit Byte Order Mark which is a sequence of special bytes that indicates encoding type
+		private static readonly Encoding UTF8Encoder = new UTF8Encoding(false);
+
+		public static int ByteIndexToCharIndex(string text, long byteIndex)
 		{
-			byte[] TextUTF8 = Encoding.UTF8.GetBytes(Text); // Convert text into a UTF-8 byte array
+			if (string.IsNullOrEmpty(text))
+				throw new ArgumentNullException(nameof(text));
 
-			if (Index < 0 || Index > TextUTF8.Length)   // Check if the Index is out of bounds
-				throw new ArgumentOutOfRangeException(nameof(Index), "Index is out of bounds.");
+			// Convert the entire string to a UTF-8 byte array
+			byte[] utf8Bytes = UTF8Encoder.GetBytes(text);
 
-			int charIndex = 0;
-			long byteIndex = 0;			
-			while (byteIndex < Index)   // Loop through each character in the string
+			if (byteIndex < 0 || byteIndex > utf8Bytes.Length)
+				throw new ArgumentOutOfRangeException(nameof(byteIndex), "Byte index is out of bounds.");
+
+			int charIndex = 0; // The resulting character index in the UTF-16 string
+			int currentByteIndex = 0; // The current byte index in the UTF-8 byte array
+
+			while (currentByteIndex < byteIndex && charIndex < text.Length)
 			{
-				// Get the byte size of the current character
-				int charByteSize = GetUtf8CharByteSize(TextUTF8, byteIndex);
+				char currentChar = text[charIndex];
 
-				// Move byteIndex by the number of bytes of the current character
-				byteIndex += charByteSize;
+				// Determine if the current character is part of a surrogate pair
+				int charByteSize;
+				if (char.IsHighSurrogate(currentChar) && charIndex + 1 < text.Length && char.IsLowSurrogate(text[charIndex + 1]))
+				{
+					// Combine surrogate pairs into a single Unicode scalar
+					string surrogatePair = new string(new[] { currentChar, text[charIndex + 1] });
+					charByteSize = UTF8Encoder.GetByteCount(surrogatePair);
+					charIndex++; // Skip the low surrogate
+				}
+				else
+				{
+					// Single character
+					charByteSize = UTF8Encoder.GetByteCount(new[] { currentChar });
+				}
+
+				// If adding this character's bytes exceeds the target byteIndex, stop here
+				if (currentByteIndex + charByteSize > byteIndex)
+					break;
+
+				currentByteIndex += charByteSize;
 				charIndex++;
 			}
+
 			return charIndex;
-		}
-
-		// Helper method to determine the byte size of a UTF-8 character
-		private static int GetUtf8CharByteSize(byte[] text, long byteIndex)
-		{
-			// Determine the number of bytes based on the leading byte
-			byte firstByte = text[byteIndex];
-
-			if ((firstByte & 0x80) == 0)
-				return 1;	// 1 byte for ASCII characters (0x00 - 0x7F)
-			else if ((firstByte & 0xE0) == 0xC0)
-				return 2;	// 2 bytes for characters in the range 0x80 - 0x7FF
-			else if ((firstByte & 0xF0) == 0xE0)
-				return 3;   // 3 bytes for characters in the range 0x800 - 0xFFFF
-			else if ((firstByte & 0xF8) == 0xF0)
-				return 4;   // 4 bytes for characters in the range 0x10000 - 0x10FFFF
-
-			return 1; // Default case, should not happen in well-formed UTF-8 text.
 		}
 	}
 }
