@@ -43,24 +43,24 @@ namespace DarkSky.Core.Services
 			// Login with refresh token
 			Session session = new Session(new ATDid(did), null, new ATHandle(handle), null, refreshJwt, refreshJwt);
 			var authSession = new AuthSession(session);
-			Session session2 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(authSession);
+			Session session2 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(authSession) ?? throw new Exception($"Refresh failed Session2 was null"); ;
 
 			var result = await ATProtocolClient.RefreshSessionAsync();
 			if(result.IsT0)
 			{
-				var RefreshSession = result.AsT0;
+				var RefreshSession = result.AsT0; ;
 				Session? Session3 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(
 					new AuthSession(
-						new Session(RefreshSession.Did, RefreshSession.DidDoc, RefreshSession.Handle, null, RefreshSession.AccessJwt, RefreshSession.RefreshJwt)));
+						new Session(RefreshSession!.Did!, RefreshSession.DidDoc, RefreshSession!.Handle!, null, RefreshSession!.AccessJwt!, RefreshSession!.RefreshJwt!)));
 				if(Session3 is not null)
 				{
-					WeakReferenceMessenger.Default.Send(new AuthenticationSessionMessage(ATProtocolClient.Session));
+					WeakReferenceMessenger.Default.Send(new AuthenticationSessionMessage(ATProtocolClient.Session ?? throw new Exception($"Refresh failed ATProtocolClient.Session was null")));
 					KeyService.Set("v1_previous_did", Session3.Did.Handler);
 					KeyService.Set("v1_previous_handle", Session3.Handle.Handle);
 					KeyService.Set("v1_previous_accessJWT", Session3.AccessJwt);
 				}
 				else
-					throw new Exception($"Refresh failed Session was null");
+					throw new Exception($"Refresh failed Session3 was null");
 			}
 			else
 				throw new Exception($"Refresh failed");
@@ -84,7 +84,6 @@ namespace DarkSky.Core.Services
 		public async Task LoginAsync(string username, string password, string pds = "")
 		{
 			ATProtocolClient = CreateATProtocolClient(pds);
-
 			var result = await ATProtocolClient.AuthenticateWithPasswordResultAsync(username, password);
 			if (result.IsT0 && result.AsT0 is not null)
 				WeakReferenceMessenger.Default.Send(new AuthenticationSessionMessage(ATProtocolClient.Session));

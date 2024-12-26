@@ -23,6 +23,10 @@ namespace DarkSky.Core.Services
 		public AccountService(ATProtoService atProtoService)
 		{
 			this.atProtoService = atProtoService;
+			WeakReferenceMessenger.Default.Register<AuthenticationSessionMessage>(this, (r, m) =>
+			{
+				currentProfile = null;
+			});
 		}
 
 		public async Task<ProfileViewModel> GetCurrentProfileAsync()

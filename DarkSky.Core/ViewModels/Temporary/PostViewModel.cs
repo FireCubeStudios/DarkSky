@@ -142,6 +142,12 @@ namespace DarkSky.Core.ViewModels.Temporary
 				LikeUri = post.Viewer.Like;
 				RepostUri = post.Viewer.Repost;
 			}
+
+			if(PostRecord.Labels is not null)
+				if(PostRecord.Labels!.Values!.Count != 0)
+				{
+					Debug.WriteLine(PostRecord.Labels.Values[0]);
+				}
 		}
 
 		// Add a reply to this post
