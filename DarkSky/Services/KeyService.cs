@@ -16,8 +16,8 @@ namespace DarkSky.Services
 	{
 		private static ApplicationDataContainer Settings = ApplicationData.Current.LocalSettings;
 
-		public object Get(string key) => Settings.Values[key];
+		public T Get<T>(string key) => (T)Settings.Values[key];
 
-		public void Set(string key, object value) => Settings.Values[key] = value;
+		public void Set<T>(string key, T value) => Settings.Values[key] = value;
 	}
 }

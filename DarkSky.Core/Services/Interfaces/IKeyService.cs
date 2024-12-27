@@ -6,8 +6,8 @@ namespace DarkSky.Core.Services.Interfaces
 {
 	public interface IKeyService
 	{
-		public object Get(string key);
+		public T Get<T>(string key);
 
-		public void Set(string key, object value);
+		public void Set<T>(string key, T value);
 	}
 }

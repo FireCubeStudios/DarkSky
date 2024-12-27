@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>
+    <UserSecretsId>79ae0892-2ff6-40cf-b8de-a38a1cdca356</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
