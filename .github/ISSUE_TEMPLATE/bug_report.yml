@@ -1,0 +1,52 @@
+name: Bug Report
+description: Create a bug report to help improve the app
+# type: 'Bug'
+title: 'Bug: '
+body:
+
+  # Tip to warn of checking for existing issues
+  - type: markdown
+    attributes:
+      value: |
+        > [!TIP]
+        > Have you checked for similar issues? There's a possibility the bug you are experiencing has already been reported. Please do a thorough search before creating a new issue.
+
+  # Description
+  - type: textarea
+    attributes:
+      label: Description
+      description: A clear and concise description of what the issue is.
+    validations:
+      required: true
+
+  # Step To Reproduce
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  # App Version
+  - type: input
+    id: rise_version
+    attributes:
+      label: App Version
+      description: Which version of the app are you using? You can find your version from the settings.
+      placeholder: "e.g. 0.14.0-alpha3"
+    validations:
+      required: true
+
+  # Windows Version
+  - type: input
+    id: windows_version
+    attributes:
+      label: Windows Version
+      description: Which version of Windows are you using? Press <kbd>Win</kbd> + <kbd>Pause/Break</kbd> and copy.
+      placeholder: "e.g. 10.0.22621.1848"
+    validations:
+      required: true
