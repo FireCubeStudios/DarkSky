@@ -1,0 +1,65 @@
+name: Feature Request
+description: This project thrives from differentiation from competing apps (there are too many)
+title: 'Feature: '
+body:
+
+  # Tip to warn of checking for existing issues
+  - type: markdown
+    attributes:
+      value: |
+        > [!TIP]
+        > Have you checked for similar feature requests? There's a possibility your suggestion is already being tracked. Please do a thorough search before creating a new issue.
+
+  # Description
+  - type: textarea
+    attributes:
+      label: What feature or improvement do you think would benefit the app?
+      description: Please include your use case
+    validations:
+      required: true
+
+  # Tooltip about Requirements
+  - type: markdown
+    attributes:
+      value: |
+        ---
+
+        Please include a list changes required to make this improvement. A good rule of thumb is to start your proposal with no more than 7 high-level requirements.
+
+  # Requirements
+  - type: textarea
+    attributes:
+      label: Requirements
+      description: Describe all the requirements to make your idea happen.
+      value: |
+        - This proposal will accomplish X
+        - This proposal will accomplish Y
+        - This proposal will accomplish Z
+    validations:
+      required: true
+
+  # App Version
+  - type: input
+    id: app_version
+    attributes:
+      label: App Version
+      description: Which version of the app are you using? You can find your version from settings.
+      placeholder: "e.g. 0.14.0-alpha3"
+    validations:
+      required: true
+
+  # Windows Version
+  - type: input
+    id: windows_version
+    attributes:
+      label: Windows Version
+      description: Which version of Windows are you using? Press <kbd>Win</kbd> + <kbd>Pause/Break</kbd> and copy.
+      placeholder: "e.g. 10.0.22621.1848"
+    validations:
+      required: true
+
+  # Additional Comments
+  - type: textarea
+    attributes:
+      label: Comments
+      description: Additional information, comments or screenshots about the feature request.
