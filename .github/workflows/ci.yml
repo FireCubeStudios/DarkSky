@@ -128,20 +128,10 @@ jobs:
         $certificateObject = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($env:APPX_SELFSIGNED_CERT_PATH, "")
         $thumbprint = $certificateObject.Thumbprint
 
-    - if: env.CONFIGURATION != env.AUTOMATED_TESTS_CONFIGURATION || env.ARCHITECTURE != env.AUTOMATED_TESTS_ARCHITECTURE
-      name: Build DarkSky
-      run: |
-        msbuild `
-          $env:PACKAGE_PROJECT_PATH `
-          -t:Build `
-          -clp:ErrorsOnly `
-          -p:Configuration=$env:CONFIGURATION `
-          -p:Platform=$env:ARCHITECTURE `
-          -p:AppxBundle=Never `
-          -p:PackageCertificateThumbprint=$thumbprint
+# https://gist.github.com/Lamparter/f3dbc0d97d5268d33429a78abfc95ff7
 
-    - if: env.CONFIGURATION == env.AUTOMATED_TESTS_CONFIGURATION && env.ARCHITECTURE == env.AUTOMATED_TESTS_ARCHITECTURE
-      name: Build & package DarkSky
+    #- if: env.CONFIGURATION == env.AUTOMATED_TESTS_CONFIGURATION && env.ARCHITECTURE == env.AUTOMATED_TESTS_ARCHITECTURE
+    - name: Build & package DarkSky
       run: |
         msbuild `
           $env:PACKAGE_PROJECT_PATH `
