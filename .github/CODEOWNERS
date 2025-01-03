@@ -1,0 +1,5 @@
+# CODEOWNERS
+# This file exists to automatically request a review from
+# a team member in PRs so they can be reviewed quickly.
+
+* @FireCubeStudios @Lamparter
