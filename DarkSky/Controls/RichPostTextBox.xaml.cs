@@ -1,14 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -16,23 +5,23 @@ using Windows.UI.Xaml.Controls;
 
 namespace DarkSky.Controls
 {
-	public sealed partial class RichPostTextBox : UserControl
-	{
-		public RichPostTextBox()
-		{
-			this.InitializeComponent();
-		}
+    public sealed partial class RichPostTextBox : UserControl
+    {
+        public RichPostTextBox()
+        {
+            this.InitializeComponent();
+        }
 
-		// used in progress ring to show number of characters left
-		public double LimitValue(string text) => 300 - text.Length;
-		public string LimitValueStr(string text) => LimitValue(text).ToString();
+        // used in progress ring to show number of characters left
+        public double LimitValue(string text) => 300 - text.Length;
+        public string LimitValueStr(string text) => LimitValue(text).ToString();
 
-		private void UserControl_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
-		{
-			if(e.NewSize.Width > 36)
-				PostText.Width = e.NewSize.Width - 36;
-		}
+        private void UserControl_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width > 36)
+                PostText.Width = e.NewSize.Width - 36;
+        }
 
-		public string gettext() => PostText.Text;
-	}
+        public string gettext() => PostText.Text;
+    }
 }

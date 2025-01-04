@@ -2,43 +2,29 @@
 using DarkSky.Core.Messages;
 using DarkSky.Core.ViewModels;
 using DarkSky.Core.ViewModels.Temporary;
-using FishyFlip.Models;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace DarkSky.Views
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class HomePage : Page
-	{
-		private HomeFeedViewModel ViewModel = App.Current.Services.GetService<HomeFeedViewModel>();
-		public HomePage()
-		{
-			this.InitializeComponent();
-		}
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class HomePage : Page
+    {
+        private HomeFeedViewModel ViewModel = App.Current.Services.GetService<HomeFeedViewModel>();
+        public HomePage()
+        {
+            this.InitializeComponent();
+        }
 
-		private void CursorListView_ItemClicked(object sender, ItemClickEventArgs e)
-		{
-			WeakReferenceMessenger.Default.Send(
-				new SecondaryNavigationMessage(
-					new SecondaryNavigation(typeof(PostViewModel), e.ClickedItem as PostViewModel)));
-		}
-	}
+        private void CursorListView_ItemClicked(object sender, ItemClickEventArgs e)
+        {
+            WeakReferenceMessenger.Default.Send(
+                new SecondaryNavigationMessage(
+                    new SecondaryNavigation(typeof(PostViewModel), e.ClickedItem as PostViewModel)));
+        }
+    }
 }

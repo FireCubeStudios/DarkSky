@@ -1,141 +1,125 @@
-﻿using DarkSky.Services;
+﻿using DarkSky.Core.Classes;
+using DarkSky.Core.Services;
+using DarkSky.Core.Services.Interfaces;
 using DarkSky.Core.ViewModels;
-using DarkSky.Views;
 using DarkSky.Services;
-using FishyFlip;
-using FishyFlip.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using DarkSky.Core.Services;
-using DarkSky.Core.Classes;
-using DarkSky.Core.Services.Interfaces;
-using Windows.Storage;
-using FishyFlip.Events;
-using System.Net;
 
 namespace DarkSky
 {
-	/// <summary>
-	/// Provides application-specific behavior to supplement the default Application class.
-	/// </summary>
-	sealed partial class App : Application
+    /// <summary>
+    /// Provides application-specific behavior to supplement the default Application class.
+    /// </summary>
+    sealed partial class App : Application
     {
-		public static IServiceProvider ConfigureServices()
-		{
-			ServiceCollection services = new ServiceCollection();
+        public static IServiceProvider ConfigureServices()
+        {
+            ServiceCollection services = new ServiceCollection();
 
-			services.AddSingleton<ICredentialService, CredentialService>();
-			services.AddSingleton<ISettingsService, SettingsService>();
-			services.AddSingleton<IAccountService, AccountService>();
-			services.AddSingleton<IKeyService, KeyService>();
-			services.AddSingleton<ATProtoService>();
-			services.AddTransient<LoginViewModel>();
-			services.AddTransient<MainViewModel>();
-			services.AddTransient<SettingsViewModel>();
-			services.AddTransient<NotificationsViewModel>();
-			services.AddSingleton<HomeFeedViewModel>();
-			services.AddSingleton<ListsViewModel>();
+            services.AddSingleton<ICredentialService, CredentialService>();
+            services.AddSingleton<ISettingsService, SettingsService>();
+            services.AddSingleton<IAccountService, AccountService>();
+            services.AddSingleton<IKeyService, KeyService>();
+            services.AddSingleton<ATProtoService>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<SettingsViewModel>();
+            services.AddTransient<NotificationsViewModel>();
+            services.AddSingleton<HomeFeedViewModel>();
+            services.AddSingleton<ListsViewModel>();
 
-			NavigationService navigationService = new();
-			navigationService.RegisterViewForViewModel(typeof(MainViewModel), typeof(MainPage));
-			navigationService.RegisterViewForViewModel(typeof(LoginViewModel), typeof(LoginPage));
-			services.AddSingleton<INavigationService>(navigationService);
+            NavigationService navigationService = new();
+            navigationService.RegisterViewForViewModel(typeof(MainViewModel), typeof(MainPage));
+            navigationService.RegisterViewForViewModel(typeof(LoginViewModel), typeof(LoginPage));
+            services.AddSingleton<INavigationService>(navigationService);
 
-			return services.BuildServiceProvider();
-		}
-		/// <summary>
-		/// Gets the current <see cref="App"/> instance in use
-		/// </summary>
-		public new static App Current => (App)Application.Current;
+            return services.BuildServiceProvider();
+        }
+        /// <summary>
+        /// Gets the current <see cref="App"/> instance in use
+        /// </summary>
+        public new static App Current => (App)Application.Current;
 
-		/// <summary>
-		/// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
-		/// </summary>
-		public IServiceProvider Services { get; set; }
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider Services { get; set; }
 
-		public ApplicationDataContainer Settings = ApplicationData.Current.LocalSettings;
+        public ApplicationDataContainer Settings = ApplicationData.Current.LocalSettings;
 
-		private CredentialService CredentialService = new CredentialService();
+        private CredentialService CredentialService = new CredentialService();
 
-		/// <summary>
-		/// Initializes the singleton application object.  This is the first line of authored code
-		/// executed, and as such is the logical equivalent of main() or WinMain().
-		/// </summary>
-		/// 
-		private bool loginfail = false;
-		public App()
-		{
-			this.InitializeComponent();
-			App.Current.Services = ServiceContainer.Services = ConfigureServices();
-			setup();
-			this.Suspending += OnSuspending;
-			UnhandledException += OnUnhandledException;
-			TaskScheduler.UnobservedTaskException += OnUnobservedException;
-			AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
-		}
+        /// <summary>
+        /// Initializes the singleton application object.  This is the first line of authored code
+        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// </summary>
+        /// 
+        private bool loginfail = false;
+        public App()
+        {
+            this.InitializeComponent();
+            App.Current.Services = ServiceContainer.Services = ConfigureServices();
+            setup();
+            this.Suspending += OnSuspending;
+            UnhandledException += OnUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnUnobservedException;
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+        }
 
-		private async void setup()
-		{
+        private async void setup()
+        {
 
-			if (CredentialService.Count() != 0)
-			{
-				try
-				{
-					Credential credentials = CredentialService.GetCredential();
-					ATProtoService proto = Services.GetService<ATProtoService>();
+            if (CredentialService.Count() != 0)
+            {
+                try
+                {
+                    Credential credentials = CredentialService.GetCredential();
+                    ATProtoService proto = Services.GetService<ATProtoService>();
 
-					if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
-					{
-						await proto.LoginAsync(credentials.username, credentials.password);
-					}
-					else
-					{ // login with refresh token if it is available
-						try
-						{
-							await proto.RefreshLoginAsync(
-								(string)Settings.Values["v1_previous_did"],
-								(string)Settings.Values["v1_previous_handle"],
-								(string)Settings.Values["v1_previous_accessJWT"],
-								credentials.token,
-								(string)Settings.Values["v1_previous_pds"]
-								);
-						}
-						catch (Exception e)
-						{
-							await proto.LoginAsync(credentials.username, credentials.password);
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					loginfail = true;
-				}
-			}
-		}
+                    if (String.IsNullOrEmpty((string)Settings.Values["v1_previous_did"])) // legacy, login normal way then save new details
+                    {
+                        await proto.LoginAsync(credentials.username, credentials.password);
+                    }
+                    else
+                    { // login with refresh token if it is available
+                        try
+                        {
+                            await proto.RefreshLoginAsync(
+                                (string)Settings.Values["v1_previous_did"],
+                                (string)Settings.Values["v1_previous_handle"],
+                                (string)Settings.Values["v1_previous_accessJWT"],
+                                credentials.token,
+                                (string)Settings.Values["v1_previous_pds"]
+                                );
+                        }
+                        catch (Exception e)
+                        {
+                            await proto.LoginAsync(credentials.username, credentials.password);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    loginfail = true;
+                }
+            }
+        }
 
-		/// <summary>
-		/// Invoked when the application is launched normally by the end user.  Other entry points
-		/// will be used such as when the application is launched to open a specific file.
-		/// </summary>
-		/// <param name="e">Details about the launch request and process.</param>
-		protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        /// <summary>
+        /// Invoked when the application is launched normally by the end user.  Other entry points
+        /// will be used such as when the application is launched to open a specific file.
+        /// </summary>
+        /// <param name="e">Details about the launch request and process.</param>
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -157,18 +141,18 @@ namespace DarkSky
 
             if (e.PrelaunchActivated == false)
             {
-				Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
-				if (rootFrame.Content == null)
-				{
-					if (CredentialService.Count() == 0 || loginfail)
-					{
-						rootFrame.Navigate(typeof(NEWLoginPage), e.Arguments);
-					}
-					else // login, initialise DI, go to mainpage
-					{
-						rootFrame.Navigate(typeof(MainPage), e.Arguments);
-					}
-				}
+                Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
+                if (rootFrame.Content == null)
+                {
+                    if (CredentialService.Count() == 0 || loginfail)
+                    {
+                        rootFrame.Navigate(typeof(NEWLoginPage), e.Arguments);
+                    }
+                    else // login, initialise DI, go to mainpage
+                    {
+                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    }
+                }
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
@@ -198,25 +182,25 @@ namespace DarkSky
             deferral.Complete();
         }
 
-		private static void OnUnobservedException(object? sender, UnobservedTaskExceptionEventArgs e) => e.SetObserved();
+        private static void OnUnobservedException(object? sender, UnobservedTaskExceptionEventArgs e) => e.SetObserved();
 
-		private static async void OnUnhandledException(object? sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
-		{
-			try
-			{
-				await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
-				{
-					Title = "Unhandled exception",
-					Content = e.Message,
-					CloseButtonText = "Close"
-				}
-					.ShowAsync();
-			}
-			catch { }
+        private static async void OnUnhandledException(object? sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            try
+            {
+                await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
+                {
+                    Title = "Unhandled exception",
+                    Content = e.Message,
+                    CloseButtonText = "Close"
+                }
+                    .ShowAsync();
+            }
+            catch { }
         }
 
-		private void CurrentDomain_FirstChanceException(object? sender, FirstChanceExceptionEventArgs e)
-		{
-		}
-	}
+        private void CurrentDomain_FirstChanceException(object? sender, FirstChanceExceptionEventArgs e)
+        {
+        }
+    }
 }

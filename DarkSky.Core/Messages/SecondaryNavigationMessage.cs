@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DarkSky.Core.Messages
 {
-	/*
+    /*
 	 * New navigation system for the secondary panel
 	 * The secondary panel is now persistent, it can be navigated to by using a Messenger to specify when to navigate
 	 * T is a ViewModel and object is a payload
@@ -16,11 +14,11 @@ namespace DarkSky.Core.Messages
 	 * This usage should close secondary panel page
 	 * new SecondaryNavigation(null)
 	 */
-	public record SecondaryNavigation(Type ViewModel, object? payload = null);
-	public class SecondaryNavigationMessage : ValueChangedMessage<SecondaryNavigation>
-	{
-		public SecondaryNavigationMessage(SecondaryNavigation Navigation) : base(Navigation)
-		{
-		}
-	}
+    public record SecondaryNavigation(Type ViewModel, object? payload = null);
+    public class SecondaryNavigationMessage : ValueChangedMessage<SecondaryNavigation>
+    {
+        public SecondaryNavigationMessage(SecondaryNavigation Navigation) : base(Navigation)
+        {
+        }
+    }
 }
