@@ -41,7 +41,7 @@ If you spot a secret in the code, please let us know by contacting us on Discord
 
 ### GitHub API
 
-DarkSky relies heavily on the BlueSky (ATProtocol) API via open source project FishyFlip. If you believe that you have found a security vulnerability in the API and not DarkSky, _please please please_ email BlueSky via `security@bsky.app`, BlueSky's official vulnerability report email.
+DarkSky relies heavily on the Bluesky (ATProtocol) API via open source project FishyFlip. If you believe that you have found a security vulnerability in the API and not DarkSky, _please please please_ email Bluesky via `security@bsky.app`, Bluesky's official vulnerability report email.
 > If you believe you have found a security vulnerability, please email us at `security@bsky.app` with a description of the issue.
 
 ## Our Measures

@@ -4,7 +4,7 @@
   <a style="text-decoration:none" href="https://github.com/FireCubeStudios/DarkSky/actions/workflows/ci.yml">
     <img src="https://github.com/FireCubeStudios/DarkSky/actions/workflows/ci.yml/badge.svg" alt="CI Status" /></a>
   <a style="text-decoration:none" href="https://bsky.app/profile/firecube.bsky.social">
-    <img src="https://img.shields.io/badge/BlueSky-Follow-blue" alt="Follow on BlueSky for updates" /></a>
+    <img src="https://img.shields.io/badge/Bluesky-Follow-blue" alt="Follow on Bluesky for updates" /></a>
   <a style="text-decoration:none" href="https://dsc.gg/devsanx">
     <img src="https://img.shields.io/discord/714581497222398064?label=Discord&color=7289da" alt="Join discord server to learn more" /></a>
 </p>
@@ -18,14 +18,14 @@
   </picture></a>
 </p>
 
-<!--<h4 align="center">A modern BlueSky client for Windows.</h3>-->
+<!--<h4 align="center">A modern Bluesky client for Windows.</h3>-->
 
 ---
 
 > [!NOTE]
 > This app is being built very rapidly; while contributions are welcome please be aware that you may face merge conflicts.
 
-Introducing **DarkSky**, a modern BlueSky client for Windows. Built using UWP and enhanced using GlowUI, it leverages fast technologies paired with beautiful design that makes using the app worthwhile.
+Introducing **DarkSky**, a modern Bluesky client for Windows. Built using UWP and enhanced using GlowUI, it leverages fast technologies paired with beautiful design that makes using the app worthwhile.
 
 ## 📋 Features
 

@@ -47,7 +47,7 @@ namespace DarkSky.Core.ViewModels.Temporary
 			this.ListView = listView;
 			this.Name = listView.Name ?? "";
 			this.Description = listView.Description ?? "";
-			this.Avatar = listView.Avatar ?? "https://raw.githubusercontent.com/FireCubeStudios/DarkSky/refs/heads/master/DarkSky/Assets/BlueSky/list.webp";
+			this.Avatar = listView.Avatar ?? "https://raw.githubusercontent.com/FireCubeStudios/DarkSky/refs/heads/master/DarkSky/Assets/Bluesky/list.webp";
 			this.CreatedAt = listView.IndexedAt ?? DateTime.Now;
 			if (listView.Uri is not null)
 			{

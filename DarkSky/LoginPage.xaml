@@ -67,7 +67,7 @@
                         </StackPanel>
                         <TextBlock
       HorizontalTextAlignment="Left" HorizontalAlignment="Left"
-      Text="Sign in with a BlueSky account using the handle/email and the password/App password."
+      Text="Sign in with a Bluesky account using the handle/email and the password/App password."
       TextWrapping="WrapWholeWords" />
                         <TextBlock
 HorizontalTextAlignment="Left" HorizontalAlignment="Left"
