@@ -25,9 +25,9 @@
                 Text="Chats are coming soon..." />
             <TextBlock
                 HorizontalTextAlignment="Center"
-                Text="The app is being built up rapidly. Follow the progress in BlueSky, GitHub or Discord."
+                Text="The app is being built up rapidly. Follow the progress in Bluesky, GitHub or Discord."
                 TextWrapping="WrapWholeWords" />
-            <HyperlinkButton HorizontalAlignment="Center" Content="See progress in BlueSky" />
+            <HyperlinkButton HorizontalAlignment="Center" Content="See progress in Bluesky" />
             <HyperlinkButton HorizontalAlignment="Center" Content="Send feedback in GitHub" />
             <HyperlinkButton HorizontalAlignment="Center" Content="Join the Discord" />
         </StackPanel>

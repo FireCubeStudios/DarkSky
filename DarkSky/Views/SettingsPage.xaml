@@ -41,7 +41,7 @@
                 <HyperlinkButton Content="Our Discord" NavigateUri="https://discord.com/invite/3WYcKat"/>
             </toolkit:SettingsCard>
             <toolkit:SettingsCard
-                       Header="See app progress in BlueSky" Description="Give a follow to see progress in-app!">
+                       Header="See app progress in Bluesky" Description="Give a follow to see progress in-app!">
                 <HyperlinkButton Content="FireCube Bluesky" NavigateUri="https://bsky.app/profile/firecube.bsky.social"/>
             </toolkit:SettingsCard>
             

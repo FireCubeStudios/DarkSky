@@ -70,9 +70,9 @@
      TextWrapping="WrapWholeWords" />
                     <TextBlock
                 HorizontalTextAlignment="Center"
-                Text="The app is being built up rapidly. Follow the progress in BlueSky, GitHub or Discord."
+                Text="The app is being built up rapidly. Follow the progress in Bluesky, GitHub or Discord."
                 TextWrapping="WrapWholeWords" />
-                    <HyperlinkButton HorizontalAlignment="Center" Content="See progress in BlueSky" NavigateUri="https://bsky.app/profile/firecube.bsky.social"/>
+                    <HyperlinkButton HorizontalAlignment="Center" Content="See progress in Bluesky" NavigateUri="https://bsky.app/profile/firecube.bsky.social"/>
                     <HyperlinkButton HorizontalAlignment="Center" Content="Send feedback in GitHub" NavigateUri="https://github.com/FireCubeStudios/DarkSky"/>
                     <HyperlinkButton HorizontalAlignment="Center" Content="Join the Discord" NavigateUri="https://discord.com/invite/3WYcKat"/>
                 </StackPanel>
