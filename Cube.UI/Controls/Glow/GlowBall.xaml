@@ -2,13 +2,23 @@
     x:Class="Cube.UI.Controls.Glow.GlowBall"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Cube.UI.Controls.Glow"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     xmlns:helpers="using:Cube.UI.Helpers"
+    xmlns:local="using:Cube.UI.Controls.Glow"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
-    <toolkit:DropShadowPanel VerticalAlignment="Center" ShadowOpacity="1" HorizontalAlignment="Stretch" Color="{x:Bind helpers:ColorHelper.GetLighterColor1(Color), Mode=OneWay}">
-        <Grid Background="{x:Bind Color, Mode=OneWay, Converter={StaticResource ColorToBrush}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" CornerRadius="100" Width="{x:Bind Width, Mode=OneWay}" Height="{x:Bind Height, Mode=OneWay}"/>
+    <toolkit:DropShadowPanel
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        ShadowOpacity="1"
+        Color="{x:Bind helpers:ColorHelper.GetLighterColor1(Color), Mode=OneWay}">
+        <Grid
+            Width="{x:Bind Width, Mode=OneWay}"
+            Height="{x:Bind Height, Mode=OneWay}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            Background="{x:Bind Color, Mode=OneWay, Converter={StaticResource ColorToBrush}}"
+            CornerRadius="100" />
     </toolkit:DropShadowPanel>
 </UserControl>

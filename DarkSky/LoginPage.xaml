@@ -6,10 +6,10 @@
     xmlns:glow="using:Cube.UI.Controls.Glow"
     xmlns:icons="using:Cube.UI.Icons"
     xmlns:local="using:DarkSky"
+    xmlns:materials="using:Cube.UI.Materials"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    xmlns:materials="using:Cube.UI.Materials"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
@@ -47,49 +47,91 @@
         </Border>
         <muxc:InfoBar
             x:Name="Errorbar"
-            Canvas.ZIndex="5"
             Margin="48"
             VerticalAlignment="Top"
-    IsOpen="False"
-    Severity="Error"/>
-        <Grid Canvas.ZIndex="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Background="{ThemeResource MicaDarkBrush}" BorderThickness="1" CornerRadius="8" BorderBrush="{ThemeResource MicaBorderBrush}">
-            <Grid Background="{ThemeResource MicaBlurBrush}" Padding="16">
+            Canvas.ZIndex="5"
+            IsOpen="False"
+            Severity="Error" />
+        <Grid
+            Width="600"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="{ThemeResource MicaDarkBrush}"
+            BorderBrush="{ThemeResource MicaBorderBrush}"
+            BorderThickness="1"
+            Canvas.ZIndex="3"
+            CornerRadius="8">
+            <Grid Padding="16" Background="{ThemeResource MicaBlurBrush}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="12"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <StackPanel Spacing="12" Grid.Column="2" HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Spacing="12" Margin="4, 4, 4, 12">
+                    <StackPanel
+                        Grid.Column="2"
+                        HorizontalAlignment="Center"
+                        Spacing="12">
+                        <StackPanel
+                            Margin="4,4,4,12"
+                            Orientation="Horizontal"
+                            Spacing="12">
                             <TextBlock FontSize="24" FontWeight="SemiBold">DarkSky</TextBlock>
-                            <TextBlock FontSize="20" FontWeight="SemiBold" Opacity="0.7" VerticalAlignment="Bottom">Preview</TextBlock>
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                FontSize="20"
+                                FontWeight="SemiBold"
+                                Opacity="0.7">
+                                Preview
+                            </TextBlock>
                         </StackPanel>
                         <TextBlock
-      HorizontalTextAlignment="Left" HorizontalAlignment="Left"
-      Text="Sign in with a Bluesky account using the handle/email and the password/App password."
-      TextWrapping="WrapWholeWords" />
+                            HorizontalAlignment="Left"
+                            HorizontalTextAlignment="Left"
+                            Text="Sign in with a Bluesky account using the handle/email and the password/App password."
+                            TextWrapping="WrapWholeWords" />
                         <TextBlock
-HorizontalTextAlignment="Left" HorizontalAlignment="Left"
-Text="This app is in a public beta and we need your help to make it better! Please report any issues you encounter to GitHub"
-TextWrapping="WrapWholeWords" />
-                        <HyperlinkButton HorizontalAlignment="Center" Content="Send feedback in GitHub" NavigateUri="https://github.com/FireCubeStudios/DarkSky"/>
-                        <HyperlinkButton HorizontalAlignment="Center" Content="Join the Discord" NavigateUri="https://discord.com/invite/3WYcKat"/>
+                            HorizontalAlignment="Left"
+                            HorizontalTextAlignment="Left"
+                            Text="This app is in a public beta and we need your help to make it better! Please report any issues you encounter to GitHub"
+                            TextWrapping="WrapWholeWords" />
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            Content="Send feedback in GitHub"
+                            NavigateUri="https://github.com/FireCubeStudios/DarkSky" />
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            Content="Join the Discord"
+                            NavigateUri="https://discord.com/invite/3WYcKat" />
                         <TextBlock
-HorizontalTextAlignment="Left" HorizontalAlignment="Left"
-Text="v 0.3.8"
-TextWrapping="WrapWholeWords" />
+                            HorizontalAlignment="Left"
+                            HorizontalTextAlignment="Left"
+                            Text="v 0.3.8"
+                            TextWrapping="WrapWholeWords" />
                     </StackPanel>
                 </Grid>
-                <AppBarSeparator Grid.Column="1"/>
-                <StackPanel Spacing="12" Grid.Column="2" VerticalAlignment="Center" Padding="12">
-                    <TextBox x:Name="UsernameBox" Header="Handle" PlaceholderText="example.bsky.social"/>
-                    <PasswordBox x:Name="PasswordBox" Header="Password" PlaceholderText="Your app password or password"/>
+                <AppBarSeparator Grid.Column="1" />
+                <StackPanel
+                    Grid.Column="2"
+                    Padding="12"
+                    VerticalAlignment="Center"
+                    Spacing="12">
+                    <TextBox
+                        x:Name="UsernameBox"
+                        Header="Handle"
+                        PlaceholderText="example.bsky.social" />
+                    <PasswordBox
+                        x:Name="PasswordBox"
+                        Header="Password"
+                        PlaceholderText="Your app password or password" />
                     <Button Click="Button_Click">Login</Button>
-                    <muxc:ProgressBar IsIndeterminate="True" x:Name="LoginBar" Visibility="Collapsed"/>
+                    <muxc:ProgressBar
+                        x:Name="LoginBar"
+                        IsIndeterminate="True"
+                        Visibility="Collapsed" />
                 </StackPanel>
             </Grid>
         </Grid>
-        <materials:AuroraLite/>
+        <materials:AuroraLite />
     </Grid>
 </Page>

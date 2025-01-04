@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:icons="using:Cube.UI.Icons" 
-    xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" 
+    xmlns:icons="using:Cube.UI.Icons"
     xmlns:swiftlottie="using:Cube.UI.Animations">
     <Style x:Key="CloseButton" TargetType="Button">
         <Setter Property="Foreground" Value="{ThemeResource SplitButtonForeground}" />
@@ -17,77 +17,118 @@
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-3" />
-        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="Transparent" Height="32" Width="40">
+                    <Grid
+                        x:Name="RootGrid"
+                        Width="40"
+                        Height="32"
+                        Background="Transparent">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="4" />
+                        <icons:FluentSymbolIcon
+                            Margin="0, 0, 2, 2"
+                            VerticalAlignment="Center"
+                            Symbol="Dismiss16">
+                            <icons:FluentSymbolIcon.Foreground>
+                                <SolidColorBrush x:Name="CloseButtonIconBrush" Color="{ThemeResource HvidSortColor}" />
+                            </icons:FluentSymbolIcon.Foreground>
+                        </icons:FluentSymbolIcon>
+                        <ToolkitControls:DropShadowPanel
+                            x:Name="Glow"
+                            Grid.Row="0"
+                            Margin="2,0,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="2"
+                            ShadowOpacity="0.93"
+                            Color="{ThemeResource SystemAccentColorLight2}">
+                            <Grid
+                                x:Name="Pipe"
+                                Width="0.1"
+                                Height="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="2">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                        <GradientStop Offset="0.5" Color="{ThemeResource SystemAccentColorLight2}" />
+                                        <GradientStop Offset="1.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </ToolkitControls:DropShadowPanel>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-        Storyboard.TargetProperty="Color"
-        To="{ThemeResource HvidSortColor}" From="#e96e60" Duration="0:0:0.3"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#e96e60"
+                                            To="{ThemeResource HvidSortColor}"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-        Storyboard.TargetProperty="Color"
-        To="#e96e60" From="{ThemeResource HvidSortColor}" Duration="0:0:0.3"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="{ThemeResource HvidSortColor}"
+                                            To="#e96e60"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-        Storyboard.TargetProperty="Color"
-        To="DarkRed" From="#e96e60" Duration="0:0:0.3"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#e96e60"
+                                            To="DarkRed"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <ContentPresenter x:Name="ContentPresenter"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="4"
-                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    AutomationProperties.AccessibilityView="Raw"/>
-                        <icons:FluentSymbolIcon Symbol="Dismiss16" Margin="0, 0, 2, 2" VerticalAlignment="Center">
-                            <icons:FluentSymbolIcon.Foreground>
-                                <SolidColorBrush x:Name="CloseButtonIconBrush" Color="{ThemeResource HvidSortColor}" />
-                            </icons:FluentSymbolIcon.Foreground>
-                        </icons:FluentSymbolIcon>
-                        <ToolkitControls:DropShadowPanel CornerRadius="2" Margin="2,0,2,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" Grid.Row="0" VerticalAlignment="Bottom"
-                HorizontalAlignment="Center">
-                            <Grid x:Name="Pipe"
-                Height="2" Width="0.1" CornerRadius="2"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center">
-                                <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
-                            </Grid>
-                        </ToolkitControls:DropShadowPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -104,19 +145,78 @@
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-3" />
-        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="Transparent" Height="32" Width="40">
+                    <Grid
+                        x:Name="RootGrid"
+                        Width="40"
+                        Height="32"
+                        Background="Transparent">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="4" />
+                        <Grid RenderTransformOrigin="0.5, 0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="ScaleA" ScaleX="0.7" ScaleY="0.7" />
+                            </Grid.RenderTransform>
+                            <controls:AnimatedIcon x:Name="Icon">
+                                <controls:AnimatedIcon.Source>
+                                    <animatedvisuals:AnimatedBackVisualSource />
+                                </controls:AnimatedIcon.Source>
+                                <controls:AnimatedIcon.FallbackIconSource>
+                                    <controls:SymbolIconSource Symbol="Back" />
+                                </controls:AnimatedIcon.FallbackIconSource>
+                            </controls:AnimatedIcon>
+                        </Grid>
+                        <ToolkitControls:DropShadowPanel
+                            x:Name="Glow"
+                            Grid.Row="0"
+                            Margin="2,0,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="2"
+                            ShadowOpacity="0.93"
+                            Color="{ThemeResource SystemAccentColorLight2}">
+                            <Grid
+                                x:Name="Pipe"
+                                Width="0.1"
+                                Height="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="2">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                        <GradientStop Offset="0.5" Color="{ThemeResource SystemAccentColorLight2}" />
+                                        <GradientStop Offset="1.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </ToolkitControls:DropShadowPanel>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Normal"/>
+                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Normal" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
@@ -124,10 +224,15 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="12"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="PointerOver"/>
+                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="PointerOver" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -135,59 +240,24 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Pressed"/>
+                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Pressed" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}"/>
+                                        <Setter Target="Icon.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <ContentPresenter x:Name="ContentPresenter"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="4"
-                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    AutomationProperties.AccessibilityView="Raw"/>
-                        <Grid RenderTransformOrigin="0.5, 0.5">
-                            <Grid.RenderTransform>
-                                <ScaleTransform x:Name="ScaleA" ScaleX="0.7" ScaleY="0.7"/>
-                            </Grid.RenderTransform>
-                            <controls:AnimatedIcon x:Name="Icon">
-                                <controls:AnimatedIcon.Source>
-                                    <animatedvisuals:AnimatedBackVisualSource/>
-                                </controls:AnimatedIcon.Source>
-                                <controls:AnimatedIcon.FallbackIconSource>
-                                    <controls:SymbolIconSource Symbol="Back"/>
-                                </controls:AnimatedIcon.FallbackIconSource>
-                            </controls:AnimatedIcon>
-                        </Grid>
-                        <ToolkitControls:DropShadowPanel CornerRadius="2" Margin="2,0,2,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" Grid.Row="0" VerticalAlignment="Bottom"
-                HorizontalAlignment="Center">
-                            <Grid x:Name="Pipe"
-                Height="2" Width="0.1" CornerRadius="2"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center">
-                                <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
-                            </Grid>
-                        </ToolkitControls:DropShadowPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -204,19 +274,81 @@
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-3" />
-        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="Transparent" Height="32" Width="40">
+                    <Grid
+                        x:Name="RootGrid"
+                        Width="40"
+                        Height="32"
+                        Background="Transparent">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="4" />
+                        <Grid RenderTransformOrigin="0.5, 0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="ScaleA" ScaleX="0.7" ScaleY="0.7" />
+                                    <RotateTransform Angle="180" />
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <controls:AnimatedIcon x:Name="Icon">
+                                <controls:AnimatedIcon.Source>
+                                    <animatedvisuals:AnimatedBackVisualSource />
+                                </controls:AnimatedIcon.Source>
+                                <controls:AnimatedIcon.FallbackIconSource>
+                                    <controls:SymbolIconSource Symbol="Forward" />
+                                </controls:AnimatedIcon.FallbackIconSource>
+                            </controls:AnimatedIcon>
+                        </Grid>
+                        <ToolkitControls:DropShadowPanel
+                            x:Name="Glow"
+                            Grid.Row="0"
+                            Margin="2,0,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="2"
+                            ShadowOpacity="0.93"
+                            Color="{ThemeResource SystemAccentColorLight2}">
+                            <Grid
+                                x:Name="Pipe"
+                                Width="0.1"
+                                Height="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="2">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                        <GradientStop Offset="0.5" Color="{ThemeResource SystemAccentColorLight2}" />
+                                        <GradientStop Offset="1.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </ToolkitControls:DropShadowPanel>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Normal"/>
+                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Normal" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
@@ -224,10 +356,15 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="12"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="PointerOver"/>
+                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="PointerOver" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -235,62 +372,24 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Pressed"/>
+                                        <Setter Target="Icon.(AnimatedIcon.State)" Value="Pressed" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
-                                        <Setter Target="Icon.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}"/>
+                                        <Setter Target="Icon.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <ContentPresenter x:Name="ContentPresenter"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="4"
-                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    AutomationProperties.AccessibilityView="Raw"/>
-                        <Grid RenderTransformOrigin="0.5, 0.5">
-                            <Grid.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform x:Name="ScaleA" ScaleX="0.7" ScaleY="0.7"/>
-                                    <RotateTransform Angle="180"/>
-                                </TransformGroup>
-                            </Grid.RenderTransform>
-                            <controls:AnimatedIcon x:Name="Icon">
-                                <controls:AnimatedIcon.Source>
-                                    <animatedvisuals:AnimatedBackVisualSource/>
-                                </controls:AnimatedIcon.Source>
-                                <controls:AnimatedIcon.FallbackIconSource>
-                                    <controls:SymbolIconSource Symbol="Forward"/>
-                                </controls:AnimatedIcon.FallbackIconSource>
-                            </controls:AnimatedIcon>
-                        </Grid>
-                        <ToolkitControls:DropShadowPanel CornerRadius="2" Margin="2,0,2,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" Grid.Row="0" VerticalAlignment="Bottom"
-                HorizontalAlignment="Center">
-                            <Grid x:Name="Pipe"
-                Height="2" Width="0.1" CornerRadius="2"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center">
-                                <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
-                            </Grid>
-                        </ToolkitControls:DropShadowPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -307,20 +406,79 @@
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-3" />
-        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="Transparent" Height="32" Width="40">
+                    <Grid
+                        x:Name="RootGrid"
+                        Width="40"
+                        Height="32"
+                        Background="Transparent">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="4" />
+                        <Grid RenderTransformOrigin="0.5, 0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="ScaleA" ScaleX="0.5" ScaleY="0.5" />
+                            </Grid.RenderTransform>
+                            <controls:AnimatedIcon x:Name="SettingsIcon">
+                                <controls:AnimatedIcon.Source>
+                                    <animatedvisuals:AnimatedSettingsVisualSource />
+                                </controls:AnimatedIcon.Source>
+                                <controls:AnimatedIcon.FallbackIconSource>
+                                    <controls:SymbolIconSource Symbol="Setting" />
+                                </controls:AnimatedIcon.FallbackIconSource>
+                            </controls:AnimatedIcon>
+                        </Grid>
+                        <ToolkitControls:DropShadowPanel
+                            x:Name="Glow"
+                            Grid.Row="0"
+                            Margin="2,0,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="2"
+                            ShadowOpacity="0.93"
+                            Color="{ThemeResource SystemAccentColorLight2}">
+                            <Grid
+                                x:Name="Pipe"
+                                Width="0.1"
+                                Height="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="2">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                        <GradientStop Offset="0.5" Color="{ThemeResource SystemAccentColorLight2}" />
+                                        <GradientStop Offset="1.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </ToolkitControls:DropShadowPanel>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Normal"/>
+                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Normal" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
@@ -328,10 +486,15 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="12"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="PointerOver"/>
+                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="PointerOver" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -339,59 +502,24 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Pressed"/>
+                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Pressed" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <ContentPresenter x:Name="ContentPresenter"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="4"
-                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    AutomationProperties.AccessibilityView="Raw"/>
-                        <Grid RenderTransformOrigin="0.5, 0.5">
-                            <Grid.RenderTransform>
-                                <ScaleTransform x:Name="ScaleA" ScaleX="0.5" ScaleY="0.5"/>
-                            </Grid.RenderTransform>
-                            <controls:AnimatedIcon x:Name="SettingsIcon">
-                                <controls:AnimatedIcon.Source>
-                                    <animatedvisuals:AnimatedSettingsVisualSource/>
-                                </controls:AnimatedIcon.Source>
-                                <controls:AnimatedIcon.FallbackIconSource>
-                                    <controls:SymbolIconSource Symbol="Setting"/>
-                                </controls:AnimatedIcon.FallbackIconSource>
-                            </controls:AnimatedIcon>
-                        </Grid>
-                        <ToolkitControls:DropShadowPanel CornerRadius="2" Margin="2,0,2,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" Grid.Row="0" VerticalAlignment="Bottom"
-                HorizontalAlignment="Center">
-                            <Grid x:Name="Pipe"
-                Height="2" Width="0.1" CornerRadius="2"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center">
-                                <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
-                            </Grid>
-                        </ToolkitControls:DropShadowPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -402,20 +530,37 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="ButtonLayoutGrid"
-                                                Margin="{ThemeResource TextBoxInnerButtonMargin}"
-                                                BorderBrush="{ThemeResource TextControlButtonBorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                Background="{ThemeResource TextControlButtonBackground}"
-                                                BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                                                CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid
+                        x:Name="ButtonLayoutGrid"
+                        Margin="{ThemeResource TextBoxInnerButtonMargin}"
+                        Background="{ThemeResource TextControlButtonBackground}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{ThemeResource TextControlButtonBorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <TextBlock
+                            x:Name="GlyphElement"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            AutomationProperties.AccessibilityView="Raw"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="{ThemeResource TextBoxIconFontSize}"
+                            FontStyle="Normal"
+                            Text="&#xE10A;">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush x:Name="CloseButtonIconBrush" Color="{ThemeResource HvidSortColor}" />
+                            </TextBlock.Foreground>
+                        </TextBlock>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-                                                                    Storyboard.TargetProperty="Color"
-                                                                    To="{ThemeResource HvidSortColor}" From="#e96e60" Duration="0:0:0.3"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#e96e60"
+                                            To="{ThemeResource HvidSortColor}"
+                                            Duration="0:0:0.3" />
                                     </Storyboard>
                                 </VisualState>
 
@@ -427,9 +572,12 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBorderBrushPointerOver}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-                                                                    Storyboard.TargetProperty="Color"
-                                                                    To="#e96e60" From="{ThemeResource HvidSortColor}" Duration="0:0:0.3"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="{ThemeResource HvidSortColor}"
+                                            To="#e96e60"
+                                            Duration="0:0:0.3" />
                                     </Storyboard>
                                 </VisualState>
 
@@ -441,34 +589,26 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBorderBrushPressed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-                                                                    Storyboard.TargetProperty="Color"
-                                                                    To="DarkRed" From="#e96e60" Duration="0:0:0.3"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#e96e60"
+                                            To="DarkRed"
+                                            Duration="0:0:0.3" />
                                     </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="ButtonLayoutGrid"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="0"
-                                                                    Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ButtonLayoutGrid"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <TextBlock x:Name="GlyphElement"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
-                                                    FontStyle="Normal"
-                                                    FontSize="{ThemeResource TextBoxIconFontSize}"
-                                                    Text="&#xE10A;"
-                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                    AutomationProperties.AccessibilityView="Raw">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush x:Name="CloseButtonIconBrush" Color="{ThemeResource HvidSortColor}" />
-                            </TextBlock.Foreground>
-                        </TextBlock>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -485,20 +625,76 @@
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-3" />
-        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="Transparent" Height="28" Width="44">
+                    <Grid
+                        x:Name="RootGrid"
+                        Width="44"
+                        Height="28"
+                        Background="Transparent">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="4" />
+                        <Grid RenderTransformOrigin="0.5, 0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="ScaleA" ScaleX="0.6" ScaleY="0.6" />
+                            </Grid.RenderTransform>
+                            <controls:AnimatedIcon x:Name="SettingsIcon">
+                                <controls:AnimatedIcon.Source>
+                                    <animatedvisuals:AnimatedFindVisualSource />
+                                </controls:AnimatedIcon.Source>
+                            </controls:AnimatedIcon>
+                        </Grid>
+                        <ToolkitControls:DropShadowPanel
+                            x:Name="Glow"
+                            Grid.Row="0"
+                            Margin="2,0,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="2"
+                            ShadowOpacity="0.93"
+                            Color="{ThemeResource SystemAccentColorLight2}">
+                            <Grid
+                                x:Name="Pipe"
+                                Width="0.1"
+                                Height="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="2">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                        <GradientStop Offset="0.5" Color="{ThemeResource SystemAccentColorLight2}" />
+                                        <GradientStop Offset="1.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </ToolkitControls:DropShadowPanel>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Normal"/>
+                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Normal" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
@@ -506,10 +702,15 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="12"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="PointerOver"/>
+                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="PointerOver" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -517,56 +718,24 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                     <VisualState.Setters>
-                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Pressed"/>
+                                        <Setter Target="SettingsIcon.(AnimatedIcon.State)" Value="Pressed" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <ContentPresenter x:Name="ContentPresenter"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="4"
-                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    AutomationProperties.AccessibilityView="Raw"/>
-                        <Grid RenderTransformOrigin="0.5, 0.5">
-                            <Grid.RenderTransform>
-                                <ScaleTransform x:Name="ScaleA" ScaleX="0.6" ScaleY="0.6"/>
-                            </Grid.RenderTransform>
-                            <controls:AnimatedIcon x:Name="SettingsIcon">
-                                <controls:AnimatedIcon.Source>
-                                    <animatedvisuals:AnimatedFindVisualSource/>
-                                </controls:AnimatedIcon.Source>
-                            </controls:AnimatedIcon>
-                        </Grid>
-                        <ToolkitControls:DropShadowPanel CornerRadius="2" Margin="2,0,2,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" Grid.Row="0" VerticalAlignment="Bottom"
-                HorizontalAlignment="Center">
-                            <Grid x:Name="Pipe"
-                Height="2" Width="0.1" CornerRadius="2"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center">
-                                <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
-                            </Grid>
-                        </ToolkitControls:DropShadowPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -576,7 +745,7 @@
     <Style x:Key="TabSnapButton" TargetType="Button">
         <Setter Property="BorderBrush" Value="{ThemeResource MicaBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{ThemeResource MicaBrush}"/>
+        <Setter Property="Background" Value="{ThemeResource MicaBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
@@ -584,82 +753,122 @@
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-3" />
-        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Opacity="1" />
+                        <ToolkitControls:DropShadowPanel
+                            x:Name="Glow"
+                            Grid.Row="0"
+                            Margin="2,0,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            CornerRadius="2"
+                            ShadowOpacity="0.93"
+                            Color="{ThemeResource SystemAccentColorLight2}">
+                            <Grid
+                                x:Name="Pipe"
+                                Width="0.1"
+                                Height="0.1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                CornerRadius="50">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                        <GradientStop Offset="0.5" Color="{ThemeResource SystemAccentColorLight2}" />
+                                        <GradientStop Offset="1.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </ToolkitControls:DropShadowPanel>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource HvidSortBrush}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource HvidSortBrush}" />
                                     </VisualState.Setters>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Height" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Height"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource HvidSortBrush}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource HvidSortBrush}" />
                                     </VisualState.Setters>
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Height" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="12"
+                                            Duration="0:0:0.12" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Height"
+                                            To="12"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource HvidSortBrush}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource HvidSortBrush}" />
                                     </VisualState.Setters>
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="8"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Height" EnableDependentAnimation="True" Duration="0:0:0.12" To="8"/>
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="8"
+                                            Duration="0:0:0.12" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Height"
+                                            To="8"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Opacity" Value="0.4"/>
+                                        <Setter Target="ContentPresenter.Opacity" Value="0.4" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <ContentPresenter x:Name="ContentPresenter"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="{TemplateBinding CornerRadius}"
-                                                    Opacity="1"
-                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    AutomationProperties.AccessibilityView="Raw"/>
-                        <ToolkitControls:DropShadowPanel CornerRadius="2" Margin="2,0,2,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" Grid.Row="0" VerticalAlignment="Center"
-                HorizontalAlignment="Center">
-                            <Grid x:Name="Pipe"
-                Height="0.1" Width="0.1" CornerRadius="50"
-                VerticalAlignment="Center" 
-                HorizontalAlignment="Center">
-                                <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
-                            </Grid>
-                        </ToolkitControls:DropShadowPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -677,77 +886,118 @@
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
         <Setter Property="FocusVisualMargin" Value="-3" />
-        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid x:Name="RootGrid" Background="Transparent" Height="32" Width="40">
+                    <Grid
+                        x:Name="RootGrid"
+                        Width="40"
+                        Height="32"
+                        Background="Transparent">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="4" />
+                        <icons:FluentSymbolIcon
+                            Margin="0, 0, 2, 2"
+                            VerticalAlignment="Center"
+                            Symbol="Dismiss12">
+                            <icons:FluentSymbolIcon.Foreground>
+                                <SolidColorBrush x:Name="CloseButtonIconBrush" Color="{ThemeResource HvidSortColor}" />
+                            </icons:FluentSymbolIcon.Foreground>
+                        </icons:FluentSymbolIcon>
+                        <ToolkitControls:DropShadowPanel
+                            x:Name="Glow"
+                            Grid.Row="0"
+                            Margin="2,0,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="2"
+                            ShadowOpacity="0.93"
+                            Color="{ThemeResource SystemAccentColorLight2}">
+                            <Grid
+                                x:Name="Pipe"
+                                Width="0.1"
+                                Height="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="2">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                        <GradientStop Offset="0.5" Color="{ThemeResource SystemAccentColorLight2}" />
+                                        <GradientStop Offset="1.0" Color="{ThemeResource SystemAccentColorLight3}" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </ToolkitControls:DropShadowPanel>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-        Storyboard.TargetProperty="Color"
-        To="{ThemeResource HvidSortColor}" From="#e96e60" Duration="0:0:0.3"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#e96e60"
+                                            To="{ThemeResource HvidSortColor}"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-        Storyboard.TargetProperty="Color"
-        To="#e96e60" From="{ThemeResource HvidSortColor}" Duration="0:0:0.3"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="{ThemeResource HvidSortColor}"
+                                            To="#e96e60"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="CloseButtonIconBrush" 
-        Storyboard.TargetProperty="Color"
-        To="DarkRed" From="#e96e60" Duration="0:0:0.3"/>
-                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="CloseButtonIconBrush"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#e96e60"
+                                            To="DarkRed"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            EnableDependentAnimation="True"
+                                            Storyboard.TargetName="Pipe"
+                                            Storyboard.TargetProperty="Width"
+                                            To="0"
+                                            Duration="0:0:0.12" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}"/>
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SplitButtonForegroundDisabled}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <ContentPresenter x:Name="ContentPresenter"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="4"
-                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    AutomationProperties.AccessibilityView="Raw"/>
-                        <icons:FluentSymbolIcon Symbol="Dismiss12" Margin="0, 0, 2, 2" VerticalAlignment="Center">
-                            <icons:FluentSymbolIcon.Foreground>
-                                <SolidColorBrush x:Name="CloseButtonIconBrush" Color="{ThemeResource HvidSortColor}" />
-                            </icons:FluentSymbolIcon.Foreground>
-                        </icons:FluentSymbolIcon>
-                        <ToolkitControls:DropShadowPanel CornerRadius="2" Margin="2,0,2,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" Grid.Row="0" VerticalAlignment="Bottom"
-                HorizontalAlignment="Center">
-                            <Grid x:Name="Pipe"
-                Height="2" Width="0.1" CornerRadius="2"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center">
-                                <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
-                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
-                            </Grid>
-                        </ToolkitControls:DropShadowPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

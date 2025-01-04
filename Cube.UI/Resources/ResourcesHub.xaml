@@ -1,37 +1,35 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Brushes/ApplicationBrushes.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Brushes/MicaBrushes.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Brushes/StyleBrushes.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Converters/Converters.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Brushes/ApplicationBrushes.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Brushes/MicaBrushes.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Brushes/StyleBrushes.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Converters/Converters.xaml" />
 
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/AnimatedButton.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/Buttons.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/FlyoutButton.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/RefreshButton.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/ToolbarButtons.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/AnimatedButton.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/Buttons.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/FlyoutButton.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/RefreshButton.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Buttons/ToolbarButtons.xaml" />
 
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Icons/FluentIcon.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Icons/FluentIcon.xaml" />
 
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Resources/CollectionResources.xaml"/>
-        
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ActionStyles.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ComboBox.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/FlipView.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Flyout.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/InfoBar.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/NavigationView.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Pivot.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Radio.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/RichEditBox.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Slider.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/SplitView.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Slider.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/TabView.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/TextBox.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ToggleSwitches.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ToolTip.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Resources/CollectionResources.xaml" />
+
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ActionStyles.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ComboBox.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/FlipView.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Flyout.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/InfoBar.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/NavigationView.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Pivot.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Radio.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/RichEditBox.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Slider.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/SplitView.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/Slider.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/TabView.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/TextBox.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ToggleSwitches.xaml" />
+        <ResourceDictionary Source="ms-appx:///Cube.UI/Styles/ToolTip.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

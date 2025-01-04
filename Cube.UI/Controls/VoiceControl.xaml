@@ -2,35 +2,55 @@
     x:Class="Cube.UI.Controls.VoiceControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Cube.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:icons="using:Cube.UI.Icons" 
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
     xmlns:glow="using:Cube.UI.Controls.Glow"
+    xmlns:icons="using:Cube.UI.Icons"
+    xmlns:local="using:Cube.UI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
     Loaded="VoiceControl_Loaded"
     Unloaded="VoiceControl_Unloaded"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    mc:Ignorable="d">
     <Grid MaxWidth="400" Padding="12">
-        <StackPanel x:Name="RecordingContent"  Spacing="4" VerticalAlignment="Center">
-            <muxc:ProgressRing x:Name="SpeechProgress"/>
-            <TextBlock x:Name="SpeechText" Text="Placeholder"/>
-            <ListBox x:Name="AlternateList" Visibility="Collapsed"/>
-            <Button x:Name="StopRecordingButton" Width="120" HorizontalAlignment="Right" Click="Stop_Click" Style="{ThemeResource ToolbarButton}" Background="{ThemeResource MicaDarkBrush}" BorderBrush="{ThemeResource MicaBorderBrush}" BorderThickness="1">
+        <StackPanel
+            x:Name="RecordingContent"
+            VerticalAlignment="Center"
+            Spacing="4">
+            <muxc:ProgressRing x:Name="SpeechProgress" />
+            <TextBlock x:Name="SpeechText" Text="Placeholder" />
+            <ListBox x:Name="AlternateList" Visibility="Collapsed" />
+            <Button
+                x:Name="StopRecordingButton"
+                Width="120"
+                HorizontalAlignment="Right"
+                Background="{ThemeResource MicaDarkBrush}"
+                BorderBrush="{ThemeResource MicaBorderBrush}"
+                BorderThickness="1"
+                Click="Stop_Click"
+                Style="{ThemeResource ToolbarButton}">
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <icons:FluentSymbolIcon Symbol="Stop20"/>
-                    <TextBlock VerticalAlignment="Center" Text="Stop Recording"/>
+                    <icons:FluentSymbolIcon Symbol="Stop20" />
+                    <TextBlock VerticalAlignment="Center" Text="Stop Recording" />
                 </StackPanel>
             </Button>
         </StackPanel>
-        <StackPanel x:Name="ErrorContent" Visibility="Collapsed" Orientation="Horizontal" Spacing="4">
+        <StackPanel
+            x:Name="ErrorContent"
+            Orientation="Horizontal"
+            Spacing="4"
+            Visibility="Collapsed">
             <Grid>
-                <icons:FluentSymbolIcon Symbol="ErrorCircle20"/>
-                <glow:GlowBall Color="Red" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="6" Height="6"/>
+                <icons:FluentSymbolIcon Symbol="ErrorCircle20" />
+                <glow:GlowBall
+                    Width="6"
+                    Height="6"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Color="Red" />
             </Grid>
-            <TextBlock VerticalAlignment="Center" Text="Voice search unavailable"/>
+            <TextBlock VerticalAlignment="Center" Text="Voice search unavailable" />
         </StackPanel>
     </Grid>
 </UserControl>

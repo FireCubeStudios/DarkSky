@@ -9,16 +9,36 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Button Click="Button_Click" Padding="0" Style="{ThemeResource CardButton}" BorderBrush="{ThemeResource MicaBorderBrush}" Background="{ThemeResource MicaDarkerBrush}" BorderThickness="1" CornerRadius="8">
-       <Grid Background="{ThemeResource MicaBlurBrush}" Padding="12">
+    <Button
+        Padding="0"
+        Background="{ThemeResource MicaDarkerBrush}"
+        BorderBrush="{ThemeResource MicaBorderBrush}"
+        BorderThickness="1"
+        Click="Button_Click"
+        CornerRadius="8"
+        Style="{ThemeResource CardButton}">
+        <Grid Padding="12" Background="{ThemeResource MicaBlurBrush}">
             <StackPanel Spacing="4">
-                <Border CornerRadius="8" MaxHeight="300" Margin="8">
-                    <Image x:Name="EmbedImage" Visibility="Collapsed" Stretch="UniformToFill"/>
+                <Border
+                    MaxHeight="300"
+                    Margin="8"
+                    CornerRadius="8">
+                    <Image
+                        x:Name="EmbedImage"
+                        Stretch="UniformToFill"
+                        Visibility="Collapsed" />
                 </Border>
-                <TextBlock x:Name="Title" FontWeight="SemiBold" TextWrapping="WrapWholeWords"/>
-                <TextBlock Text="{x:Bind Embed.Description, Mode=OneWay}" TextWrapping="WrapWholeWords"/>
-                <MenuFlyoutSeparator/>
-                <TextBlock Text="{x:Bind Embed.Uri, Mode=OneWay}" FontSize="12" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+                <TextBlock
+                    x:Name="Title"
+                    FontWeight="SemiBold"
+                    TextWrapping="WrapWholeWords" />
+                <TextBlock Text="{x:Bind Embed.Description, Mode=OneWay}" TextWrapping="WrapWholeWords" />
+                <MenuFlyoutSeparator />
+                <TextBlock
+                    FontSize="12"
+                    Opacity="0.7"
+                    Text="{x:Bind Embed.Uri, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis" />
             </StackPanel>
         </Grid>
     </Button>

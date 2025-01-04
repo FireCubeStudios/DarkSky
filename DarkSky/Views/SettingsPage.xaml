@@ -14,37 +14,58 @@
     mc:Ignorable="d">
 
     <Grid Padding="12">
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Spacing="12">
-            <StackPanel Orientation="Horizontal" Spacing="12" Margin="4, 4, 4, 12">
+        <StackPanel
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Spacing="12">
+            <StackPanel
+                Margin="4,4,4,12"
+                Orientation="Horizontal"
+                Spacing="12">
                 <TextBlock FontSize="24" FontWeight="SemiBold">DarkSky</TextBlock>
-                <TextBlock FontSize="20" FontWeight="SemiBold" Opacity="0.7" VerticalAlignment="Bottom">Preview</TextBlock>
-                <TextBlock FontSize="20" FontWeight="SemiBold" Opacity="0.7" VerticalAlignment="Bottom">v0.4.16</TextBlock>
+                <TextBlock
+                    VerticalAlignment="Bottom"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Opacity="0.7">
+                    Preview
+                </TextBlock>
+                <TextBlock
+                    VerticalAlignment="Bottom"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Opacity="0.7">
+                    v0.4.16
+                </TextBlock>
             </StackPanel>
-            <TextBlock FontSize="14" FontWeight="SemiBold" Margin="4">Account</TextBlock>
+            <TextBlock
+                Margin="4"
+                FontSize="14"
+                FontWeight="SemiBold">
+                Account
+            </TextBlock>
             <toolkit:SettingsCard Header="Logout of this account">
                 <toolkit:SettingsCard.HeaderIcon>
-                    <icons:FluentIconElement Symbol="SignOut24"/>
+                    <icons:FluentIconElement Symbol="SignOut24" />
                 </toolkit:SettingsCard.HeaderIcon>
-                <Button Click="Button_Click" Content="Log out"/>
+                <Button Click="Button_Click" Content="Log out" />
             </toolkit:SettingsCard>
-            <MenuFlyoutSeparator/>
+            <MenuFlyoutSeparator />
             <TextBlock
-         FontSize="16" HorizontalAlignment="Left"
-         Text="The app is being built up rapidly. More settings will be available soon"
-         TextWrapping="WrapWholeWords" />
-            <toolkit:SettingsCard
-                  Header="Send feedback in GitHub" Description="Star the repository to help support us!">
-                <HyperlinkButton Content="DarkSky GitHub" NavigateUri="https://github.com/FireCubeStudios/DarkSky"/>
+                HorizontalAlignment="Left"
+                FontSize="16"
+                Text="The app is being built up rapidly. More settings will be available soon"
+                TextWrapping="WrapWholeWords" />
+            <toolkit:SettingsCard Description="Star the repository to help support us!" Header="Send feedback in GitHub">
+                <HyperlinkButton Content="DarkSky GitHub" NavigateUri="https://github.com/FireCubeStudios/DarkSky" />
             </toolkit:SettingsCard>
-            <toolkit:SettingsCard
-        Header="Contact the Developer in Discord" Description="Find me in the #firecubestudios channel in Developer Sanctuary">
-                <HyperlinkButton Content="Our Discord" NavigateUri="https://discord.com/invite/3WYcKat"/>
+            <toolkit:SettingsCard Description="Find me in the #firecubestudios channel in Developer Sanctuary" Header="Contact the Developer in Discord">
+                <HyperlinkButton Content="Our Discord" NavigateUri="https://discord.com/invite/3WYcKat" />
             </toolkit:SettingsCard>
-            <toolkit:SettingsCard
-                       Header="See app progress in Bluesky" Description="Give a follow to see progress in-app!">
-                <HyperlinkButton Content="FireCube Bluesky" NavigateUri="https://bsky.app/profile/firecube.bsky.social"/>
+            <toolkit:SettingsCard Description="Give a follow to see progress in-app!" Header="See app progress in Bluesky">
+                <HyperlinkButton Content="FireCube Bluesky" NavigateUri="https://bsky.app/profile/firecube.bsky.social" />
             </toolkit:SettingsCard>
-            
+
         </StackPanel>
     </Grid>
 </Page>

@@ -2,17 +2,20 @@
     x:Class="DarkSky.Views.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="using:DarkSky.Core.Classes"
     xmlns:controls="using:DarkSky.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:glow="using:Cube.UI.Controls.Glow"
+    xmlns:helpers="using:DarkSky.Helpers"
     xmlns:icons="using:Cube.UI.Icons"
     xmlns:local="using:DarkSky.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:FishyFlip.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:classes="using:DarkSky.Core.Classes" xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary" xmlns:helpers="using:DarkSky.Helpers"
-    NavigationCacheMode="Enabled"
+    xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -20,23 +23,26 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel
-            Grid.Row="0" Height="49"
+            Grid.Row="0"
+            Height="49"
             Background="{ThemeResource MicaDarkerBrush}"
             BorderBrush="{ThemeResource MicaBorderBrush}"
             BorderThickness="0,0,0,1">
             <muxc:NavigationView
-                x:Name="FeedNavigation" Height="48"
+                x:Name="FeedNavigation"
+                Height="48"
+                HorizontalAlignment="Center"
                 IsBackButtonVisible="Collapsed"
-                IsSettingsVisible="False" HorizontalAlignment="Center"
+                IsSettingsVisible="False"
                 MenuItemsSource="{x:Bind ViewModel.Feeds, Mode=OneWay}"
-                SelectedItem="{x:Bind ViewModel.SelectedFeed, Mode=TwoWay}"
-                PaneDisplayMode="Top">
+                PaneDisplayMode="Top"
+                SelectedItem="{x:Bind ViewModel.SelectedFeed, Mode=TwoWay}">
                 <muxc:NavigationView.MenuItemTemplate>
-                    <DataTemplate x:DataType="classes:CursorNavigationItem" >
-                        <muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}"/>
+                    <DataTemplate x:DataType="classes:CursorNavigationItem">
+                        <muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}" />
                     </DataTemplate>
                 </muxc:NavigationView.MenuItemTemplate>
-              <!--  <muxc:NavigationView.FooterMenuItems>
+                <!--  <muxc:NavigationView.FooterMenuItems>
                     <muxc:NavigationViewItem SelectsOnInvoked="False">
                         <muxc:NavigationViewItem.Icon>
                             <icons:FluentIconElement Margin="0,0,4,0" Symbol="AddSquare24" />
@@ -45,6 +51,10 @@
                 </muxc:NavigationView.FooterMenuItems>-->
             </muxc:NavigationView>
         </StackPanel>
-        <controls:CursorListView CursorSource="{x:Bind ViewModel.SelectedFeed.CursorSource, Mode=OneWay}" MaxWidth="700" Grid.Row="1" HorizontalAlignment="Stretch"/>
+        <controls:CursorListView
+            Grid.Row="1"
+            MaxWidth="700"
+            HorizontalAlignment="Stretch"
+            CursorSource="{x:Bind ViewModel.SelectedFeed.CursorSource, Mode=OneWay}" />
     </Grid>
 </Page>

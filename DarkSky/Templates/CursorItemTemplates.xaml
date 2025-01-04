@@ -1,9 +1,8 @@
 ﻿<ResourceDictionary
     x:Class="DarkSky.Templates.CursorItemTemplates"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary" 
-    xmlns:controls="using:DarkSky.UserControls" 
-    xmlns:helpers="using:DarkSky.Helpers" 
-    xmlns:local="using:DarkSky.Templates">
-</ResourceDictionary>
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:DarkSky.UserControls"
+    xmlns:helpers="using:DarkSky.Helpers"
+    xmlns:local="using:DarkSky.Templates"
+    xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary" />

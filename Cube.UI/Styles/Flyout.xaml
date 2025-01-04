@@ -1,30 +1,31 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="MicaFlyoutStyle"  TargetType="FlyoutPresenter">
+    <Style x:Key="MicaFlyoutStyle" TargetType="FlyoutPresenter">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Opacity" Value="1" />
         <Setter Property="MaxHeight" Value="1400" />
-        <Setter Property="MaxWidth" Value="1400"/>
+        <Setter Property="MaxWidth" Value="1400" />
         <Setter Property="MinHeight" Value="40" />
         <Setter Property="IsDefaultShadowEnabled" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="FlyoutPresenter">
-                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                    <Border
+                        BorderBrush="{ThemeResource MicaBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
                         <Grid Background="{ThemeResource MicaDarkBrush}">
                             <Grid Background="{ThemeResource MicaBlurBrush}">
                                 <ContentPresenter
-                        MaxWidth="{TemplateBinding MaxWidth}"
-                        MaxHeight="{TemplateBinding MaxHeight}"
-                        Margin="0"
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Content="{TemplateBinding Content}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        ContentTransitions="{TemplateBinding ContentTransitions}"
-                        CornerRadius="6" />
+                                    MaxWidth="{TemplateBinding MaxWidth}"
+                                    MaxHeight="{TemplateBinding MaxHeight}"
+                                    Margin="0"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    CornerRadius="6" />
                             </Grid>
                         </Grid>
                     </Border>
@@ -32,29 +33,32 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="TransparentFlyoutStyle"  TargetType="FlyoutPresenter">
+    <Style x:Key="TransparentFlyoutStyle" TargetType="FlyoutPresenter">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Opacity" Value="1" />
         <Setter Property="MaxHeight" Value="1400" />
-        <Setter Property="MaxWidth" Value="1400"/>
+        <Setter Property="MaxWidth" Value="1400" />
         <Setter Property="MinHeight" Value="40" />
         <Setter Property="IsDefaultShadowEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="FlyoutPresenter">
-                    <Border CornerRadius="8" BorderThickness="0" BorderBrush="{ThemeResource MicaBorderBrush}">
+                    <Border
+                        BorderBrush="{ThemeResource MicaBorderBrush}"
+                        BorderThickness="0"
+                        CornerRadius="8">
                         <Grid Background="Transparent">
                             <Grid Background="Transparent">
                                 <ContentPresenter
-                        MaxWidth="{TemplateBinding MaxWidth}"
-                        MaxHeight="{TemplateBinding MaxHeight}"
-                        Margin="0"
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Content="{TemplateBinding Content}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        ContentTransitions="{TemplateBinding ContentTransitions}"
-                        CornerRadius="6" />
+                                    MaxWidth="{TemplateBinding MaxWidth}"
+                                    MaxHeight="{TemplateBinding MaxHeight}"
+                                    Margin="0"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    CornerRadius="6" />
                             </Grid>
                         </Grid>
                     </Border>

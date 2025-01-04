@@ -10,6 +10,9 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Grid x:Name="ImagesGrid" CornerRadius="8" ColumnSpacing="8" RowSpacing="8">
-    </Grid>
+    <Grid
+        x:Name="ImagesGrid"
+        ColumnSpacing="8"
+        CornerRadius="8"
+        RowSpacing="8" />
 </UserControl>

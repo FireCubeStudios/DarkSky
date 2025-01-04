@@ -1,44 +1,86 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mica="using:MicaForUWP.Media" 
+    xmlns:brushes="using:Cube.UI.Brushes"
     xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
-    xmlns:brushes="using:Cube.UI.Brushes">
-    <media:BackdropBlurBrush x:Key="MicaBlurBrush" Amount="240"/>
+    xmlns:mica="using:MicaForUWP.Media">
+    <media:BackdropBlurBrush x:Key="MicaBlurBrush" Amount="240" />
 
-    <mica:BackdropMicaBrush x:Key="MicaElementBrush" BackgroundSource="Backdrop"/>
-    <mica:BackdropMicaBrush x:Key="MicaWindowBrush" BackgroundSource="HostBackdrop"/>
-    <mica:BackdropMicaBrush x:Key="MicaWallpaperBrush" BackgroundSource="WallpaperBackdrop"/>
+    <mica:BackdropMicaBrush x:Key="MicaElementBrush" BackgroundSource="Backdrop" />
+    <mica:BackdropMicaBrush x:Key="MicaWindowBrush" BackgroundSource="HostBackdrop" />
+    <mica:BackdropMicaBrush x:Key="MicaWallpaperBrush" BackgroundSource="WallpaperBackdrop" />
     <brushes:MicaAltBrush x:Key="MicaAltBrush" />
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Dark">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <SolidColorBrush x:Key="MicaBrush" Color="#202020" Opacity="0.8"/>
-                    <SolidColorBrush x:Key="MicaDarkBrush" Color="#161616" Opacity="0.4"/>
-                    <SolidColorBrush x:Key="MicaDeepBackgroundBrush" Color="#161616" Opacity="0.6"/>
-                    <SolidColorBrush x:Key="MicaDarkerBrush" Color="#121212" Opacity="0.8"/>
-                    <SolidColorBrush x:Key="MicaBorderBrush" Color="#757575" Opacity="0.4"/>
+                    <SolidColorBrush
+                        x:Key="MicaBrush"
+                        Opacity="0.8"
+                        Color="#202020" />
+                    <SolidColorBrush
+                        x:Key="MicaDarkBrush"
+                        Opacity="0.4"
+                        Color="#161616" />
+                    <SolidColorBrush
+                        x:Key="MicaDeepBackgroundBrush"
+                        Opacity="0.6"
+                        Color="#161616" />
+                    <SolidColorBrush
+                        x:Key="MicaDarkerBrush"
+                        Opacity="0.8"
+                        Color="#121212" />
+                    <SolidColorBrush
+                        x:Key="MicaBorderBrush"
+                        Opacity="0.4"
+                        Color="#757575" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <SolidColorBrush x:Key="MicaBrush" Color="#FCFCFC" Opacity="0.8"/>
-                    <SolidColorBrush x:Key="MicaDarkBrush" Color="#E9E9E9" Opacity="0.4"/>
-                    <SolidColorBrush x:Key="MicaDeepBackgroundBrush" Color="#E9E9E9" Opacity="0"/>
-                    <SolidColorBrush x:Key="MicaDarkerBrush" Color="#EDEDED" Opacity="0.8"/>
-                    <SolidColorBrush x:Key="MicaBorderBrush" Color="#757575" Opacity="0.4"/>
+                    <SolidColorBrush
+                        x:Key="MicaBrush"
+                        Opacity="0.8"
+                        Color="#FCFCFC" />
+                    <SolidColorBrush
+                        x:Key="MicaDarkBrush"
+                        Opacity="0.4"
+                        Color="#E9E9E9" />
+                    <SolidColorBrush
+                        x:Key="MicaDeepBackgroundBrush"
+                        Opacity="0"
+                        Color="#E9E9E9" />
+                    <SolidColorBrush
+                        x:Key="MicaDarkerBrush"
+                        Opacity="0.8"
+                        Color="#EDEDED" />
+                    <SolidColorBrush
+                        x:Key="MicaBorderBrush"
+                        Opacity="0.4"
+                        Color="#757575" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         <ResourceDictionary x:Key="HighContrast">
-            <SolidColorBrush x:Key="MicaBrush" Color="{ThemeResource SystemColorWindowColor}" Opacity="1"/>
-            <SolidColorBrush x:Key="MicaDarkBrush" Color="#161616" Opacity="0.4"/>
-            <SolidColorBrush x:Key="MicaDarkerBrush" Color="#161616" Opacity="0.8"/>
-            <SolidColorBrush x:Key="MicaBorderBrush" Color="{ThemeResource SystemColorButtonTextColor}" Opacity="1"/>
+            <SolidColorBrush
+                x:Key="MicaBrush"
+                Opacity="1"
+                Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush
+                x:Key="MicaDarkBrush"
+                Opacity="0.4"
+                Color="#161616" />
+            <SolidColorBrush
+                x:Key="MicaDarkerBrush"
+                Opacity="0.8"
+                Color="#161616" />
+            <SolidColorBrush
+                x:Key="MicaBorderBrush"
+                Opacity="1"
+                Color="{ThemeResource SystemColorButtonTextColor}" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
