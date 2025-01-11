@@ -139,6 +139,7 @@
     <Compile Include="Controls\RichPostTextBox.xaml.cs">
       <DependentUpon>RichPostTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Sentry.cs" />
     <Compile Include="Helpers\SetttingsHelper.cs" />
     <Compile Include="Helpers\SQLFileHelper.cs" />
     <Compile Include="NEWLoginPage.xaml.cs">
