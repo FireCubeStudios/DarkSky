@@ -61,11 +61,12 @@ namespace DarkSky
 
         private CredentialService CredentialService = new CredentialService();
 
+        private bool loginfail = false;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        private bool loginfail = false;
         public App()
         {
             this.InitializeComponent();
