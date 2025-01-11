@@ -438,6 +438,9 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.6</Version>
     </PackageReference>
+    <PackageReference Include="Sentry">
+      <Version>5.0.1</Version>
+    </PackageReference>
     <PackageReference Include="TenMica">
       <Version>1.0.0-beta</Version>
     </PackageReference>
