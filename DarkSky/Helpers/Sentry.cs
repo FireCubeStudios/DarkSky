@@ -26,23 +26,17 @@ namespace DarkSky.Helpers
                 // YOU WILL BREAK ALL ERROR REPORTING IF YOU REMOVE THIS LINE
                 options.Dsn = "https://aaed7c44c79880e43658b5ccf9bf9e9f@o4508502512828416.ingest.de.sentry.io/4508624248176720";
 
-                // When debug is enabled, the Sentry client will emit detailed debugging information to the console.
-                // This might be helpful, or might interfere with the normal operation of your application.
-                // We enable it here for demonstration purposes when first trying Sentry.
-                // You shouldn't do this in your applications unless you're troubleshooting issues with Sentry.
-                options.Debug = true;
-
                 options.AutoSessionTracking = true;
 
                 // Set TracesSampleRate to 1.0 to capture 100%
                 // of transactions for tracing.
                 // We recommend adjusting this value in production.
-                options.TracesSampleRate = 1.0;
+                options.TracesSampleRate = 0.6;
 
                 // Sample rate for profiling, applied on top of othe TracesSampleRate,
                 // e.g. 0.2 means we want to profile 20 % of the captured transactions.
                 // We recommend adjusting this value in production.
-                options.ProfilesSampleRate = 1.0;
+                options.ProfilesSampleRate = 0.2;
 
                 /* This doesn't work on UAP iirc
                 // Requires NuGet package: Sentry.Profiling
