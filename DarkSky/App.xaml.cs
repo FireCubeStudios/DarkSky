@@ -78,7 +78,9 @@ namespace DarkSky
             TaskScheduler.UnobservedTaskException += OnUnobservedException;
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
 
+#if !DEBUG
             Helpers.Sentry.Init(); // Initialize Sentry SDK
+#endif
         }
 
         private async void ATProtoSetup()
