@@ -175,7 +175,7 @@
                         </toolkit:DropShadowPanel>
                     </Grid>-->
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Content="Search" Visibility="Collapsed">
+                <muxc:NavigationViewItem Content="Search">
                     <muxc:NavigationViewItem.Icon>
                         <icons:FluentIconElement Symbol="Search24" />
                     </muxc:NavigationViewItem.Icon>

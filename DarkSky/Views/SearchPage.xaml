@@ -5,52 +5,80 @@
     xmlns:classes="using:DarkSky.Core.Classes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="using:DarkSky.Helpers"
-    xmlns:icons="using:Cube.UI.Icons"
     xmlns:local="using:DarkSky.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:notification="using:FishyFlip.Lexicon.App.Bsky.Notification"
     xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:usercontrols="using:DarkSky.UserControls"
+    xmlns:usercontrols="using:DarkSky.UserControls" 
+    xmlns:icons="using:Cube.UI.Icons"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
+                <RowDefinition Height="48" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid
                 Grid.Row="0"
                 Height="49"
                 Padding="12,8,12,8"
+                ColumnSpacing="8"
                 BorderBrush="{ThemeResource MicaBorderBrush}"
                 BorderThickness="0,0,0,1">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <Button x:Name="HomeButton" Command="{x:Bind ViewModel.HomeCommand, Mode=OneWay}" x:Load="{x:Bind ViewModel.IsSearching, Mode=OneWay}" Grid.Column="0" VerticalAlignment="Center" Style="{ThemeResource ToolbarButton}">
+                    <icons:FluentSymbolIcon Symbol="Home20"/>
+                </Button>
                 <toolkit:DropShadowPanel
-                    Grid.Column="0"
+                    Grid.Column="1"
                     CornerRadius="8"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
                     OffsetX="4"
                     OffsetY="4"
                     ShadowOpacity="0.4">
-                    <AutoSuggestBox
+                    <AutoSuggestBox Text="{x:Bind ViewModel.Query, Mode=TwoWay}"
                         Grid.Column="0"
-                        MinWidth="430"
-                        HorizontalAlignment="Center"
+                        QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                        HorizontalAlignment="Stretch"
                         BorderBrush="{ThemeResource MicaBorderBrush}"
                         BorderThickness="1">
                         <AutoSuggestBox.QueryIcon>
                             <icons:FluentIconElement Symbol="Search20" />
                         </AutoSuggestBox.QueryIcon>
-                        <!--   <UI:effects.Shadow>
-                            <media:AttachedCardShadow Offset="4" />
-                        </UI:effects.Shadow>-->
                     </AutoSuggestBox>
                 </toolkit:DropShadowPanel>
+            </Grid>
+            <Grid x:Name="SearchNavigation" x:Load="{x:Bind ViewModel.IsSearching, Mode=OneWay}" Grid.Row="1" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                <muxc:NavigationView
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Height="48"
+                IsBackButtonVisible="Collapsed"
+                IsSettingsVisible="False"
+                MenuItemsSource="{x:Bind ViewModel.SearchResults, Mode=OneWay}"
+                PaneDisplayMode="Top"
+                SelectedItem="{x:Bind ViewModel.SelectedSearchResult, Mode=TwoWay}">
+                    <muxc:NavigationView.MenuItemTemplate>
+                        <DataTemplate x:DataType="classes:CursorNavigationItem">
+                            <muxc:NavigationViewItem Content="{x:Bind Name, Mode=OneWay}" />
+                        </DataTemplate>
+                    </muxc:NavigationView.MenuItemTemplate>
+                </muxc:NavigationView>
+            </Grid>
+            <Grid Grid.Row="2">
+                <usercontrols:CursorListView x:Name="SearchList" x:Load="{x:Bind ViewModel.IsSearching, Mode=OneWay}"
+                    HorizontalAlignment="Stretch"
+                    CursorSource="{x:Bind ViewModel.SelectedSearchResult.CursorSource, Mode=OneWay}"
+                    ItemsSource="{x:Bind ViewModel.SelectedSearchResult.CursorSource.Items, Mode=OneWay}" />
             </Grid>
         </Grid>
     </Grid>
