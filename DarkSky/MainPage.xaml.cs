@@ -55,11 +55,13 @@ namespace DarkSky
             viewModelsToViews[typeof(PostViewModel)] = typeof(PostPage);
             viewModelsToViews[typeof(ProfileViewModel)] = typeof(ProfilePage);
             viewModelsToViews[typeof(ListViewModel)] = typeof(ListPage);
-            WeakReferenceMessenger.Default.Register<SecondaryNavigationMessage>(this, (r, m) =>
+			viewModelsToViews[typeof(FeedViewModel)] = typeof(FeedPage);
+			WeakReferenceMessenger.Default.Register<SecondaryNavigationMessage>(this, (r, m) =>
             {
                 if (m.Value is not null)
                 {
-                    if (m.Value.payload is ProfileViewModel || m.Value.payload is ListViewModel)
+                    // Show these items in the left sidebar
+                    if (m.Value.payload is ProfileViewModel || m.Value.payload is ListViewModel || m.Value.payload is FeedViewModel)
                     {
                         PrimaryPane.Navigate(viewModelsToViews[m.Value.ViewModel], m.Value.payload);
                         AppNavigation.SelectedItem = null;

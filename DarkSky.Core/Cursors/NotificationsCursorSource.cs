@@ -9,12 +9,15 @@ namespace DarkSky.Core.Cursors
 
         protected override async Task OnGetMoreItemsAsync(int limit = 50)
         {
-            ListNotificationsOutput notifications = (await atProtoService.ATProtocolClient.Notification.ListNotificationsAsync(limit, false, Cursor)).AsT0;
-            Cursor = notifications.Cursor;
-            foreach (var item in notifications.Notifications)
+            ListNotificationsOutput? notifications = (await atProtoService.ATProtocolClient.Notification.ListNotificationsAsync(null, limit, false, Cursor)).AsT0;
+            if(notifications is not null)
             {
-                Add(item);
-            }
+				Cursor = notifications!.Cursor;
+				foreach (var item in notifications!.Notifications)
+				{
+					Add(item);
+				}
+			}
         }
     }
 }

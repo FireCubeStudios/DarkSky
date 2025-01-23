@@ -185,7 +185,7 @@
                         <icons:FluentIconElement Symbol="Chat24" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Content="Feeds" Visibility="Collapsed">
+                <muxc:NavigationViewItem Content="Feeds">
                     <muxc:NavigationViewItem.Icon>
                         <icons:FluentIconElement Symbol="BroadActivityFeed24" />
                     </muxc:NavigationViewItem.Icon>

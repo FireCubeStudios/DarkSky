@@ -80,7 +80,7 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Margin="0,8,0,-4"
-                Text="{x:Bind List.Description, Mode=OneWay}" />
+                Text="{x:Bind List.Description, Mode=OneWay}" TextWrapping="WrapWholeWords"/>
             <muxc:NavigationView
                 x:Name="ListNavigation"
                 Grid.Row="2"

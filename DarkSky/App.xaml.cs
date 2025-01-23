@@ -36,6 +36,7 @@ namespace DarkSky
             services.AddTransient<NotificationsViewModel>();
             services.AddSingleton<HomeFeedViewModel>();
             services.AddSingleton<ListsViewModel>();
+			services.AddSingleton<FeedsViewModel>();
 			services.AddSingleton<SearchViewModel>();
 
 			NavigationService navigationService = new();

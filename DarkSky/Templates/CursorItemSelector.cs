@@ -9,8 +9,9 @@ namespace DarkSky.Templates
         public DataTemplate PostItemTemplate { get; set; }
         public DataTemplate ProfileItemTemplate { get; set; }
         public DataTemplate ListItemTemplate { get; set; }
+		public DataTemplate FeedItemTemplate { get; set; }
 
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             if (item is PostViewModel)
             {
@@ -24,7 +25,11 @@ namespace DarkSky.Templates
             {
                 return ListItemTemplate;
             }
-            return base.SelectTemplateCore(item, container);
+			else if (item is FeedViewModel)
+			{
+				return FeedItemTemplate;
+			}
+			return base.SelectTemplateCore(item, container);
         }
     }
 }

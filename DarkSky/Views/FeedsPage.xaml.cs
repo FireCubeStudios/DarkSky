@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using DarkSky.Core.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -9,9 +11,10 @@ namespace DarkSky.Views
     /// </summary>
     public sealed partial class FeedsPage : Page
     {
-        public FeedsPage()
-        {
-            this.InitializeComponent();
-        }
-    }
+		private FeedsViewModel ViewModel = App.Current.Services.GetService<FeedsViewModel>();
+		public FeedsPage()
+		{
+			this.InitializeComponent();
+		}
+	}
 }

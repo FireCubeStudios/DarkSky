@@ -56,7 +56,7 @@
                     </AutoSuggestBox>
                 </toolkit:DropShadowPanel>
             </Grid>
-            <Grid x:Name="SearchNavigation" x:Load="{x:Bind ViewModel.IsSearching, Mode=OneWay}" Grid.Row="1" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+            <Grid x:Name="SearchNavigation" Grid.Row="1" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
                 <muxc:NavigationView
                 Grid.Row="2"
                 Grid.Column="0"
@@ -75,7 +75,7 @@
                 </muxc:NavigationView>
             </Grid>
             <Grid Grid.Row="2">
-                <usercontrols:CursorListView x:Name="SearchList" x:Load="{x:Bind ViewModel.IsSearching, Mode=OneWay}"
+                <usercontrols:CursorListView x:Name="SearchList" 
                     HorizontalAlignment="Stretch"
                     CursorSource="{x:Bind ViewModel.SelectedSearchResult.CursorSource, Mode=OneWay}"
                     ItemsSource="{x:Bind ViewModel.SelectedSearchResult.CursorSource.Items, Mode=OneWay}" />

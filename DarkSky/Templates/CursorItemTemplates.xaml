@@ -6,3 +6,5 @@
     xmlns:helpers="using:DarkSky.Helpers"
     xmlns:local="using:DarkSky.Templates"
     xmlns:temporary="using:DarkSky.Core.ViewModels.Temporary" />
+    
+    <!-- Templates moved to CursorListView.xaml because it fixes x:Bind bug-->

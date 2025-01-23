@@ -12,33 +12,53 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
-
     <Grid>
-        <StackPanel
-            Padding="32"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Spacing="8">
-            <TextBlock
-                FontSize="24"
-                HorizontalTextAlignment="Center"
-                Text="Feeds are coming soon.." />
-            <TextBlock
-                HorizontalTextAlignment="Center"
-                Text="The app is being built up rapidly. Follow the progress in Bluesky, GitHub or Discord."
-                TextWrapping="WrapWholeWords" />
-            <HyperlinkButton
-                HorizontalAlignment="Center"
-                Content="See progress in Bluesky"
-                NavigateUri="https://bsky.app/profile/firecube.bsky.social" />
-            <HyperlinkButton
-                HorizontalAlignment="Center"
-                Content="Send feedback in GitHub"
-                NavigateUri="https://github.com/FireCubeStudios/DarkSky" />
-            <HyperlinkButton
-                HorizontalAlignment="Center"
-                Content="Join the Discord"
-                NavigateUri="https://discord.com/invite/3WYcKat" />
-        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36" />
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid
+               Grid.Row="0"
+               Height="49"
+               Padding="16,8,12,8">
+                <StackPanel
+                   VerticalAlignment="Center"
+                   Orientation="Horizontal"
+                   Spacing="12">
+                    <TextBlock
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Text="Feeds" />
+                    <TextBlock
+                       VerticalAlignment="Bottom"
+                       Opacity="0.7"
+                       Text="View your saved feeds and discover new ones!" />
+                </StackPanel>
+                <Button
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   IsEnabled="False"
+                   Style="{ThemeResource ToolbarButton}">
+                    <icons:FluentSymbolIcon Symbol="Add20" />
+                </Button>
+            </Grid>
+            <Grid Grid.Row="1" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
+                <muxc:NavigationView
+       Grid.Row="2"
+       Grid.Column="0"
+       Grid.ColumnSpan="2"
+       Height="48"
+       IsBackButtonVisible="Collapsed"
+       IsSettingsVisible="False"
+       PaneDisplayMode="Top">
+                    <muxc:NavigationView.MenuItems>
+                        <muxc:NavigationViewItem Content="My feeds"/>
+                        <muxc:NavigationViewItem Content="Suggested feeds"/>
+                    </muxc:NavigationView.MenuItems>
+                </muxc:NavigationView>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

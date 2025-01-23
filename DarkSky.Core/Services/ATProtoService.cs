@@ -33,7 +33,7 @@ namespace DarkSky.Core.Services
             ATProtocolClient = CreateATProtocolClient(pds);
 
             // Login with refresh token
-            Session session = new Session(new ATDid(did), null, new ATHandle(handle), null, refreshJwt, refreshJwt);
+            Session session = new Session(new ATDid(did), null, new ATHandle(handle), null, refreshJwt, refreshJwt, DateTime.MaxValue);
             var authSession = new AuthSession(session);
             Session session2 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(authSession) ?? throw new Exception($"Refresh failed Session2 was null"); ;
 
@@ -43,7 +43,7 @@ namespace DarkSky.Core.Services
                 var RefreshSession = result.AsT0; ;
                 Session? Session3 = await ATProtocolClient.AuthenticateWithPasswordSessionAsync(
                     new AuthSession(
-                        new Session(RefreshSession!.Did!, RefreshSession.DidDoc, RefreshSession!.Handle!, null, RefreshSession!.AccessJwt!, RefreshSession!.RefreshJwt!)));
+                        new Session(RefreshSession!.Did!, RefreshSession.DidDoc, RefreshSession!.Handle!, null, RefreshSession!.AccessJwt!, RefreshSession!.RefreshJwt!, DateTime.MaxValue)));
                 if (Session3 is not null)
                 {
                     WeakReferenceMessenger.Default.Send(new AuthenticationSessionMessage(ATProtocolClient.Session ?? throw new Exception($"Refresh failed ATProtocolClient.Session was null")));

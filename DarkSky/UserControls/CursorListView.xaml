@@ -13,10 +13,12 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <!--  Item template selector for posts, lists etc.  -->
+        <!--  Item template selector for posts, lists, feeds etc.  -->
         <!--  The resource dictionary contains the item templates and selector resource  -->
+        <!-- I kept the code here because it fixed x:Bind bug -->
         <templates:CursorItemSelector
             x:Key="CursorItemSelector"
+            FeedItemTemplate="{StaticResource FeedItemTemplate}"
             ListItemTemplate="{StaticResource ListItemTemplate}"
             PostItemTemplate="{StaticResource PostItemTemplate}"
             ProfileItemTemplate="{StaticResource ProfileItemTemplate}" />
@@ -104,6 +106,67 @@
                             VerticalAlignment="Center"
                             Opacity="0.7"
                             Text="{x:Bind ListView.Creator.Handle, Mode=OneWay}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Opacity="0.7"
+                            Text="• Created " />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Opacity="0.7"
+                            Text="{x:Bind helpers:UIHelper.SimpleDate(CreatedAt), Mode=OneWay}" />
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Text="{x:Bind Description, Mode=OneWay}"
+                    TextWrapping="WrapWholeWords" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="FeedItemTemplate" x:DataType="temporary:FeedViewModel">
+            <Grid
+                Margin="-16,0,-16,0"
+                Padding="12,8,12,8"
+                BorderBrush="{ThemeResource MicaBorderBrush}"
+                BorderThickness="0,0,0,1"
+                ColumnSpacing="8"
+                RowSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Width="48"
+                    Height="48"
+                    CornerRadius="8">
+                    <Image Source="{x:Bind helpers:UIHelper.Img(Avatar), Mode=OneWay}" Stretch="Fill" />
+                </Border>
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="12,8,12,8"
+                    Spacing="4">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontWeight="SemiBold"
+                        Text="{x:Bind Name, Mode=OneWay}" />
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Opacity="0.7"
+                            Text="Feed by " />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Opacity="0.7"
+                            Text="{x:Bind FeedView.Creator.Handle, Mode=OneWay}" />
                         <TextBlock
                             VerticalAlignment="Center"
                             Opacity="0.7"

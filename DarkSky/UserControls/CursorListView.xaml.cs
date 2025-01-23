@@ -98,7 +98,13 @@ namespace DarkSky.UserControls
                         new SecondaryNavigationMessage(
                             new SecondaryNavigation(typeof(ListViewModel), e.ClickedItem as ListViewModel)));
                 }
-            }
+				else if (e.ClickedItem is FeedViewModel)
+				{
+					WeakReferenceMessenger.Default.Send(
+						new SecondaryNavigationMessage(
+							new SecondaryNavigation(typeof(FeedViewModel), e.ClickedItem as FeedViewModel)));
+				}
+			}
         }
 
         private async void RefreshContainer_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)

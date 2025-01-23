@@ -100,12 +100,14 @@ namespace DarkSky.Core.ViewModels.Temporary
             SelectedProfileNavigationItem = ProfileNavigationItems[0];
             ProfileNavigationItems.Add(new CursorNavigationItem("Replies", new ProfileFeedCursorSource(this, "posts_with_replies")));
             ProfileNavigationItems.Add(new CursorNavigationItem("Media", new ProfileFeedCursorSource(this, "posts_with_media")));
-            if (Profile.Associated.Lists > 0)
+			if (Profile.Associated?.Feedgens > 0)
+				ProfileNavigationItems.Add(new CursorNavigationItem("Feeds", new ProfileFeedsCursorSource(this)));
+			if (Profile.Associated?.Lists > 0)
                 ProfileNavigationItems.Add(new CursorNavigationItem("Lists", new ProfileListsCursorSource(this)));
 
-            // Profile Descriptions supports Facets but the API does not return them
-            // To fix this we manually parse the Facets using FishyFlip Facet.Parse method
-            RichDescription = new RichText(Description, Facet.Parse(Description, new ProfileViewBasic[0]).ToList());
+			// Profile Descriptions supports Facets but the API does not return them
+			// To fix this we manually parse the Facets using FishyFlip Facet.Parse method
+			RichDescription = new RichText(Description, Facet.Parse(Description, new ProfileViewBasic[0]).ToList());
 
             if (Profile.PinnedPost is not null)
             {
