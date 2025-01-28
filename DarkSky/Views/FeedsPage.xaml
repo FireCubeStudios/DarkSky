@@ -8,21 +8,21 @@
     xmlns:local="using:DarkSky.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:classes="using:DarkSky.Core.Classes"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="36" />
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="50" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid
                Grid.Row="0"
                Height="49"
-               Padding="16,8,12,8">
+               Padding="16,8,12,8"
+                BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
                 <StackPanel
                    VerticalAlignment="Center"
                    Orientation="Horizontal"
@@ -34,7 +34,7 @@
                     <TextBlock
                        VerticalAlignment="Bottom"
                        Opacity="0.7"
-                       Text="View your saved feeds and discover new ones!" />
+                       Text="Manage your saved feeds and lists." />
                 </StackPanel>
                 <Button
                    HorizontalAlignment="Right"
@@ -44,20 +44,14 @@
                     <icons:FluentSymbolIcon Symbol="Add20" />
                 </Button>
             </Grid>
-            <Grid Grid.Row="1" BorderThickness="0, 0, 0, 1" BorderBrush="{ThemeResource MicaBorderBrush}">
-                <muxc:NavigationView
-       Grid.Row="2"
-       Grid.Column="0"
-       Grid.ColumnSpan="2"
-       Height="48"
-       IsBackButtonVisible="Collapsed"
-       IsSettingsVisible="False"
-       PaneDisplayMode="Top">
-                    <muxc:NavigationView.MenuItems>
-                        <muxc:NavigationViewItem Content="My feeds"/>
-                        <muxc:NavigationViewItem Content="Suggested feeds"/>
-                    </muxc:NavigationView.MenuItems>
-                </muxc:NavigationView>
+            <Grid Grid.Row="1">
+                <ListView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="classes:SavedFeedPreference">
+                            <Grid></Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </Grid>
     </Grid>

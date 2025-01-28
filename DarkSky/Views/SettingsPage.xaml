@@ -35,7 +35,7 @@
                     FontSize="20"
                     FontWeight="SemiBold"
                     Opacity="0.7">
-                    v0.4.16
+                    v0.5.17
                 </TextBlock>
             </StackPanel>
             <TextBlock

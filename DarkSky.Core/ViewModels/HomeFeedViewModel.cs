@@ -50,6 +50,7 @@ namespace DarkSky.Core.ViewModels
                             if ((bool)item.Pinned && item.TypeValue == "feed")
                             {
                                 var f = (await atProtoService.ATProtocolClient.Feed.GetFeedGeneratorAsync(new ATUri(item.Value))).AsT0;
+                             
                                 Feeds.Add(new CursorNavigationItem(f.View.DisplayName, new FeedCursorSource(item.Value)));
                             }
                             else if ((bool)item.Pinned && item.TypeValue == "list")
