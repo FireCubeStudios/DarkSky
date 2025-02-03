@@ -43,7 +43,7 @@ namespace DarkSky.Views.Temporary
         {
             if (sender.SelectedItem is null || List is null) return;
 
-            if (sender.SelectedItem == ListNavigation.MenuItems[0])
+           /* if (sender.SelectedItem == ListNavigation.MenuItems[0])
             {
                 PostsUsersList.CursorSource = List.ListFeedCursorSource;
                 PostsUsersList.ItemsSource = List.ListFeedCursorSource.Items;
@@ -52,7 +52,7 @@ namespace DarkSky.Views.Temporary
             {
                 PostsUsersList.CursorSource = List.ListUsersCursorSource;
                 PostsUsersList.ItemsSource = List.ListUsersCursorSource.Items;
-            }
+            }*/
         }
     }
 }

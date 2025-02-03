@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DarkSky.Core.Classes;
+using DarkSky.Core.Cursors;
 using DarkSky.Core.Cursors.Feeds;
 using DarkSky.Core.Cursors.Lists;
+using DarkSky.Core.ViewModels.Feeds;
 using FishyFlip.Lexicon.App.Bsky.Feed;
 using FishyFlip.Lexicon.App.Bsky.Graph;
 using System;
@@ -11,7 +13,7 @@ using System.Text;
 
 namespace DarkSky.Core.ViewModels.Temporary
 {
-	public partial class FeedViewModel : ObservableObject
+	public partial class FeedViewModel : ObservableObject, IFeedViewModel
 	{
 		[ObservableProperty]
 		private string name = "";
@@ -32,7 +34,7 @@ namespace DarkSky.Core.ViewModels.Temporary
 		private long likeCount = 0;
 
 		[ObservableProperty]
-		private FeedCursorSource? feedCursorSource;
+		private ICursorSource? postsCursorSource;
 
 		[ObservableProperty]
 		private GeneratorView? feedView;
@@ -48,7 +50,7 @@ namespace DarkSky.Core.ViewModels.Temporary
 
 			this.RichDescription = new RichText(Description, FeedView.DescriptionFacets);
 
-			this.FeedCursorSource = new FeedCursorSource(feed.Uri.ToString());
+			this.PostsCursorSource = new FeedCursorSource(feed.Uri.ToString());
 		}
 	}
 }

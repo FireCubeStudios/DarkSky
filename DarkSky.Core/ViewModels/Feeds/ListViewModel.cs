@@ -1,15 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DarkSky.Core.Classes;
+using DarkSky.Core.Cursors;
 using DarkSky.Core.Cursors.Feeds;
 using DarkSky.Core.Cursors.Lists;
+using DarkSky.Core.ViewModels.Feeds;
 using FishyFlip.Lexicon.App.Bsky.Graph;
 using System;
 using System.Collections.ObjectModel;
 
 namespace DarkSky.Core.ViewModels.Temporary
 {
-    public partial class ListViewModel : ObservableObject
-    {
+    public partial class ListViewModel : ObservableObject, IFeedViewModel
+	{
 
         public ObservableCollection<CursorNavigationItem> Cursors = new();
 
@@ -29,10 +31,7 @@ namespace DarkSky.Core.ViewModels.Temporary
         private DateTime createdAt;
 
         [ObservableProperty]
-        private ListFeedCursorSource listFeedCursorSource;
-
-        [ObservableProperty]
-        private ListUsersCursorSource listUsersCursorSource;
+        private ICursorSource postsCursorSource;
 
         [ObservableProperty]
         private ListView listView;
@@ -46,10 +45,15 @@ namespace DarkSky.Core.ViewModels.Temporary
             this.CreatedAt = listView.IndexedAt ?? DateTime.Now;
             if (listView.Uri is not null)
             {
-                Cursors.Add(new CursorNavigationItem("Posts", new ListFeedCursorSource(listView.Uri.ToString())));
+                // Used in Home Page
+				PostsCursorSource = new ListFeedCursorSource(listView.Uri.ToString());
+
+				Cursors.Add(new CursorNavigationItem("Posts", PostsCursorSource));
                 Cursors.Add(new CursorNavigationItem("Users", new ListUsersCursorSource(this)));
                 SelectedCursor = Cursors[0];
             }
         }
-    }
+
+		ICursorSource IFeedViewModel.PostsCursorSource { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+	}
 }

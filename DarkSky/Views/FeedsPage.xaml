@@ -8,7 +8,7 @@
     xmlns:local="using:DarkSky.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:classes="using:DarkSky.Core.Classes"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:classes="using:DarkSky.Core.Classes" xmlns:helpers="using:DarkSky.Helpers"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -45,10 +45,23 @@
                 </Button>
             </Grid>
             <Grid Grid.Row="1">
-                <ListView>
+                <ListView SelectionMode="None" IsItemClickEnabled="True" CanReorderItems="True" ItemsSource="{x:Bind ViewModel.Feeds, Mode=OneWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="classes:SavedFeedPreference">
-                            <Grid></Grid>
+                            <Grid Padding="8, 0, 12, 0">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Border CornerRadius="4" Height="24" Width="24">
+                                        <Image Source="{x:Bind helpers:UIHelper.Img(Feed.Avatar), Mode=OneWay}" Stretch="Fill" />
+                                    </Border>
+                                    <TextBlock Text="{x:Bind Feed.Name, Mode=OneWay}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                    <ToggleButton IsChecked="{x:Bind IsPinned, Mode=OneWay}" Style="{ThemeResource ToolbarToggleButton}">
+                                        <icons:FluentSymbolIcon Symbol="Pin20"/>
+                                    </ToggleButton>
+                                </StackPanel>
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -106,7 +106,7 @@
             x:Name="FeedPostsList"
             Grid.Row="1"
             HorizontalAlignment="Stretch"
-            CursorSource="{x:Bind Feed.FeedCursorSource, Mode=OneWay}"
-            ItemsSource="{x:Bind Feed.FeedCursorSource.Items, Mode=OneWay}" />
+            CursorSource="{x:Bind Feed.PostsCursorSource, Mode=OneWay}"
+            ItemsSource="{x:Bind Feed.PostsCursorSource.Items, Mode=OneWay}" />
     </Grid>
 </Page>
