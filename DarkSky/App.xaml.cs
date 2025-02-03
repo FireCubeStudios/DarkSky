@@ -4,8 +4,11 @@ using DarkSky.Core.Services.Interfaces;
 using DarkSky.Core.ViewModels;
 using DarkSky.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Sentry;
+using Sentry.Protocol;
 using System;
 using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -60,24 +63,29 @@ namespace DarkSky
 
         private CredentialService CredentialService = new CredentialService();
 
+        private bool loginfail = false;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        /// 
-        private bool loginfail = false;
         public App()
         {
             this.InitializeComponent();
             App.Current.Services = ServiceContainer.Services = ConfigureServices();
-            setup();
-            this.Suspending += OnSuspending;
+            ATProtoSetup();
+
+            Suspending += OnSuspending;
             UnhandledException += OnUnhandledException;
             TaskScheduler.UnobservedTaskException += OnUnobservedException;
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+
+#if !DEBUG
+            Helpers.Sentry.Init(); // Initialize Sentry SDK
+#endif
         }
 
-        private async void setup()
+        private async void ATProtoSetup()
         {
 
             if (CredentialService.Count() != 0)
@@ -177,28 +185,38 @@ namespace DarkSky
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+
+            // Flush Sentry events when suspending
+            await SentrySdk.FlushAsync(TimeSpan.FromSeconds(2));
+
+            // TODO: Save any other application state and stop any background activity.
+
             deferral.Complete();
         }
 
         private static void OnUnobservedException(object? sender, UnobservedTaskExceptionEventArgs e) => e.SetObserved();
 
-        private static async void OnUnhandledException(object? sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        [SecurityCritical]
+        [HandleProcessCorruptedStateExceptions]
+        private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            try
+            // Get a reference to the exception, because the Exception property is cleared when accessed.
+            var exception = e.Exception;
+            if (exception != null)
             {
-                await new ContentDialog // This code was taken directly from the UnifiedApp class. When a UWP-targeting version of it is created, it will be used here.
-                {
-                    Title = "Unhandled exception",
-                    Content = e.Message,
-                    CloseButtonText = "Close"
-                }
-                    .ShowAsync();
+                // Tell Sentry this was an unhandled exception
+                exception.Data[Mechanism.HandledKey] = false;
+                exception.Data[Mechanism.MechanismKey] = "Application.UnhandledException";
+
+                // Capture the exception
+                SentrySdk.CaptureException(exception);
+
+                // Flush the event immediately
+                SentrySdk.FlushAsync(TimeSpan.FromSeconds(2)).GetAwaiter().GetResult();
             }
-            catch { }
         }
 
         private void CurrentDomain_FirstChanceException(object? sender, FirstChanceExceptionEventArgs e)
